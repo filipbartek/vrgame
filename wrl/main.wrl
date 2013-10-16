@@ -2,7 +2,7 @@
 
 WorldInfo {
 	title "Maják"
-	info ["Filip Brtek", "Eva Pešková"]
+	info ["Filip Bártek", "Eva Pešková"]
 }
 
 Viewpoint {
