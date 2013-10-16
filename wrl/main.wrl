@@ -12,7 +12,15 @@ Inline {
 }
 
 Viewpoint {
-	description	"default"
+	description	"Default"
+}
+
+Viewpoint {
+	description	"Inside lighthouse"
+}
+                                   
+Viewpoint {
+	description	"Outside lighthouse"
 }
 
 Background {
