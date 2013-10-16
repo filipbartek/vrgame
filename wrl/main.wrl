@@ -7,12 +7,8 @@ WorldInfo {
 
 NavigationInfo { type ["WALK"] headlight TRUE }
 
-Inline {
-    url [ "eva.wrl" ]
-}
-
 Viewpoint {
-	description	"default"
+	description	"Default"
 }
 
 Background {
@@ -22,17 +18,10 @@ Background {
 	groundAngle [1.4, 1.57]
 }
 
-Transform {
-	children [
-		Shape {
-			appearance Appearance {
-				material Material {
-					diffuseColor 0.8 0.8 0.0
-				}
-			}
-			geometry Box {
-                size 1 1 1
-			}
-		}
-	]              
+Inline {
+    url [ "island.wrl" ]
+}
+
+Inline {
+    url [ "lighthouse.wrl" ]
 }
