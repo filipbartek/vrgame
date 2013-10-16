@@ -7,6 +7,10 @@ WorldInfo {
 
 NavigationInfo { type ["WALK"] headlight TRUE }
 
+Inline {
+    url [ "eva.wrl" ]
+}
+
 Viewpoint {
 	description	"default"
 }
@@ -26,9 +30,9 @@ Transform {
 					diffuseColor 0.8 0.8 0.0
 				}
 			}
-			geometry Cylinder {
+			geometry Box {
+                size 1 1 1
 			}
 		}
-	]
-	scale 1 35.3 1
+	]              
 }
