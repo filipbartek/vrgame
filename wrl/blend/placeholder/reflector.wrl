@@ -13,10 +13,13 @@ Transform {
 			geometry Cone {
 				# http://www.bellrock.org.uk/lighthouse/lighthouse_lightroom.htm
 				# parabolic shape of 25 inches in diameter
+				# http://www.bellrock.org.uk/lighthouse/lighthouse_stats.htm
+				# 25-inch (63.5cm)
 				bottomRadius 0.3175
 				height 0.3175
 			}
 		}
 	]
 	rotation 1 0 0 4.71
+	translation	0 0 -0.15875
 }
