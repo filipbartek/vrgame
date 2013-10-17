@@ -1,0 +1,73 @@
+#VRML V2.0 utf8
+
+Switch {
+	choice [
+		DEF	Window Inline {
+			url	["lightroom-window.wrl"]
+		}
+		DEF	WindowTranslated Transform {
+			children [
+				USE	Window
+			]
+			translation	0 0 0.83
+		}
+		DEF	Cage Group {
+			children [
+				Transform {
+					children [
+						USE	WindowTranslated
+					]
+					rotation 0 1 0 0
+				}
+				Transform {
+					children [
+						USE	WindowTranslated
+					]
+					rotation 0 1 0 0.79
+				}
+				Transform {
+					children [
+						USE	WindowTranslated
+					]
+					rotation 0 1 0 1.57
+				}
+				Transform {
+					children [
+						USE	WindowTranslated
+					]
+					rotation 0 1 0 2.36
+				}
+				Transform {
+					children [
+						USE	WindowTranslated
+					]
+					rotation 0 1 0 3.14
+				}
+				Transform {
+					children [
+						USE	WindowTranslated
+					]
+					rotation 0 1 0 3.93
+				}
+				Transform {
+					children [
+						USE	WindowTranslated
+					]
+					rotation 0 1 0 4.71
+				}
+				Transform {
+					children [
+						USE	WindowTranslated
+					]
+					rotation 0 1 0 5.50
+				}
+			]
+		}
+	]
+}
+
+# Desired width (short): 2.74
+# Window width: 0.684
+# Octagon of windows: approx. 1.65
+
+USE	Cage
