@@ -1,0 +1,124 @@
+#VRML V2.0 utf8
+
+Switch {
+	choice [
+		DEF Panel Inline {
+			url	["lightroom-glass-panel.wrl"]
+		}
+		DEF	Line2 Group	{
+			children [
+				Transform {
+					children [
+						USE	Panel
+					]
+					translation	-0.171 0 0
+				}
+				Transform {
+					children [
+						USE	Panel
+					]
+					translation	0.171 0 0
+				}
+			]
+		}
+		DEF	Wood Shape {
+			appearance Appearance {
+				material Material {
+					diffuseColor 0.5 0.1 0
+				}
+			}
+			geometry Box {
+				size 1 0.1 0.1
+			}
+		}
+		DEF	WoodHorizontalLong Transform {
+			children [
+				USE	Wood
+			]
+			scale 0.684 1 1
+		}
+		DEF	WoodVertical Transform {
+			children [
+				USE	Wood
+			]
+			rotation 0 0 1 1.57
+		}
+		DEF	WoodVerticalLong Transform {
+			children [
+				USE	WoodVertical
+			]
+			scale 1 2.037 1
+		}
+		DEF	Frame Group	{
+			children [
+				Transform {
+					children [
+						USE	WoodHorizontalLong
+					]
+					translation	0 -1.0185 0
+				}
+				Transform {
+					children [
+						USE	WoodHorizontalLong
+					]
+					translation	0 -0.3395 0
+				}
+				Transform {
+					children [
+						USE	WoodHorizontalLong
+					]
+					translation	0 0.3395 0
+				}
+				Transform {
+					children [
+						USE	WoodHorizontalLong
+					]
+					translation	0 1.0185 0
+				}
+				Transform {
+					children [
+						USE	WoodVerticalLong
+					]
+					translation	-0.342 0 0
+				}
+				Transform {
+					children [
+						USE	WoodVerticalLong
+					]
+					translation	0 0 0
+				}
+				Transform {
+					children [
+						USE	WoodVerticalLong
+					]
+					translation	0.342 0 0
+				}
+			]
+		}
+		DEF	Window Group {
+			children [
+				Transform {
+					children [
+						USE	Line2
+					]
+					translation	0 -0.679 0
+				}
+				Transform {
+					children [
+						USE	Line2
+					]
+					translation	0 0 0
+				}
+				Transform {
+					children [
+						USE	Line2
+					]
+					translation	0 0.679 0
+				}
+				USE	Frame
+			]
+		}
+	]
+}
+
+USE	Window
