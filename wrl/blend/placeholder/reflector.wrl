@@ -1,6 +1,6 @@
 #VRML V2.0 utf8
 
-# A reflector that is pointing in the positive direction of X axis.
+# A reflector that is pointing in the positive direction of Z axis.
 
 Transform {
 	children [
@@ -18,5 +18,5 @@ Transform {
 			}
 		}
 	]
-	rotation 0 0 1 1.57
+	rotation 1 0 0 4.71
 }

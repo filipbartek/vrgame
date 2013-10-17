@@ -13,13 +13,13 @@ Switch {
 					children [
 						USE	Reflector
 					]
-					translation	0 0 -0.35
+					translation	-0.35 0 0
 				}
 				Transform {
 					children [
 						USE	Reflector
 					]
-					translation	0 0 0.35
+					translation	0.35 0 0
 				}
 			]
 		}
@@ -30,14 +30,14 @@ Switch {
 					children [
 						USE	Reflector
 					]
-					translation	0 0 -0.70
+					translation	-0.70 0 0
 				}
 				USE	Reflector
 				Transform {
 					children [
 						USE	Reflector
 					]
-					translation	0 0 0.70
+					translation	0.70 0 0
 				}
 			]
 		}
@@ -84,28 +84,28 @@ Switch {
 					children [
 						USE	Side7
 					]
-					translation	0.35 0 0
+					translation	0 0 0.35
 				}
 				Transform {
 					children [
 						USE	Side7
 					]
 					rotation 0 1 0 3.14
-					translation	-0.35 0 0
+					translation	0 0 -0.35
 				}
 				Transform {
 					children [
 						USE	Side5
 					]
 					rotation 0 1 0 1.57
-					translation	0 0 -0.7
+					translation	0.7 0 0
 				}
 				Transform {
 					children [
 						USE	Side5
 					]
 					rotation 0 1 0 4.71
-					translation	0 0 0.7
+					translation	-0.7 0 0
 				}
 			]
 		}
