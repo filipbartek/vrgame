@@ -1,0 +1,116 @@
+#VRML V2.0 utf8
+
+Switch {
+	choice [
+
+		DEF	Reflector Inline {
+			url	["reflector.wrl"]
+		}
+
+		DEF	Line2 Group {
+			children [
+				Transform {
+					children [
+						USE	Reflector
+					]
+					translation	0 0 -0.35
+				}
+				Transform {
+					children [
+						USE	Reflector
+					]
+					translation	0 0 0.35
+				}
+			]
+		}
+
+		DEF	Line3 Group {
+			children [
+				Transform {
+					children [
+						USE	Reflector
+					]
+					translation	0 0 -0.70
+				}
+				USE	Reflector
+				Transform {
+					children [
+						USE	Reflector
+					]
+					translation	0 0 0.70
+				}
+			]
+		}
+
+		DEF	Side7 Group {
+			children [
+				Transform {
+					children [
+						USE	Line2
+					]
+					translation	0 -0.64 0
+				}
+				USE	Line3
+				Transform {
+					children [
+						USE	Line2
+					]
+					translation	0 0.64 0
+				}
+			]
+		}
+
+		DEF	Side5 Group {
+			children [
+				Transform {
+					children [
+						USE	Line2
+					]
+					translation	0 -0.64 0
+				}
+				USE	Reflector
+				Transform {
+					children [
+						USE	Line2
+					]
+					translation	0 0.64 0
+				}
+			]
+		}
+
+		DEF	Chandelier Group {
+			children [
+				Transform {
+					children [
+						USE	Side7
+					]
+					translation	0.35 0 0
+				}
+				Transform {
+					children [
+						USE	Side7
+					]
+					rotation 0 1 0 3.14
+					translation	-0.35 0 0
+				}
+				Transform {
+					children [
+						USE	Side5
+					]
+					rotation 0 1 0 1.57
+					translation	0 0 -0.7
+				}
+				Transform {
+					children [
+						USE	Side5
+					]
+					rotation 0 1 0 4.71
+					translation	0 0 0.7
+				}
+			]
+		}
+
+	]
+}
+
+USE	Chandelier
