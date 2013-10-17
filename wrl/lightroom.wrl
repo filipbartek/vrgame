@@ -7,7 +7,22 @@ Switch {
 		DEF	Chandelier Inline {
 			url	["chandelier.wrl"]
 		}
+		DEF	Cage Inline	{
+			url	["lightroom-cage.wrl"]
+		}
 	]
 }
 
-USE	Chandelier
+Transform {
+	children [
+		USE	Chandelier
+	]
+	scale 0.8 0.8 0.8
+}
+
+Transform {
+	children [
+		USE	Cage
+	]
+	scale 1.5 1.5 1.5
+}
