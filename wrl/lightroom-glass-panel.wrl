@@ -1,0 +1,14 @@
+#VRML V2.0 utf8
+
+Shape {
+	appearance Appearance {
+		material Material {
+			diffuseColor 0 0 0.8
+			transparency 0.5
+		}
+	}
+	geometry Box {
+		# http://www.bellrock.org.uk/lighthouse/lighthouse_stats.htm
+		size 0.342 0.679 0.00635
+	}
+}
