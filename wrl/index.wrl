@@ -25,3 +25,6 @@ Inline {
 Inline {
     url [ "lighthouse.wrl" ]
 }
+Inline {
+    url [ "circle.wrl" ]
+}
