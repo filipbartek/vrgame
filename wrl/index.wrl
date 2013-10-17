@@ -5,10 +5,13 @@ WorldInfo {
 	info ["Filip Bártek", "Eva Pešková"]
 }
 
-NavigationInfo { type ["WALK"] headlight TRUE }
+NavigationInfo {
+	type ["WALK"]
+	headlight TRUE
+}
 
 Viewpoint {
-	description	"Default"
+	description "Default"
 }
 
 Background {
@@ -17,9 +20,9 @@ Background {
 }
 
 Inline {
-    url [ "island.wrl" ]
+	url ["island.wrl"]
 }
 
 Inline {
-    url [ "lighthouse.wrl" ]
+	url ["lighthouse.wrl"]
 }
