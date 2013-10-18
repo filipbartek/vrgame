@@ -44,5 +44,6 @@ Shape {
 		]
 
 		beginCap FALSE
+		creaseAngle	0.79
 	}
 }
