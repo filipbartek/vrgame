@@ -4,8 +4,20 @@ Inline {
 	url	["lighthouse-body.wrl"]
 }
 
-Inline {
-	url	["lightroom.wrl"]
+Transform {
+	children [
+		Transform {
+			children [
+				Inline {
+					url	["lightroom.wrl"]
+				}
+			]
+			# Lighthouse height
+			translation	0 29.7942 0
+		}
+	]
+	# Lightroom half-height
+	translation	0 1.52775 0
 }
 
 Inline {
