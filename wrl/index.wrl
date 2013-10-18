@@ -28,6 +28,15 @@ Inline {
 	url ["island.wrl"]
 }
 
+Transform {
+	children [
+		Inline {
+			url ["lighthouse.wrl"]
+		}
+	]
+	translation	0 -4.7752 0
+}
+
 Inline {
-	url ["lighthouse.wrl"]
+	url	["sea.wrl"]
 }
