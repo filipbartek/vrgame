@@ -6,12 +6,17 @@ WorldInfo {
 }
 
 NavigationInfo {
-	type ["WALK"]
+	#type ["WALK"]
 	headlight TRUE
 }
 
 Viewpoint {
-	description "Default"
+	description	"Default"
+}
+
+Viewpoint {
+	description	"Lightroom"
+	position 0 29.7942 0
 }
 
 Background {
