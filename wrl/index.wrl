@@ -20,8 +20,8 @@ Viewpoint {
 }
 
 Background {
-	skyColor [0.6 0.75 1]
-	groundColor [0 0.125 0.25]
+	skyColor [0.0 0.0 0]
+	groundColor [0 0.0625 0.125]
 }
 
 Inline {
