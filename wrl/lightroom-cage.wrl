@@ -70,4 +70,14 @@ Switch {
 # Window width: 0.684
 # Octagon of windows: approx. 1.65
 
-USE	Cage
+Transform {
+	children [
+		Transform {
+			children [
+				USE	Cage
+			]
+			translation	0 1.0185 0
+		}
+	]
+	scale 2 2 2
+}

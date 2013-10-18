@@ -6,18 +6,12 @@ Inline {
 
 Transform {
 	children [
-		Transform {
-			children [
-				Inline {
-					url	["lightroom.wrl"]
-				}
-			]
-			# Lighthouse height
-			translation	0 29.7942 0
+		Inline {
+			url	["lightroom.wrl"]
 		}
 	]
-	# Lightroom half-height
-	translation	0 1.52775 0
+	# Lighthouse height
+	translation	0 29.7942 0
 }
 
 Inline {
