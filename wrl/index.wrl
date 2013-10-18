@@ -19,6 +19,12 @@ Viewpoint {
 	position 0 29.7942 0
 }
 
+Viewpoint {
+	description	"Overview"
+	orientation	0 1 0 0.79
+	position 20 29.7942 20
+}
+
 Background {
 	skyColor [0.0 0.0 0]
 	groundColor [0 0.0625 0.125]
@@ -38,5 +44,5 @@ Transform {
 }
 
 Inline {
-	url	["sea.wrl"]
+	#url	["sea.wrl"]
 }
