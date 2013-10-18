@@ -10,19 +10,23 @@ Switch {
 		DEF	Cage Inline	{
 			url	["lightroom-cage.wrl"]
 		}
+		DEF	Masonry Inline {
+			url	["lightroom-masonry.wrl"]
+		}
 	]
 }
 
-Transform {
-	children [
-		USE	Chandelier
-	]
-	scale 0.8 0.8 0.8
-}
+USE	Masonry
 
 Transform {
 	children [
 		USE	Cage
+		Transform {
+			children [
+				USE	Chandelier
+			]
+			translation	0 2.037 0
+		}
 	]
-	scale 1.5 1.5 1.5
+	translation	0 1.4478 0
 }
