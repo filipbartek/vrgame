@@ -27,7 +27,14 @@ Viewpoint {
 
 Background {
 	skyColor [0.0 0.0 0]
-	groundColor [0 0.0625 0.125]
+	groundColor [0 1 0]
+	groundAngle	4
+	backUrl     [ "data\sea.jpg" ]
+    bottomUrl   [ "data\sea.jpg" ]
+    frontUrl    [ "data\sea.jpg" ]
+    leftUrl     [ "data\sea.jpg" ]
+    rightUrl    [ "data\sea.jpg" ]
+    topUrl      [ "data\sea.jpg" ]
 }
 
 Inline {
