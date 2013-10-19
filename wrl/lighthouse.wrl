@@ -4,6 +4,25 @@ Inline {
 	url	["lighthouse-body.wrl"]
 }
 
+Transform  {
+	children Inline	{
+		url	["barrier.wrl"]
+	}
+	# Lighthouse height
+	translation	0 30.7942 0
+}
+
+Transform {
+	children [
+		Inline {
+			url	["barrier.wrl"]
+		}
+	]
+	# Lighthouse height
+	translation	0 29.7942 0
+	scale 1.5 1 1.5
+}
+
 Transform {
 	children [
 		Inline {
