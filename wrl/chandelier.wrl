@@ -42,7 +42,7 @@ Switch {
 			]
 		}
 
-		DEF	LightCone Transform	{
+		DEF	LightConeSimple Transform	{
 			children [
 				Transform	{
 					children [
@@ -67,6 +67,18 @@ Switch {
 				}
 			]
 			scale 10 10 100
+		}
+
+		DEF	LightCone Group	{
+			children [
+				USE	LightConeSimple
+				SpotLight {
+					color 1 1 0 # yellow
+					beamWidth 0.39 # 22.5 degrees
+					cutOffAngle	0.39 # 22.5 degrees
+					location 0 0 0.01 # To prevent flickering of the cone
+				}
+			]
 		}
 
 		DEF	Side7 Group {
