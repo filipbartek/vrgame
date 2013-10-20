@@ -7,7 +7,7 @@ WorldInfo {
 
 NavigationInfo {
 	#type ["WALK"]
-	headlight TRUE
+	headlight FALSE
 }
 
 Viewpoint {
@@ -25,9 +25,18 @@ Viewpoint {
 	position 20 29.7942 20
 }
 
+# Night
 Background {
 	skyColor [0.0 0.0 0]
 	groundColor [0 0.0625 0.125]
+}
+
+# Moonlight
+DirectionalLight {
+	color 1 1 1
+	direction 0 -1 0
+	intensity 0.25
+	ambientIntensity 0.125
 }
 
 Transform {
