@@ -1,5 +1,8 @@
 #VRML V2.0 utf8
 
+# Height: 1.80975
+# Diameter (smaller): 4.1148
+
 Shape {
 	appearance Appearance {
 		material Material {
@@ -23,11 +26,11 @@ Shape {
 		]
 
 		# http://www.bellrock.org.uk/lighthouse/lighthouse_courses.htm
-		# course 86 to course 90: 1.4478
+		# course 86 to course 91: 1.80975 (extension from course 90 information)
 		spine [
 			0 0 0,
-			0 1.4478 0
-			0 1.4478 0
+			0 1.80975 0
+			0 1.80975 0
 			0 0 0
 		]
 
