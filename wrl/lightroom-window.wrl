@@ -1,5 +1,18 @@
 #VRML V2.0 utf8
 
+# panel width = 0.3429
+# panel height = 0.67945
+# panel width / 2 = 0.3429 / 2 = 0.17145
+# panel widht * 2 = 0.3429 * 2 = 0.6858
+# panel height * 3 = 0.67945 * 3 = 2.03835
+# panel height * 3/2 = 0.67945 * 3/2 = 1.019175
+# panel height * 1/2 = 0.67945 * 1/2 = 0.339725
+
+# window height = panel height * 3 = 2.03835
+# window width = panel width * 2 = 0.6858
+
+# http://www.bellrock.org.uk/lighthouse/lighthouse_stats.htm
+
 Switch {
 	choice [
 		DEF Panel Inline {
@@ -11,13 +24,13 @@ Switch {
 					children [
 						USE	Panel
 					]
-					translation	-0.171 0 0
+					translation	-0.17145 0 0
 				}
 				Transform {
 					children [
 						USE	Panel
 					]
-					translation	0.171 0 0
+					translation	0.17145 0 0
 				}
 			]
 		}
@@ -28,6 +41,7 @@ Switch {
 				}
 			}
 			geometry Box {
+				# 0.05: arbitrary
 				size 1 0.05 0.05
 			}
 		}
@@ -35,19 +49,20 @@ Switch {
 			children [
 				USE	Wood
 			]
-			scale 0.684 1 1
+			scale 0.6858 1 1
 		}
 		DEF	WoodVertical Transform {
 			children [
 				USE	Wood
 			]
+			# 1.57: 90 degrees
 			rotation 0 0 1 1.57
 		}
 		DEF	WoodVerticalLong Transform {
 			children [
 				USE	WoodVertical
 			]
-			scale 1 2.037 1
+			scale 1 2.03835 1
 		}
 		DEF	Frame Group	{
 			children [
@@ -55,31 +70,31 @@ Switch {
 					children [
 						USE	WoodHorizontalLong
 					]
-					translation	0 -1.0185 0
+					translation	0 -1.019175 0
 				}
 				Transform {
 					children [
 						USE	WoodHorizontalLong
 					]
-					translation	0 -0.3395 0
+					translation	0 -0.339725 0
 				}
 				Transform {
 					children [
 						USE	WoodHorizontalLong
 					]
-					translation	0 0.3395 0
+					translation	0 0.339725 0
 				}
 				Transform {
 					children [
 						USE	WoodHorizontalLong
 					]
-					translation	0 1.0185 0
+					translation	0 1.019175 0
 				}
 				Transform {
 					children [
 						USE	WoodVerticalLong
 					]
-					translation	-0.342 0 0
+					translation	-0.3429 0 0
 				}
 				Transform {
 					children [
@@ -91,7 +106,7 @@ Switch {
 					children [
 						USE	WoodVerticalLong
 					]
-					translation	0.342 0 0
+					translation	0.3429 0 0
 				}
 			]
 		}
@@ -101,7 +116,7 @@ Switch {
 					children [
 						USE	Line2
 					]
-					translation	0 -0.679 0
+					translation	0 -0.67945 0
 				}
 				Transform {
 					children [
@@ -113,7 +128,7 @@ Switch {
 					children [
 						USE	Line2
 					]
-					translation	0 0.679 0
+					translation	0 0.67945 0
 				}
 				USE	Frame
 			]
