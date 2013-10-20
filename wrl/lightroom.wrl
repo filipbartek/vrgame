@@ -13,6 +13,9 @@ Switch {
 		DEF	Masonry Inline {
 			url	["lightroom-masonry.wrl"]
 		}
+		DEF	Roof Inline	{
+			url	["lightroom-roof.wrl"]
+		}
 	]
 }
 
@@ -25,8 +28,17 @@ Transform {
 			children [
 				USE	Chandelier
 			]
+			# Cage height / 2
 			translation	0 2.037 0
 		}
+		Transform {
+			children [
+				USE	Roof
+			]
+			# Cage height
+			translation	0 4.0767 0
+		}
 	]
+	# Masonry height
 	translation	0 1.4478 0
 }

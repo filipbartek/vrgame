@@ -1,0 +1,43 @@
+#VRML V2.0 utf8
+
+# Picture:
+# http://www.bellrock.org.uk/lighthouse/lighthouse_lightroom.htm
+
+Shape {
+	appearance Appearance {
+		material Material {
+			diffuseColor 0 0.25 0.125
+		}
+	}
+	geometry Extrusion {
+
+		# regular octagon
+		# diameter: 2
+		crossSection [
+			 1.0000 -0.4142,
+			 0.4142 -1.0000,
+			-0.4142 -1.0000,
+			-1.0000 -0.4142,
+			-1.0000  0.4142,
+			-0.4142  1.0000,
+			 0.4142  1.0000,
+			 1.0000  0.4142,
+			 1.0000 -0.4142
+		]
+
+		spine [
+			0 0 0,
+			0 2.0574 0
+		]
+
+		scale [
+			2.0574 2.0574, # just like masonry
+			0 0
+		]
+
+		creaseAngle	0.79 # 45 degrees
+		beginCap FALSE
+		endCap FALSE
+		solid FALSE
+	}
+}
