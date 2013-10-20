@@ -50,6 +50,16 @@ Transform {
 	translation	0 -4.7752 0
 }
 
+Transform {
+	children [
+		Inline {
+			url ["smeaton.wrl"]
+		}
+	]
+	translation	-17 -4.7752 0
+	scale 3 3 3
+}
+
 Inline {
 	#url	["sea.wrl"]
 }
