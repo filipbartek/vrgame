@@ -8,6 +8,8 @@ Shape {
 	}
 	geometry Extrusion {
 
+		# regular octagon
+		# diameter (side to side): 2
 		crossSection [
 			 1.0000 -0.4142,
 			 0.4142 -1.0000,
@@ -20,10 +22,20 @@ Shape {
 			 1.0000 -0.4142
 		]
 
+		# http://www.bellrock.org.uk/lighthouse/lighthouse_courses.htm
+		# course 86 to course 90
 		spine [0 0 0, 0 1.4478 0]
 
 		beginCap FALSE
+
+		# 45 degrees
 		creaseAngle	0.79
+
+		# http://www.bellrock.org.uk/lighthouse/lighthouse_courses.htm
+		# Course 86
+		# Diameter - 13 ft 6 in
+		# diameter (side to side): 4.1148 = 2.0574 * 2
 		scale 2.0574 2.0574
+
 	}
 }
