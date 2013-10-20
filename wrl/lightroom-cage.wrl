@@ -1,5 +1,10 @@
 #VRML V2.0 utf8
 
+# window height: 2.03835
+# window height / 2: 1.019175
+
+# cage height: window height * 2 = 4.0767
+
 Switch {
 	choice [
 		DEF	Window Inline {
@@ -76,7 +81,7 @@ Transform {
 			children [
 				USE	Cage
 			]
-			translation	0 1.0185 0
+			translation	0 1.019175 0
 		}
 	]
 	scale 2 2 2
