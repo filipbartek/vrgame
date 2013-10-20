@@ -23,19 +23,31 @@ Shape {
 		]
 
 		# http://www.bellrock.org.uk/lighthouse/lighthouse_courses.htm
-		# course 86 to course 90
-		spine [0 0 0, 0 1.4478 0]
-
-		beginCap FALSE
-
-		# 45 degrees
-		creaseAngle	0.79
+		# course 86 to course 90: 1.4478
+		spine [
+			0 0 0,
+			0 1.4478 0
+			0 1.4478 0
+			0 0 0
+		]
 
 		# http://www.bellrock.org.uk/lighthouse/lighthouse_courses.htm
 		# Course 86
 		# Diameter - 13 ft 6 in
 		# diameter (side to side): 4.1148 = 2.0574 * 2
-		scale 2.0574 2.0574
+		# 1.75: guess of inner diameter based on picture
+		scale [
+			2.0574 2.0574
+			2.0574 2.0574
+			1.75 1.75
+			1.75 1.75
+		]
+
+		beginCap FALSE
+		endCap FALSE
+
+		# 45 degrees
+		creaseAngle	0.79
 
 	}
 }
