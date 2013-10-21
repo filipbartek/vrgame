@@ -19,6 +19,9 @@ Switch {
 		DEF	Clock Inline {
 			url	["clock.wrl"]
 		}
+		DEF	Winding Inline {
+			url	["winding.wrl"]
+		}
 	]
 }
 
@@ -30,6 +33,13 @@ Transform {
 	]
 	rotation 0 1 0 -0.79
 	translation	-1.1854 1.6 1.1854
+}
+
+Transform {
+	children [
+		USE	Winding
+	]
+	translation	0.2 1.6 0
 }
 
 Transform {
