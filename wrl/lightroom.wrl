@@ -38,6 +38,9 @@ Transform {
 			# Cage height
 			translation	0 4.0767 0
 		}
+		Inline	{
+			url	["barrier.wrl"]
+		}
 	]
 	# Masonry height
 	translation	0 1.80975 0
