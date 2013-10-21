@@ -8,17 +8,18 @@ Shape {
 	}
 	geometry Extrusion {
 		# http://www.wiley.com/legacy/compbooks/vrml2sbk/ch15/15fig07.htm
+		# circle - 16 vertices
 		crossSection [
-             1.00  0.00,   0.92 -0.38,
-             0.71 -0.71,   0.38 -0.92,
-             0.00 -1.00,  -0.38 -0.92,
-            -0.71 -0.71,  -0.92 -0.38,
-            -1.00 -0.00,  -0.92  0.38,
-            -0.71  0.71,  -0.38  0.92,
-             0.00  1.00,   0.38  0.92,
-             0.71  0.71,   0.92  0.38,
-             1.00  0.00
-        ]
+			 1.00  0.00,   0.92 -0.38,
+			 0.71 -0.71,   0.38 -0.92,
+			 0.00 -1.00,  -0.38 -0.92,
+			-0.71 -0.71,  -0.92 -0.38,
+			-1.00 -0.00,  -0.92  0.38,
+			-0.71  0.71,  -0.38  0.92,
+			 0.00  1.00,   0.38  0.92,
+			 0.71  0.71,   0.92  0.38,
+			 1.00  0.00
+		]
 
 		# http://www.bellrock.org.uk/lighthouse/lighthouse_courses.htm
 		# https://docs.google.com/spreadsheet/ccc?key=0AkRO6nRMpzvydGh4dWlmZDJfYlc4UUZROHZ4VnR1NGc&usp=sharing
