@@ -7,7 +7,7 @@ WorldInfo {
 
 NavigationInfo {
 	#type ["WALK"]
-	headlight FALSE
+	headlight TRUE
 }
 
 Viewpoint {
