@@ -1,5 +1,13 @@
 #VRML V2.0 utf8
 
+Switch {
+	choice [
+		DEF	Bell Inline	{
+			url	["bell.wrl"]
+		}
+	]
+}
+
 Inline {
 	url	["lightroom.wrl"]
 }
@@ -11,4 +19,18 @@ Transform {
 		}
 	]
 	scale 1.5 1 1.5
+}
+
+Transform {
+	children [
+		USE	Bell
+	]
+	translation	1.7871 0 -1.7871
+}
+
+Transform {
+	children [
+		USE	Bell
+	]
+	translation	-1.7871 0 1.7871
 }
