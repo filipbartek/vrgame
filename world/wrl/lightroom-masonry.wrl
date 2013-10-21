@@ -3,6 +3,14 @@
 # Height: 1.80975
 # Diameter (smaller): 4.1148
 
+# Opening width: 0.4
+# Source: picture on:
+# http://www.bellrock.org.uk/lighthouse/lighthouse_courses.htm
+
+# Wall thickness: 0.381
+# Source: http://www.bellrock.org.uk/lighthouse/lighthouse_courses.htm
+# Thickness - 1 ft 3 in
+
 Shape {
 	appearance Appearance {
 		material Material {
@@ -11,35 +19,43 @@ Shape {
 	}
 	geometry Extrusion {
 
-		# regular octagon
-		# diameter (side to side): 2
+		# Outer circle: regular octagon
+		# Diameter: 4.1148
+		# Source: http://www.bellrock.org.uk/lighthouse/lighthouse_courses.htm
+		# "Diameter - 13 ft 6 in"
+		# radius = diameter / 2 = 2.0574
+		# side = diameter / (1 + 2 * sqrt(1/2)) = 1.7044
+		# side / 2 = 0.8522
+		# opening half-width: 0.2 (guess from picture)
+		# wall thickness: 0.381
+		# inner width = radius - wall thickness = 1.6764
 		crossSection [
 			# outer circle
-			 1.0000 -0.4142,
-			 0.4142 -1.0000,
-			-0.4142 -1.0000,
-			-1.0000 -0.4142,
-			-1.0000  0.4142,
-			-0.4142  1.0000,
-			 0.4142  1.0000,
-			 1.0000  0.4142,
+			 2.0574 -0.8522,
+			 0.8522 -2.0574,
+			-0.8522 -2.0574,
+			-2.0574 -0.8522,
+			-2.0574  0.8522,
+			-0.8522  2.0574,
+			 0.8522  2.0574,
+			 2.0574  0.8522,
 			# go in
-			 1.0000  0.1000,
-			 0.9000  0.1000,
+			 2.0574  0.2000,
+			 1.6764  0.2000,
 			# inner circle
-			 0.9000  0.4142,
-			 0.4142  0.9000,
-			-0.4142  0.9000,
-			-0.9000  0.4142,
-			-0.9000 -0.4142,
-			-0.4142 -0.9000,
-			 0.4142 -0.9000,
-			 0.9000 -0.4142
+			 1.6764  0.8522,
+			 0.8522  1.6764,
+			-0.8522  1.6764,
+			-1.6764  0.8522,
+			-1.6764 -0.8522,
+			-0.8522 -1.6764,
+			 0.8522 -1.6764,
+			 1.6764 -0.8522
 			# go out
-			 0.9000 -0.1000
-			 1.0000 -0.1000
+			 1.6764 -0.2000
+			 2.0574 -0.2000
 			# finish
-			 1.0000 -0.4142
+			 2.0574 -0.8522
 		]
 
 		# http://www.bellrock.org.uk/lighthouse/lighthouse_courses.htm
@@ -49,16 +65,9 @@ Shape {
 			0 1.80975 0
 		]
 
-		# http://www.bellrock.org.uk/lighthouse/lighthouse_courses.htm
-		# Course 86
-		# Diameter - 13 ft 6 in
-		# diameter (side to side): 4.1148 = 2.0574 * 2
-		scale 2.0574 2.0574
-
 		beginCap FALSE
 
-		# 45 degrees
-		creaseAngle	0.79
+		creaseAngle	0.7
 
 	}
 }

@@ -3,7 +3,8 @@
 # window height: 2.03835
 # window height / 2: 1.019175
 
-# cage height: window height * 2 = 4.0767
+# cage width: 3.7338 (calculated below from lightroom masonry dimensions)
+# cage height = window height * scale = 2.03835 * 2.2493 = 4.5849
 
 Switch {
 	choice [
@@ -84,5 +85,7 @@ Transform {
 			translation	0 1.019175 0
 		}
 	]
-	scale 2 2 2
+	# desired widht = masonry widht - masonry thickness = 4.1148 - 0.381 = 3.7338
+	# scale = desired width / actual width = 3.7338 / (0.83 * 2) = 2.2493
+	scale 2.2493 2.2493 2.2493
 }
