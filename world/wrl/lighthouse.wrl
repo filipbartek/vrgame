@@ -23,7 +23,7 @@ Transform {
 		Transform {
 			children [
 				Inline {
-					url	["barrier.wrl"]
+					url	["../blend/barrier.wrl"]
 				}
 			]
 			scale 1.5 1 1.5
