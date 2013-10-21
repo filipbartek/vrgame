@@ -5,7 +5,7 @@
 Switch {
 	choice [
 		DEF	Chandelier Inline {
-			url	["chandelier.wrl"]
+			url	["lightroom-chandelier.wrl"]
 		}
 		DEF	Cage Inline	{
 			url	["lightroom-cage.wrl"]
