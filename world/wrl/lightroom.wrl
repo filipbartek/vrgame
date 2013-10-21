@@ -39,7 +39,7 @@ Transform {
 			translation	0 4.0767 0
 		}
 		Inline	{
-			url	["../blend/barrier.wrl"]
+			url	["barrier.wrl"]
 		}
 	]
 	# Masonry height
