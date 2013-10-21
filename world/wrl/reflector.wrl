@@ -1,5 +1,25 @@
 #VRML V2.0 utf8
 
-Inline {
-	url	["blend/exported/reflector.wrl", "blend/placeholder/reflector.wrl"]
+# A reflector that is pointing in the positive direction of Z axis.
+
+Transform {
+	children [
+		Shape {
+			appearance Appearance {
+				material Material {
+					diffuseColor 0.8 0.8 0.8
+				}
+			}
+			geometry Cone {
+				# http://www.bellrock.org.uk/lighthouse/lighthouse_lightroom.htm
+				# parabolic shape of 25 inches in diameter
+				# http://www.bellrock.org.uk/lighthouse/lighthouse_stats.htm
+				# 25-inch (63.5cm)
+				bottomRadius 0.3175
+				height 0.3175
+			}
+		}
+	]
+	rotation 1 0 0 4.71
+	translation	0 0 -0.15875
 }
