@@ -42,7 +42,7 @@ DirectionalLight {
 Transform {
 	children [
 		Inline {
-			url ["lighthouse.wrl"]
+			url ["wrl/lighthouse.wrl"]
 		}
 	]
 	translation	0 -4.7752 0
@@ -51,7 +51,7 @@ Transform {
 Transform {
 	children [
 		Inline {
-			url ["smeaton.wrl"]
+			url ["wrl/smeaton.wrl"]
 		}
 	]
 	translation	-17 -4.7752 0
