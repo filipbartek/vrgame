@@ -14,6 +14,7 @@ Shape {
 		# regular octagon
 		# diameter (side to side): 2
 		crossSection [
+			# outer circle
 			 1.0000 -0.4142,
 			 0.4142 -1.0000,
 			-0.4142 -1.0000,
@@ -22,6 +23,22 @@ Shape {
 			-0.4142  1.0000,
 			 0.4142  1.0000,
 			 1.0000  0.4142,
+			# go in
+			 1.0000  0.1000,
+			 0.9000  0.1000,
+			# inner circle
+			 0.9000  0.4142,
+			 0.4142  0.9000,
+			-0.4142  0.9000,
+			-0.9000  0.4142,
+			-0.9000 -0.4142,
+			-0.4142 -0.9000,
+			 0.4142 -0.9000,
+			 0.9000 -0.4142
+			# go out
+			 0.9000 -0.1000
+			 1.0000 -0.1000
+			# finish
 			 1.0000 -0.4142
 		]
 
@@ -30,24 +47,15 @@ Shape {
 		spine [
 			0 0 0,
 			0 1.80975 0
-			0 1.80975 0
-			0 0 0
 		]
 
 		# http://www.bellrock.org.uk/lighthouse/lighthouse_courses.htm
 		# Course 86
 		# Diameter - 13 ft 6 in
 		# diameter (side to side): 4.1148 = 2.0574 * 2
-		# 1.75: guess of inner diameter based on picture
-		scale [
-			2.0574 2.0574
-			2.0574 2.0574
-			1.75 1.75
-			1.75 1.75
-		]
+		scale 2.0574 2.0574
 
 		beginCap FALSE
-		endCap FALSE
 
 		# 45 degrees
 		creaseAngle	0.79
