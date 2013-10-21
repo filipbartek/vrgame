@@ -49,7 +49,8 @@ Switch {
 			children [
 				USE	Wood
 			]
-			scale 0.6858 1 1
+			# 0.99 to prevent face fitting artifacts
+			scale 0.6858 0.99 0.99
 		}
 		DEF	WoodVertical Transform {
 			children [
