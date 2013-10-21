@@ -16,10 +16,21 @@ Switch {
 		DEF	Roof Inline	{
 			url	["lightroom-roof.wrl"]
 		}
+		DEF	Clock Inline {
+			url	["clock.wrl"]
+		}
 	]
 }
 
 USE	Masonry
+
+Transform {
+	children [
+		USE	Clock
+	]
+	rotation 0 1 0 -0.79
+	translation	-1.1854 1.6 1.1854
+}
 
 Transform {
 	children [

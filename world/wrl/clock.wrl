@@ -1,0 +1,25 @@
+#VRML V2.0 utf8
+
+Switch {
+	choice [
+		DEF	Clock Transform {
+			children [
+				Shape {
+					appearance Appearance {
+						material Material {
+							diffuseColor 0.3 0.4 0.3
+						}
+					}
+					geometry Box {
+						size 1 1 1
+					}
+				}
+			]
+			scale 0.2 0.3 0.1
+			#rotation 0 0 1 1.57
+			translation	0 0 0.05
+		}
+	]
+}
+
+USE	Clock
