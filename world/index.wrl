@@ -51,7 +51,7 @@ Transform {
 Transform {
 	children [
 		Inline {
-			url ["wrl/smeaton.wrl"]
+			url ["blend/smeaton.wrl"]
 		}
 	]
 	translation	-17 -4.7752 0
