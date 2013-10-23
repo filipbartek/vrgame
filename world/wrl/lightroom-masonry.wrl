@@ -72,6 +72,23 @@ Transform {
 				creaseAngle	0.7
 			}
 		}
+		Transform {
+			children [
+				Viewpoint {
+					description	"Lightroom"
+					position 0 0 0
+					jump FALSE
+				}
+				Viewpoint {
+					description	"Lightroom floor"
+					position 0 0 0
+					orientation	1 0 0 -0.52
+					jump FALSE
+				}
+			]
+			rotation 0 1 0 1.57
+			translation	2.0574 1.6 0
+		}
 	]
 	# Exit faces south-west
 	# Source: picture at http://www.bellrock.org.uk/lighthouse/lighthouse_courses.htm

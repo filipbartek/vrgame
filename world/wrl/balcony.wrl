@@ -1,5 +1,27 @@
 #VRML V2.0 utf8
 
+Transform {
+	children [
+		Transform {
+			children [
+				Transform {
+					children [
+						Viewpoint {
+							description	"Balcony (perspective)"
+							position 0 0 15
+							jump FALSE
+						}
+					]
+					# pi / 32 ~ 0.10
+					rotation 1 0 0 -0.10
+				}
+			]
+			rotation 0 1 0 -1.05
+		}
+	]
+	translation	0 4.1022 0
+}
+
 Switch {
 	choice [
 		DEF	Bell Inline	{
@@ -41,4 +63,12 @@ Transform {
 		USE	Bell
 	]
 	translation	0 0 -2.5273
+}
+
+Viewpoint {
+	description	"Balcony (ortogonal)"
+	orientation	0 1 0 1.57
+	position 1000 4.1022 0
+	fieldOfView	0.012
+	jump FALSE
 }
