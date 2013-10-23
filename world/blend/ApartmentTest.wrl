@@ -25,6 +25,15 @@ Transform {
 				}
 			]
 		}
+
+		Transform {
+			children [
+				Inline {
+					url	["balconyPlatform.wrl"]
+				}
+			]
+			translation	0 3 0
+		}
 		]	  		
 }
 
