@@ -14,17 +14,20 @@ NavigationInfo {
 
 Viewpoint {
 	description	"Default"
+	jump FALSE
 }
 
 Viewpoint {
 	description	"Lightroom"
 	position 0 29.7942 0
+	jump FALSE
 }
 
 Viewpoint {
 	description	"Overview"
 	orientation	0 1 0 0.79
 	position 20 29.7942 20
+	jump FALSE
 }
 
 # Night
