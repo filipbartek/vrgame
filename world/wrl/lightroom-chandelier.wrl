@@ -135,6 +135,18 @@ Switch {
 			]
 		}
 
+		DEF	RedPane Shape	{
+			appearance Appearance {
+				material Material {
+					diffuseColor 1 0 0
+					transparency 0.5
+				}
+			}
+			geometry Box {
+				size 1 1 0.00635
+			}
+		}
+
 		DEF	Side5 Group {
 			children [
 				Transform {
@@ -151,6 +163,13 @@ Switch {
 					translation	0 0.64 0
 				}
 				USE	LightRed
+				Transform {
+					children [
+						USE	RedPane
+					]
+					scale 1 2 1
+					translation	0 0 0.4175
+				}
 			]
 		}
 
