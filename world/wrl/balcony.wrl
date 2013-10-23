@@ -43,6 +43,31 @@ Transform {
 	translation	0 0 -2.5273
 }
 
+Transform {
+	children [
+		Transform {
+			children [
+				Transform {
+					children [
+						Viewpoint {
+							description	"Balcony (perspective)"
+							#orientation	0 1 0 -0.52
+							#position -7.5 4.1022 15
+							position 0 0 15
+							jump FALSE
+						}
+					]
+					rotation 1 0 0 -0.39
+				}
+			]
+			rotation 0 1 0 -1.05
+		}
+	]
+	translation	0 4.1022 0
+}
+
+
+
 Viewpoint {
 	description	"Balcony (ortogonal)"
 	orientation	0 1 0 1.57
