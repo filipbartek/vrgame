@@ -10,14 +10,14 @@ Transform {
 			Transform {
 				children 
 			Inline {
-				url	["apartment.wrl"]
+				url	["../blend/apartment.wrl"]
 			}				   
 		} 
 		# there is no need to translate or manipulate with stairs
 		Transform {
 			children [
 				Inline {
-					url	["stair.wrl"]
+					url	["../blend/stair.wrl"]
 				}
 			]
 		}
@@ -25,7 +25,7 @@ Transform {
 		Transform {
 			children [
 				Inline {
-					url	["balconyPlatform.wrl"]
+					url	["../blend/balconyPlatform.wrl"]
 				}
 			]
 			# Translastion of the balcony platform
