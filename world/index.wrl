@@ -12,22 +12,27 @@ NavigationInfo {
 	avatarSize [0.1, 1.6, 0.75]
 }
 
-Viewpoint {
-	description	"Default"
-	jump FALSE
-}
-
-Viewpoint {
-	description	"Lightroom"
-	position 0 29.7942 0
-	jump FALSE
-}
-
-Viewpoint {
-	description	"Overview"
-	orientation	0 1 0 0.79
-	position 20 29.7942 20
-	jump FALSE
+Transform {
+	children [
+		Transform {
+			children [
+				Transform {
+					children [
+						Viewpoint {
+							description	"Lighthouse"
+							#position 0 0 70
+							jump FALSE
+						}
+					]
+					# pi / 32 ~ 0.10
+					rotation 1 0 0 0.20
+					translation	0 0 100
+				}
+			]
+			rotation 0 1 0 -1.05
+		}
+	]
+	translation	0 0 0
 }
 
 # Night
@@ -51,4 +56,11 @@ Transform {
 		}
 	]
 	translation	0 -4.7752 0
+}
+
+Viewpoint {
+	description	"Overview"
+	orientation	0 1 0 0.79
+	position 20 29.7942 20
+	jump FALSE
 }
