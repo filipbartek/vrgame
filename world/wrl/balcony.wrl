@@ -21,16 +21,24 @@ Transform {
 	scale 1.5 1 1.5
 }
 
+# Bells positioned according to a picture on:
+# http://www.bellrock.org.uk/lighthouse/lighthouse_courses.htm
+# balcony diameter = 2.9972
+# lightroom masonry outer diameter = 2.0574
+# bell distance from center = (balcony diameter + masonry diameter) / 2 = 2.5273
+
+# Southern bell
 Transform {
 	children [
 		USE	Bell
 	]
-	translation	1.7871 0 -1.7871
+	translation	0 0 2.5273
 }
 
+# Northern bell
 Transform {
 	children [
 		USE	Bell
 	]
-	translation	-1.7871 0 1.7871
+	translation	0 0 -2.5273
 }

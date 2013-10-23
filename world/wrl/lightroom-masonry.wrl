@@ -11,63 +11,69 @@
 # Source: http://www.bellrock.org.uk/lighthouse/lighthouse_courses.htm
 # Thickness - 1 ft 3 in
 
-Shape {
-	appearance Appearance {
-		material Material {
-			diffuseColor 1 1 1
+Transform {
+	children [
+		Shape {
+			appearance Appearance {
+				material Material {
+					diffuseColor 1 1 1
+				}
+			}
+			geometry Extrusion {
+
+				# Outer circle: regular octagon
+				# Diameter: 4.1148
+				# Source: http://www.bellrock.org.uk/lighthouse/lighthouse_courses.htm
+				# "Diameter - 13 ft 6 in"
+				# radius = diameter / 2 = 2.0574
+				# side = diameter / (1 + 2 * sqrt(1/2)) = 1.7044
+				# side / 2 = 0.8522
+				# opening half-width: 0.2 (guess from picture)
+				# wall thickness: 0.381
+				# inner width = radius - wall thickness = 1.6764
+				crossSection [
+					# outer circle
+					 2.0574 -0.8522,
+					 0.8522 -2.0574,
+					-0.8522 -2.0574,
+					-2.0574 -0.8522,
+					-2.0574  0.8522,
+					-0.8522  2.0574,
+					 0.8522  2.0574,
+					 2.0574  0.8522,
+					# go in
+					 2.0574  0.2000,
+					 1.6764  0.2000,
+					# inner circle
+					 1.6764  0.8522,
+					 0.8522  1.6764,
+					-0.8522  1.6764,
+					-1.6764  0.8522,
+					-1.6764 -0.8522,
+					-0.8522 -1.6764,
+					 0.8522 -1.6764,
+					 1.6764 -0.8522
+					# go out
+					 1.6764 -0.2000
+					 2.0574 -0.2000
+					# finish
+					 2.0574 -0.8522
+				]
+
+				# http://www.bellrock.org.uk/lighthouse/lighthouse_courses.htm
+				# course 86 to course 91: 1.80975 (extension from course 90 information)
+				spine [
+					0 0 0,
+					0 1.80975 0
+				]
+
+				beginCap FALSE
+
+				creaseAngle	0.7
+			}
 		}
-	}
-	geometry Extrusion {
-
-		# Outer circle: regular octagon
-		# Diameter: 4.1148
-		# Source: http://www.bellrock.org.uk/lighthouse/lighthouse_courses.htm
-		# "Diameter - 13 ft 6 in"
-		# radius = diameter / 2 = 2.0574
-		# side = diameter / (1 + 2 * sqrt(1/2)) = 1.7044
-		# side / 2 = 0.8522
-		# opening half-width: 0.2 (guess from picture)
-		# wall thickness: 0.381
-		# inner width = radius - wall thickness = 1.6764
-		crossSection [
-			# outer circle
-			 2.0574 -0.8522,
-			 0.8522 -2.0574,
-			-0.8522 -2.0574,
-			-2.0574 -0.8522,
-			-2.0574  0.8522,
-			-0.8522  2.0574,
-			 0.8522  2.0574,
-			 2.0574  0.8522,
-			# go in
-			 2.0574  0.2000,
-			 1.6764  0.2000,
-			# inner circle
-			 1.6764  0.8522,
-			 0.8522  1.6764,
-			-0.8522  1.6764,
-			-1.6764  0.8522,
-			-1.6764 -0.8522,
-			-0.8522 -1.6764,
-			 0.8522 -1.6764,
-			 1.6764 -0.8522
-			# go out
-			 1.6764 -0.2000
-			 2.0574 -0.2000
-			# finish
-			 2.0574 -0.8522
-		]
-
-		# http://www.bellrock.org.uk/lighthouse/lighthouse_courses.htm
-		# course 86 to course 91: 1.80975 (extension from course 90 information)
-		spine [
-			0 0 0,
-			0 1.80975 0
-		]
-
-		beginCap FALSE
-
-		creaseAngle	0.7
-
-	}
+	]
+	# Exit faces south-west
+	# Source: picture at http://www.bellrock.org.uk/lighthouse/lighthouse_courses.htm
+	rotation 0 1 0 -2.36
 }

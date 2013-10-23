@@ -31,15 +31,19 @@ Transform {
 	children [
 		USE	Clock
 	]
-	rotation 0 1 0 -0.79
-	translation	-1.1854 1.6 1.1854
+	translation	0 1.6 -1.6764
 }
 
 Transform {
 	children [
-		USE	Winding
+		Transform {
+			children [
+				USE	Winding
+			]
+			translation	-0.2 1.6 0
+		}
 	]
-	translation	0.2 1.6 0
+	rotation 0 1 0 0.52
 }
 
 Transform {
