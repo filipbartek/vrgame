@@ -2,42 +2,34 @@
 
 Viewpoint {
 	description	"Inside"
-	position 0 0 0
+	position 0 2 0
 }
 
 NavigationInfo {
-	avatarSize  [ 0.25, 1.6, 0.75 ]
+	avatarSize  [ 0.2, 1.6, 1.75 ]
 }
 
 Transform {
 		children [
+			Transform {
+				children 
 			Inline {
 				url	["stair.wrl"]
+			}
+			translation	0 1 0
+			scale 1 0.5 1
+
 			}
 			Transform {
 				children [
 					Inline {
 				url	["floor.wrl"]
 			}
-					]
-					scale 2 2 1
+					]		     
 			}
 			
 		]			
 }
-Transform {
-	translation	0 -1 0
-	children  [Shape {
-	geometry Box {
-		size 20 1 15
-	}
-	appearance Appearance {
-		material Material {
-			
-			diffuseColor 1 1 0
-		}
-	}		
-}
-]
-}
+
+
 
