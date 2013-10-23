@@ -17,18 +17,25 @@ Transform {
 			Inline {
 				url	["circled.wrl"]
 			}
-			scale 3 4 3
+			scale 3 5 3
 
 		}
 		Transform {
-			children[
-				Inline {
-				url	["Entry.wrl"]
+				children[
+					Inline {
+						url	["Entry.wrl"]
+					}
+					]
+			translation	-5 0 0
 			}
-		]
-		translation	-5 0 0
+		Transform {
+			children [
+				Inline {
+					url	["innerStair.wrl"]
+				}
+			]
 		}
-		]			  		
+		]	  		
 }
 
 
