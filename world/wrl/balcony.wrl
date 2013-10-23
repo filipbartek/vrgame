@@ -57,7 +57,8 @@ Transform {
 							jump FALSE
 						}
 					]
-					rotation 1 0 0 -0.39
+					# pi / 32 ~ 0.10
+					rotation 1 0 0 -0.10
 				}
 			]
 			rotation 0 1 0 -1.05
