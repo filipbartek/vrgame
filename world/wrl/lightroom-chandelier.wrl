@@ -107,7 +107,7 @@ Switch {
 					rotation 1 0 0 4.71
 				}
 			]
-			scale 10 10 50
+			scale 5 5 50
 		}
 
 		DEF	LightRed Group {
