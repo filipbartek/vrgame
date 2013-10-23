@@ -135,6 +135,8 @@ Switch {
 			]
 		}
 
+		# http://www.bellrock.org.uk/lighthouse/lighthouse_lightroom.htm
+		# "panes of red-coloured glass were placed in front of each of the reflectors on the minor sides"
 		DEF	RedPane Shape	{
 			appearance Appearance {
 				material Material {
