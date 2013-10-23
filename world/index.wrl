@@ -16,23 +16,28 @@ Transform {
 	children [
 		Transform {
 			children [
-				Transform {
-					children [
-						Viewpoint {
-							description	"Lighthouse"
-							#position 0 0 70
-							jump FALSE
-						}
-					]
-					# pi / 32 ~ 0.10
-					rotation 1 0 0 0.20
-					translation	0 0 100
+				Viewpoint {
+					description	"Far"
+					jump FALSE
 				}
 			]
-			rotation 0 1 0 -1.05
+			# pi / 32 ~ 0.10
+			rotation 1 0 0 0.20
+			translation	0 0 100
+		}
+		Transform {
+			children [
+				Viewpoint {
+					description	"Near"
+					jump FALSE
+				}
+			]
+			# pi / 3 ~ 1.05
+			rotation 1 0 0 1.05
+			translation	0 0 10
 		}
 	]
-	translation	0 0 0
+	rotation 0 1 0 -1.05
 }
 
 # Night
