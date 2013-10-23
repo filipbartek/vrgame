@@ -7,6 +7,15 @@ Inline {
 Transform {
 	children [
 		Inline {
+			url	["apartment.wrl"]
+		}
+	]
+	translation	0 29.7942 0
+}
+
+Transform {
+	children [
+		Inline {
 			url	["balcony.wrl"]
 		}
 	]
