@@ -56,7 +56,7 @@ Shape {
 Transform {
 	children [
 		Inline {
-			url	["apartmentTest.wrl"]
+			url	["apartment.wrl"]
 		}
 	]
 	translation	0 29.7942 0
