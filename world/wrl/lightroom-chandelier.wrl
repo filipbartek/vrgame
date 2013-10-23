@@ -79,7 +79,7 @@ Switch {
 		DEF	LightCone Group	{
 			children [
 				USE	LightConeSimple
-				USE	LightConeLight
+				#USE	LightConeLight
 			]
 		}
 
