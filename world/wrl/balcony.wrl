@@ -8,8 +8,6 @@ Transform {
 					children [
 						Viewpoint {
 							description	"Balcony (perspective)"
-							#orientation	0 1 0 -0.52
-							#position -7.5 4.1022 15
 							position 0 0 15
 							jump FALSE
 						}
