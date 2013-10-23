@@ -67,8 +67,6 @@ Transform {
 	translation	0 4.1022 0
 }
 
-
-
 Viewpoint {
 	description	"Balcony (ortogonal)"
 	orientation	0 1 0 1.57
