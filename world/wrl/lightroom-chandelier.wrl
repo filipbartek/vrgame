@@ -7,6 +7,25 @@ Switch {
 			url	["reflector.wrl"]
 		}
 
+		DEF	Rod Shape {
+			appearance Appearance {
+				material Material {
+					diffuseColor 0.0 0.1 0.2
+				}
+			}
+			geometry Cylinder {
+				height 1
+				radius 0.02
+			}
+		}
+
+		DEF	RodHorizontal Transform	{
+			children [
+				USE	Rod
+			]
+			rotation 0 0 1 1.57
+		}
+
 		DEF	Line2 Group {
 			children [
 				Transform {
@@ -21,6 +40,12 @@ Switch {
 					]
 					translation	0.3175 0 0
 				}
+				Transform {
+					children [
+						USE	RodHorizontal
+					]
+					scale 0.6350 1 1
+				}
 			]
 		}
 
@@ -30,14 +55,20 @@ Switch {
 					children [
 						USE	Reflector
 					]
-					translation	-0.635 0 0
+					translation	-0.6350 0 0
 				}
 				USE	Reflector
 				Transform {
 					children [
 						USE	Reflector
 					]
-					translation	0.635 0 0
+					translation	0.6350 0 0
+				}
+				Transform {
+					children [
+						USE	RodHorizontal
+					]
+					scale 1.2700 1 1
 				}
 			]
 		}
