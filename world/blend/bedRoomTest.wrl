@@ -10,7 +10,20 @@ NavigationInfo {
 	type ["EXAMINE", "ANY"]
 }
 
-Transform
+DEF Bed Transform {
+				children [
+					Inline	{
+					url	["bed.wrl"]
+				}
+			]
+				translation	-0.7 0 0
+			}
+			
+DEF Stair Inline
+	{
+		url	["stair.wrl"]
+	}
+
 Transform {
 		children [
 			Transform {
@@ -21,19 +34,21 @@ Transform {
 				]
 					   
 		}
-			Transform {
-				children [
-					Inline	{
-					url	["bed.wrl"]
-				}
-			]
-				translation	-0.8 0 0
-			}
-
-				Inline
-				{
-					url	["stair.wrl"]
-				}
+		Transform
+		{
+			children [
+			USE	Bed
+		]
+		translation	0 0 0.3
+	}
+	Transform
+		{
+			children [
+			USE	Bed
+		]
+		translation	0 0 -0.3
+	}
+		USE	Stair
 	]
 }
 
