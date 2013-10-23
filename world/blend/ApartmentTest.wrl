@@ -1,0 +1,30 @@
+#VRML V2.0 utf8
+
+Viewpoint {
+	description	"Inside"
+	position 0 0 0 
+}
+
+NavigationInfo {
+	avatarSize  [ 0.2, 1.6, 1.75 ]
+	type ["EXAMINE", "ANY"]
+}
+
+Transform {
+		children [
+			Transform {
+				children 
+			Inline {
+				url	["apartment.wrl"]
+			}				   
+		} 
+		Transform {
+			children [
+				Inline {
+					url	["stair.wrl"]
+				}
+			]
+		}
+		]	  		
+}
+
