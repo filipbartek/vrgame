@@ -2,32 +2,23 @@
 
 Transform {
 		children [
-			Transform {
-				children 
 			Inline {
 				url	["../blend/apartment.wrl"]
-			}				   
-		} 
-		# there is no need to translate or manipulate with stairs
-		Transform {
-			children [
-				Inline {
-					url	["../blend/stair.wrl"]
-				}
-			]
-		}
-
-		Transform {
-			children [
-				Inline {
-					url	["../blend/balconyPlatform.wrl"]
-				}
-			]
-			# Translastion of the balcony platform
-			translation	0 2.9 0
-		}
-		]	  	
+			}
+			# there is no need to translate or manipulate with stairs
+			Inline {
+				url	["../blend/stair.wrl"]
+			}
+			Transform {
+				children [
+					Inline {
+						url	["../blend/balconyPlatform.wrl"]
+					}
+				]
+				# Translastion of the balcony platform
+				translation	0 2.9 0
+			}
+		]
 	#all is moved  "down" so that the ceiling is at "0"
-		translation	0 -2.9 0
+	translation	0 -2.9 0
 }
-
