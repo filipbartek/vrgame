@@ -22,14 +22,6 @@ Transform {
 	translation	0 4.1022 0
 }
 
-Viewpoint {
-	description	"Balcony (ortogonal)"
-	orientation	0 1 0 1.57
-	position 1000 4.1022 0
-	fieldOfView	0.012
-	jump FALSE
-}
-
 Switch {
 	choice [
 		DEF	Bell Inline	{
@@ -71,4 +63,12 @@ Transform {
 		USE	Bell
 	]
 	translation	0 0 -2.5273
+}
+
+Viewpoint {
+	description	"Balcony (ortogonal)"
+	orientation	0 1 0 1.57
+	position 1000 4.1022 0
+	fieldOfView	0.012
+	jump FALSE
 }
