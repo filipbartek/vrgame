@@ -83,6 +83,39 @@ Switch {
 			]
 		}
 
+		DEF	LightRedCone Transform	{
+			children [
+				Transform	{
+					children [
+						Transform {
+							children [
+								Shape {
+									appearance Appearance {
+										material Material {
+											diffuseColor 1 0 0
+											transparency 0.5
+										}
+									}
+									geometry Cone {
+										bottom FALSE
+									}
+								}
+							]
+							translation	0 -1 0
+						}
+					]
+					rotation 1 0 0 4.71
+				}
+			]
+			scale 10 10 50
+		}
+
+		DEF	LightRed Group {
+			children [
+				USE	LightRedCone
+			]
+		}
+
 		DEF	Side7 Group {
 			children [
 				Transform {
@@ -117,6 +150,7 @@ Switch {
 					]
 					translation	0 0.64 0
 				}
+				USE	LightRed
 			]
 		}
 
