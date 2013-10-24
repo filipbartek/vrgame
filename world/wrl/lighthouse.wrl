@@ -13,6 +13,9 @@ Transform {
 		Inline {
 			url	["balcony.wrl"]
 		}
+		Inline {
+			url	["apartment.wrl"]
+		}
 	]
 	# Lighthouse height
 	translation	0 29.7942 0

@@ -12,7 +12,7 @@ Transform {
 				Transform {
 					children [
 						Viewpoint {
-							description	"Balcony (perspective)"
+							description	"Balcony"
 							position 0 0 15
 							jump FALSE
 						}
@@ -45,7 +45,7 @@ Transform {
 			url	["barrier.wrl"]
 		}
 	]
-	scale 1.5 1 1.5
+	scale 1.5 1.5 1.5
 }
 
 # Bells positioned according to a picture on:
@@ -68,12 +68,4 @@ Transform {
 		USE	Bell
 	]
 	translation	0 0 -2.5273
-}
-
-Viewpoint {
-	description	"Balcony (ortogonal)"
-	orientation	0 1 0 1.57
-	position 1000 4.1022 0
-	fieldOfView	0.012
-	jump FALSE
 }
