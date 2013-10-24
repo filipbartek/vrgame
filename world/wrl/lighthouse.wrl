@@ -14,7 +14,7 @@ Transform {
 			url	["balcony.wrl"]
 		}
 		Inline {
-			url	["apartment.wrl"]
+			url["bedroom.wrl"]
 		}
 	]
 	# Lighthouse height

@@ -56,12 +56,3 @@ Shape {
 		creaseAngle	0.79
 	}
 }
-
-Transform {
-	children [
-		Inline {
-			url["bedroom.wrl"]
-		}
-	]
-	translation	0 29.7942 0
-}
