@@ -1,6 +1,9 @@
 #VRML V2.0 utf8
 
-
+WorldInfo {
+	title "Lighthouse Body"
+	info ["Filip Bártek", "Eva Pešková"]
+}
 Shape {
 	appearance Appearance {
 		material Material {
@@ -56,7 +59,7 @@ Shape {
 Transform {
 	children [
 		Inline {
-			url	["..\blend\apartmentTest.wrl"]
+			url	["..\blend\bedroom.wrl"]
 		}
 	]
 	translation	0 29.7942 0

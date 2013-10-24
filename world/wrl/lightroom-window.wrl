@@ -1,5 +1,10 @@
 #VRML V2.0 utf8
 
+WorldInfo {
+	title "Lighthouse window"
+	info ["Filip Bártek", "Eva Pešková"]
+}
+
 # panel width = 0.3429
 # panel height = 0.67945
 # panel width / 2 = 0.3429 / 2 = 0.17145

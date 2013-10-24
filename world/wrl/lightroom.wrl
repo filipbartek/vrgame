@@ -1,5 +1,10 @@
 #VRML V2.0 utf8
 
+WorldInfo {
+	title "Light Room"
+	info ["Filip Bártek", "Eva Pešková"]
+}
+
 # http://www.bellrock.org.uk/lighthouse/lighthouse_lightroom.htm
 
 Switch {
