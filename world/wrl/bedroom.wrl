@@ -10,7 +10,7 @@ Switch {
 		DEF Bed Transform {
 				children [
 					Inline	{
-					url	["bed.wrl"]
+					url	["../blend/bed.wrl"]
 				}
 			]
 			translation	-0.7 0 0
@@ -24,7 +24,7 @@ Switch {
 		DEF	LadyBug Transform {
 			children [
 				Inline {
-					url	["ladybug.wrl"]
+					url	["../blend/ladybug.wrl"]
 				}
 			]
 			scale 0.01 0.01 0.01 
@@ -32,12 +32,12 @@ Switch {
 
 		DEF	Shelf Transform {
 			children Inline {
-				url	["library.wrl"]
+				url	["../blend/library.wrl"]
 			}
 		}
 		DEF	Glass Transform	{
 			children  Inline {
-				url	["glass.wrl"]
+				url	["../blend/glass.wrl"]
 			}
 			translation	0 0.1 0
 			scale 0.07 0.07 0.07
@@ -50,7 +50,7 @@ Transform {
 			Transform {
 				children		[
 					Inline {
-						url	["apartment.wrl"]
+						url	["../blend/apartment.wrl"]
 					}
 				] 	   
 		}
@@ -110,7 +110,7 @@ Transform {
 		Transform {
 			children [
 				Inline {
-					url	["balconyPlatform.wrl"]
+					url	["../blend/balconyPlatform.wrl"]
 				}
 			]
 			# Translastion of the balcony platform

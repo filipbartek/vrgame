@@ -60,7 +60,7 @@ Shape {
 Transform {
 	children [
 		Inline {
-			url	["..\blend\bedroom.wrl"]
+			url["bedroom.wrl"]
 		}
 	]
 	translation	0 29.7942 0
