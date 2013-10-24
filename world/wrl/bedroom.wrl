@@ -17,7 +17,7 @@ Switch {
 		}
 			
 		DEF Stair Inline {
-			url	["stair.wrl"]
+			url	["../blend/stair.wrl"]
 		}
 		DEF	LadyBug Transform {
 			children [
