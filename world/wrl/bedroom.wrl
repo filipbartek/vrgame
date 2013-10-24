@@ -2,7 +2,7 @@
 
 WorldInfo {
 	title "Bedroom content"
-	info ["Filip Bártek", "Eva Pešková"]
+	info ["Eva Pešková"]
 }
 
 Switch {
