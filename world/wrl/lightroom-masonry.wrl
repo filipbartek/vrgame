@@ -79,6 +79,12 @@ Transform {
 					position 0 0 0
 					jump FALSE
 				}
+			]
+			rotation 0 1 0 1.57
+			translation	2.0574 1.6 0
+		}
+		Transform {
+			children [
 				Viewpoint {
 					description	"Lightroom floor"
 					position 0 0 0
@@ -87,7 +93,7 @@ Transform {
 				}
 			]
 			rotation 0 1 0 1.57
-			translation	2.0574 1.6 0
+			translation	1.8 1.6 0
 		}
 	]
 	# Exit faces south-west
