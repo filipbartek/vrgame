@@ -4,6 +4,7 @@ WorldInfo {
 	title "Barrier"
 	info ["Filip Bártek", "Eva Pešková"]
 }
+
 Inline {
 	url	["../blend/barrier.wrl"]
 }

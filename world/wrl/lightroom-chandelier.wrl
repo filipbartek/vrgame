@@ -2,8 +2,9 @@
 
 WorldInfo {
 	title "Chandelier"
-	info ["Filip Bártek", "Eva Pešková"]
+	info ["Filip Bártek"]
 }
+
 Switch {
 	choice [
 
