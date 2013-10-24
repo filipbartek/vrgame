@@ -1,5 +1,10 @@
 #VRML V2.0 utf8
 
+WorldInfo {
+	title "Sea"
+	info ["Filip Bártek", "Eva Pešková"]
+}
+
 Transform {
 	children [
 		Transform {

@@ -1,27 +1,112 @@
 #VRML V2.0 utf8
 
-NavigationInfo {
-	avatarSize  [ 0.2, 1.6, 1.75 ]
-	type ["EXAMINE", "ANY"]
+WorldInfo {
+	title "Bedroom content"
+	info ["Filip Bártek", "Eva Pešková"]
+}
+
+Switch {
+	choice [
+		DEF Bed Transform {
+				children [
+					Inline	{
+					url	["bed.wrl"]
+				}
+			]
+			translation	-0.7 0 0
+		}
+			
+		DEF Stair Inline
+		{
+			url	["stair.wrl"]
+		}
+
+		DEF	LadyBug Transform {
+			children [
+				Inline {
+					url	["ladybug.wrl"]
+				}
+			]
+			scale 0.01 0.01 0.01 
+		}
+
+		DEF	Shelf Transform {
+			children Inline {
+				url	["library.wrl"]
+			}
+		}
+		DEF	Glass Transform	{
+			children  Inline {
+				url	["glass.wrl"]
+			}
+			translation	0 0.1 0
+			scale 0.07 0.07 0.07
+		}
+	]
 }
 
 Transform {
 		children [
 			Transform {
-				children 
-			Inline {
-				url	["apartment.wrl"]
-			}				   
-		} 
-		# there is no need to translate or manipulate with stairs
-		Transform {
+				children		[
+					Inline {
+						url	["apartment.wrl"]
+					}
+				] 	   
+		}
+		Transform
+		{
 			children [
-				Inline {
-					url	["stair.wrl"]
+			USE	Bed
+			]
+			translation	0 0 0.3
+		}
+		Transform {
+			children [ USE LadyBug ]
+			translation	0 0.58 0
+		}
+		Transform
+			{
+				children [
+				USE	Bed
+			]
+			translation	0 0 -0.3
+		}
+		Transform {
+			children [ 
+				USE Shelf
+			   Transform {
+				   children	USE	LadyBug
+				   translation 1.0 0.5 -1.0
+				   
+			   }
+			]
+			translation	0 2 0
+			rotation 0 1 0 1.6
+		}
+		Transform {
+			children [ 
+				USE Shelf
+				Transform {
+					children  [ USE Glass
+						Transform {
+							children [ USE Glass 
+								Transform {
+									children USE Glass
+									translation	0.1 0.12 0.3
+									rotation 0 1 1 2.17
+								}
+							]
+							translation	0.1 0 0.25
+						}
+					] 
+					translation	1 0 0
 				}
 			]
+			translation	0 1.5 0
+			rotation 0 1 0 1.6
 		}
-
+		USE	Stair
 		Transform {
 			children [
 				Inline {
@@ -30,9 +115,9 @@ Transform {
 			]
 			# Translastion of the balcony platform
 			translation	0 2.9 0
-		}
-		]	  	
-	#all is moved  "down" so that the ceiling is at "0"
-		translation	0 -2.9 0
-}
+		}			
 
+	]							
+	#all is moved  "down" so that the ceiling is at "0"
+	translation	0 -2.9 0
+}
