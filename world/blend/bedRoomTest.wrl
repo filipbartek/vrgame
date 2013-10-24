@@ -40,6 +40,13 @@ Switch {
 				url	["library.wrl"]
 			}
 		}
+		DEF	Glass Transform	{
+			children  Inline {
+				url	["glass.wrl"]
+			}
+			translation	0 0.1 0
+			scale 0.07 0.07 0.07
+		}
 	]
 }
 
@@ -80,6 +87,28 @@ Transform {
 			   }
 			]
 			translation	0 2 0
+			rotation 0 1 0 1.6
+		}
+		Transform {
+			children [ 
+				USE Shelf
+				Transform {
+					children  [ USE Glass
+						Transform {
+							children [ USE Glass 
+								Transform {
+									children USE Glass
+									translation	0.1 0.12 0.3
+									rotation 0 1 1 2.17
+								}
+							]
+							translation	0.1 0 0.25
+						}
+					] 
+					translation	1 0 0
+				}
+			]
+			translation	0 1.5 0
 			rotation 0 1 0 1.6
 		}
 		USE	Stair
