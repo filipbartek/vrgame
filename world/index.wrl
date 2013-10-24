@@ -6,7 +6,6 @@ WorldInfo {
 }
 
 NavigationInfo {
-	#type ["WALK"]
 	headlight TRUE
 	# radius, height, foot length (climb height)
 	avatarSize [0.15, 1.6, 0.4]
