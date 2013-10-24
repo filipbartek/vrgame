@@ -1,0 +1,54 @@
+#VRML V2.0 utf8
+
+Viewpoint {
+	description	"InsideBedroom"
+	position 0 0 0 
+}
+
+NavigationInfo {
+	avatarSize  [ 0.2, 1.6, 1.75 ]
+	type ["EXAMINE", "ANY"]
+}
+
+DEF Bed Transform {
+				children [
+					Inline	{
+					url	["bed.wrl"]
+				}
+			]
+				translation	-0.7 0 0
+			}
+			
+DEF Stair Inline
+	{
+		url	["stair.wrl"]
+	}
+
+Transform {
+		children [
+			Transform {
+				children		[
+					Inline {
+						url	["apartment.wrl"]
+					}
+				]
+					   
+		}
+		Transform
+		{
+			children [
+			USE	Bed
+		]
+		translation	0 0 0.3
+	}
+	Transform
+		{
+			children [
+			USE	Bed
+		]
+		translation	0 0 -0.3
+	}
+		USE	Stair
+	]
+}
+
