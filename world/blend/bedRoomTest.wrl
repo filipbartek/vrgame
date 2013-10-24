@@ -10,19 +10,38 @@ NavigationInfo {
 	type ["EXAMINE", "ANY"]
 }
 
-DEF Bed Transform {
+Switch {
+	choice [
+		DEF Bed Transform {
 				children [
 					Inline	{
 					url	["bed.wrl"]
 				}
 			]
-				translation	-0.7 0 0
-			}
+			translation	-0.7 0 0
+		}
 			
-DEF Stair Inline
-	{
-		url	["stair.wrl"]
-	}
+		DEF Stair Inline
+		{
+			url	["stair.wrl"]
+		}
+
+		DEF	LadyBug Transform {
+			children [
+				Inline {
+					url	["ladybug.wrl"]
+				}
+			]
+			scale 0.01 0.01 0.01 
+		}
+
+		DEF	Shelf Transform {
+			children Inline {
+				url	["library.wrl"]
+			}
+		}
+	]
+}
 
 Transform {
 		children [
@@ -31,24 +50,38 @@ Transform {
 					Inline {
 						url	["apartment.wrl"]
 					}
-				]
-					   
+				] 	   
 		}
 		Transform
 		{
 			children [
 			USE	Bed
-		]
-		translation	0 0 0.3
-	}
-	Transform
-		{
-			children [
-			USE	Bed
-		]
-		translation	0 0 -0.3
-	}
+			]
+			translation	0 0 0.3
+		}
+		Transform {
+			children [ USE LadyBug ]
+			translation	0 0.58 0
+		}
+		Transform
+			{
+				children [
+				USE	Bed
+			]
+			translation	0 0 -0.3
+		}
+		Transform {
+			children [ 
+				USE Shelf
+			   Transform {
+				   children	USE	LadyBug
+				   translation 1.0 0.5 -1.0
+				   
+			   }
+			]
+			translation	0 2 0
+			rotation 0 1 0 1.6
+		}
 		USE	Stair
 	]
 }
-
