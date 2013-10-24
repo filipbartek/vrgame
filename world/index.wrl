@@ -84,3 +84,17 @@ Viewpoint {
 	fieldOfView	0.012
 	jump TRUE
 }
+
+Viewpoint {
+	description	"Test: FPS 1"
+	orientation	0 1 0 0.79
+	position 20 29.7942 20
+	jump FALSE
+}
+
+Viewpoint {
+	description	"Test: FPS 2"
+	orientation	0 1 0 -0.79
+	position -20 29.7942 20
+	jump FALSE
+}
