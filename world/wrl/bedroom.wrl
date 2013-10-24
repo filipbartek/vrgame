@@ -8,19 +8,17 @@ WorldInfo {
 Switch {
 	choice [
 		DEF Bed Transform {
-				children [
-					Inline	{
+			children [
+				Inline {
 					url	["../blend/bed.wrl"]
 				}
 			]
 			translation	-0.7 0 0
 		}
 			
-		DEF Stair Inline
-		{
+		DEF Stair Inline {
 			url	["stair.wrl"]
 		}
-
 		DEF	LadyBug Transform {
 			children [
 				Inline {
@@ -29,14 +27,13 @@ Switch {
 			]
 			scale 0.01 0.01 0.01 
 		}
-
 		DEF	Shelf Transform {
 			children Inline {
 				url	["../blend/library.wrl"]
 			}
 		}
 		DEF	Glass Transform	{
-			children  Inline {
+			children Inline {
 				url	["../blend/glass.wrl"]
 			}
 			translation	0 0.1 0
@@ -48,38 +45,37 @@ Switch {
 Transform {
 		children [
 			Transform {
-				children		[
+				children	[
 					Inline {
 						url	["../blend/apartment.wrl"]
 					}
-				] 	   
-		}
-		Transform
-		{
+				]
+			}
+		Transform {
 			children [
-			USE	Bed
+				USE	Bed
 			]
 			translation	0 0 0.3
 		}
 		Transform {
-			children [ USE LadyBug ]
+			children [
+				USE LadyBug
+			]
 			translation	0 0.58 0
 		}
-		Transform
-			{
-				children [
+		Transform {
+			children [
 				USE	Bed
 			]
 			translation	0 0 -0.3
 		}
 		Transform {
-			children [ 
+			children [
 				USE Shelf
-			   Transform {
-				   children	USE	LadyBug
-				   translation 1.0 0.5 -1.0
-				   
-			   }
+				Transform {
+					children	USE	LadyBug
+					translation 1.0 0.5 -1.0
+				}
 			]
 			translation	0 2 0
 			rotation 0 1 0 1.6
@@ -115,9 +111,9 @@ Transform {
 			]
 			# Translastion of the balcony platform
 			translation	0 2.9 0
-		}			
+		}
 
-	]							
+	]
 	#all is moved  "down" so that the ceiling is at "0"
 	translation	0 -2.9 0
 }
