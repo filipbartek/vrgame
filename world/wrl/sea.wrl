@@ -1,0 +1,30 @@
+#VRML V2.0 utf8
+
+WorldInfo {
+	title "Sea"
+	info ["Filip Bártek", "Eva Pešková"]
+}
+
+Transform {
+	children [
+		Transform {
+			children [
+				Shape {
+					appearance Appearance {
+						material Material {
+							diffuseColor 0 0.4 0.8
+							transparency 0.5
+						}
+					}
+					geometry ElevationGrid {
+						height [0 0, 0 0]
+						xDimension 2
+						zDimension 2
+					}
+				}
+			]
+			translation	-0.5 0 -0.5
+		}
+	]
+	scale 100 1 100
+}
