@@ -6,33 +6,37 @@ WorldInfo {
 }
 
 NavigationInfo {
-	#type ["WALK"]
 	headlight TRUE
 	# radius, height, foot length (climb height)
-	avatarSize [0.1, 1.6, 0.75]
+	avatarSize [0.15, 1.6, 0.4]
 }
 
 Transform {
 	children [
 		Transform {
 			children [
-				Transform {
-					children [
-						Viewpoint {
-							description	"Lighthouse"
-							#position 0 0 70
-							jump FALSE
-						}
-					]
-					# pi / 32 ~ 0.10
-					rotation 1 0 0 0.20
-					translation	0 0 100
+				Viewpoint {
+					description	"Far"
+					jump FALSE
 				}
 			]
-			rotation 0 1 0 -1.05
+			# pi / 32 ~ 0.10
+			rotation 1 0 0 0.20
+			translation	0 0 100
+		}
+		Transform {
+			children [
+				Viewpoint {
+					description	"Near"
+					jump FALSE
+				}
+			]
+			# pi / 3 ~ 1.05
+			rotation 1 0 0 1.05
+			translation	0 0 10
 		}
 	]
-	translation	0 0 0
+	rotation 0 1 0 -1.05
 }
 
 # Night
@@ -54,13 +58,43 @@ Transform {
 		Inline {
 			url ["wrl/lighthouse.wrl"]
 		}
+		Viewpoint {
+			description	"Ortogonal: Balcony"
+			orientation	0 1 0 1.57
+			position 1000 33.8964 0
+			fieldOfView	0.012
+			jump TRUE
+		}
 	]
+	# Sea level
 	translation	0 -4.7752 0
 }
 
 Viewpoint {
-	description	"Overview"
+	description	"Ortogonal: Front"
+	position 0 16.9482 4000
+	fieldOfView	0.012
+	jump TRUE
+}
+
+Viewpoint {
+	description	"Ortogonal: Top"
+	orientation	1 0 0 -1.57
+	position 0 1500 0
+	fieldOfView	0.012
+	jump TRUE
+}
+
+Viewpoint {
+	description	"Test: FPS 1"
 	orientation	0 1 0 0.79
 	position 20 29.7942 20
+	jump FALSE
+}
+
+Viewpoint {
+	description	"Test: FPS 2"
+	orientation	0 1 0 -0.79
+	position -20 29.7942 20
 	jump FALSE
 }

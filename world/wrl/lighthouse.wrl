@@ -1,5 +1,9 @@
 #VRML V2.0 utf8
 
+WorldInfo {
+	title "Lighthouse"
+	info ["Filip Bártek", "Eva Pešková"]
+}
 Inline {
 	url	["lighthouse-body.wrl"]
 }
@@ -8,6 +12,9 @@ Transform {
 	children [
 		Inline {
 			url	["balcony.wrl"]
+		}
+		Inline {
+			url["bedroom.wrl"]
 		}
 	]
 	# Lighthouse height

@@ -1,5 +1,9 @@
 #VRML V2.0 utf8
 
+WorldInfo {
+	title "Chandelier"
+	info ["Filip Bártek", "Eva Pešková"]
+}
 Switch {
 	choice [
 

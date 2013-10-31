@@ -1,5 +1,10 @@
 #VRML V2.0 utf8
 
+WorldInfo {
+	title "Light masonry"
+	info ["Filip Bártek", "Eva Pešková"]
+}
+
 # Height: 1.80975
 # Diameter (smaller): 4.1148
 
@@ -71,6 +76,29 @@ Transform {
 
 				creaseAngle	0.7
 			}
+		}
+		Transform {
+			children [
+				Viewpoint {
+					description	"Lightroom"
+					position 0 0 0
+					jump FALSE
+				}
+			]
+			rotation 0 1 0 1.57
+			translation	2.0574 1.6 0
+		}
+		Transform {
+			children [
+				Viewpoint {
+					description	"Lightroom floor"
+					position 0 0 0
+					orientation	1 0 0 -0.52
+					jump FALSE
+				}
+			]
+			rotation 0 1 0 1.57
+			translation	1.8 1.6 0
 		}
 	]
 	# Exit faces south-west
