@@ -8,8 +8,13 @@ WorldInfo {
 	info ["Filip Bártek", "Eva Pešková"]
 }
 
-Inline {
-	url	["lighthouse-body.wrl"]
+EXTERNPROTO	Body [
+	exposedField SFInt32 lod
+]
+"lighthouse-body.wrl#LighthouseBody"
+
+Body {
+	lod	1
 }
 
 Transform {
