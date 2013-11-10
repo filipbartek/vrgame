@@ -108,6 +108,11 @@ Transform {
 				Inline {
 					url	["../blend/balconyPlatform.wrl"]
 				}
+
+				Inline {
+					url	["../blend/PlatformWithHole.wrl"]
+				}
+
 				Transform {
 					children [
 						Viewpoint {
