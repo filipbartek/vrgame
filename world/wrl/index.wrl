@@ -61,6 +61,7 @@ DirectionalLight {
 Transform {
 	children [
 		LighthouseProto	{
+			# Central entry point where scene parameters are set
 			lod	1
 		}
 		Viewpoint {

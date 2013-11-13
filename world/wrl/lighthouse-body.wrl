@@ -6,7 +6,11 @@ WorldInfo {
 }
 
 PROTO LighthouseBody [
+
+	# 1: LOD enabled
+	# 0: LOD disabled
 	exposedField SFInt32 lod 1
+
 ]{
 	Group {
 		children [
