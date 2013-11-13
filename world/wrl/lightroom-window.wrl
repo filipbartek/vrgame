@@ -30,6 +30,7 @@ EXTERNPROTO	BarSquareProto [
 	exposedField SFInt32 lod
 	field SFVec3f size
 	exposedField SFColor diffuseColor
+	exposedField SFNode texture
 ]
 "barsquare.wrl#BarSquare"
 
@@ -66,8 +67,14 @@ PROTO Window [
 							}
 						]
 					}
+
 					DEF	WoodVertical BarSquareProto	{
 						lod	IS lod
+						texture ImageTexture {
+							url	["../textures/wood.jpeg"]
+							repeatS	TRUE
+							repeatT	TRUE
+						}
 						diffuseColor 0.5 0.1 0
 						size 0.05 1 0.05
 					}
