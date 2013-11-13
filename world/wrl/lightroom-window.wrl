@@ -26,6 +26,13 @@ EXTERNPROTO	PanelProto [
 ]
 "lightroom-glass-panel.wrl#Panel"
 
+EXTERNPROTO	BarSquareProto [
+	exposedField SFInt32 lod
+	field SFVec3f size
+	exposedField SFColor diffuseColor
+]
+"barsquare.wrl#BarSquare"
+
 PROTO Window [
 	exposedField SFInt32 lod 1
 ]{
@@ -55,30 +62,21 @@ PROTO Window [
 							}
 						]
 					}
-					DEF	Wood Shape {
-						appearance Appearance {
-							material Material {
-								diffuseColor 0.5 0.1 0
-							}
-						}
-						geometry Box {
-							# 0.05: arbitrary
-							size 1 0.05 0.05
-						}
+					DEF	WoodVertical BarSquareProto	{
+						lod	IS lod
+						diffuseColor 0.5 0.1 0
+						size 0.05 1 0.05
+					}
+					DEF	WoodHorizontal Transform {
+						children USE WoodVertical
+						rotation 0 0 1 1.57
 					}
 					DEF	WoodHorizontalLong Transform {
 						children [
-							USE	Wood
+							USE	WoodHorizontal
 						]
 						# 0.99 to prevent face fitting artifacts
 						scale 0.6858 0.99 0.99
-					}
-					DEF	WoodVertical Transform {
-						children [
-							USE	Wood
-						]
-						# 1.57: 90 degrees
-						rotation 0 0 1 1.57
 					}
 					DEF	WoodVerticalLong Transform {
 						children [
