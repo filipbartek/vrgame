@@ -7,13 +7,18 @@ WorldInfo {
 
 # http://www.bellrock.org.uk/lighthouse/lighthouse_lightroom.htm
 
+EXTERNPROTO	CageProto [
+	exposedField SFInt32 lod
+]
+"lightroom-cage.wrl#Cage"
+
 Switch {
 	choice [
 		DEF	Chandelier Inline {
 			url	["lightroom-chandelier.wrl"]
 		}
-		DEF	Cage Inline	{
-			url	["lightroom-cage.wrl"]
+		DEF	Cage CageProto {
+			lod	1
 		}
 		DEF	Masonry Inline {
 			url	["lightroom-masonry.wrl"]

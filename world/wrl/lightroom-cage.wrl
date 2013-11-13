@@ -16,86 +16,100 @@ EXTERNPROTO	WindowProto [
 ]
 "lightroom-window.wrl#Window"
 
-Switch {
-	choice [
-		DEF	Window WindowProto {
-			lod	1
-		}
-		DEF	WindowTranslated Transform {
-			children [
-				USE	Window
-			]
-			translation	0 0 0.83
-		}
-		DEF	Cage Group {
-			children [
-				Transform {
-					children [
-						USE	WindowTranslated
-					]
-					rotation 0 1 0 0
-				}
-				Transform {
-					children [
-						USE	WindowTranslated
-					]
-					rotation 0 1 0 0.79
-				}
-				Transform {
-					children [
-						USE	WindowTranslated
-					]
-					rotation 0 1 0 1.57
-				}
-				Transform {
-					children [
-						USE	WindowTranslated
-					]
-					rotation 0 1 0 2.36
-				}
-				Transform {
-					children [
-						USE	WindowTranslated
-					]
-					rotation 0 1 0 3.14
-				}
-				Transform {
-					children [
-						USE	WindowTranslated
-					]
-					rotation 0 1 0 3.93
-				}
-				Transform {
-					children [
-						USE	WindowTranslated
-					]
-					rotation 0 1 0 4.71
-				}
-				Transform {
-					children [
-						USE	WindowTranslated
-					]
-					rotation 0 1 0 5.50
-				}
-			]
-		}
-	]
-}
+PROTO Cage [
 
-# Desired width (short): 2.74
-# Window width: 0.684
-# Octagon of windows: approx. 1.65
+	# 1: LOD enabled
+	# 0: LOD disabled
+	exposedField SFInt32 lod 1
 
-Transform {
-	children [
-		Transform {
-			children [
-				USE	Cage
-			]
-			translation	0 1.019175 0
-		}
-	]
-	# desired widht = masonry widht - masonry thickness = 4.1148 - 0.381 = 3.7338
-	# scale = desired width / actual width = 3.7338 / (0.83 * 2) = 2.2493
-	scale 2.2493 2.2493 2.2493
+]{
+	Group {
+		children [
+
+			Switch {
+				choice [
+					DEF	Window WindowProto {
+						lod	IS lod
+					}
+					DEF	WindowTranslated Transform {
+						children [
+							USE	Window
+						]
+						translation	0 0 0.83
+					}
+					DEF	Cage Group {
+						children [
+							Transform {
+								children [
+									USE	WindowTranslated
+								]
+								rotation 0 1 0 0
+							}
+							Transform {
+								children [
+									USE	WindowTranslated
+								]
+								rotation 0 1 0 0.79
+							}
+							Transform {
+								children [
+									USE	WindowTranslated
+								]
+								rotation 0 1 0 1.57
+							}
+							Transform {
+								children [
+									USE	WindowTranslated
+								]
+								rotation 0 1 0 2.36
+							}
+							Transform {
+								children [
+									USE	WindowTranslated
+								]
+								rotation 0 1 0 3.14
+							}
+							Transform {
+								children [
+									USE	WindowTranslated
+								]
+								rotation 0 1 0 3.93
+							}
+							Transform {
+								children [
+									USE	WindowTranslated
+								]
+								rotation 0 1 0 4.71
+							}
+							Transform {
+								children [
+									USE	WindowTranslated
+								]
+								rotation 0 1 0 5.50
+							}
+						]
+					}
+				]
+			}
+
+			# Desired width (short): 2.74
+			# Window width: 0.684
+			# Octagon of windows: approx. 1.65
+
+			Transform {
+				children [
+					Transform {
+						children [
+							USE	Cage
+						]
+						translation	0 1.019175 0
+					}
+				]
+				# desired widht = masonry widht - masonry thickness = 4.1148 - 0.381 = 3.7338
+				# scale = desired width / actual width = 3.7338 / (0.83 * 2) = 2.2493
+				scale 2.2493 2.2493 2.2493
+			}
+
+		]
+	}
 }
