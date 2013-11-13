@@ -18,6 +18,14 @@ WorldInfo {
 
 # http://www.bellrock.org.uk/lighthouse/lighthouse_stats.htm
 
+EXTERNPROTO	PanelProto [
+	exposedField SFInt32 lod
+	field SFVec3f size
+	exposedField SFColor diffuseColor
+	exposedField SFFloat transparency
+]
+"lightroom-glass-panel.wrl#Panel"
+
 PROTO Window [
 	exposedField SFInt32 lod 1
 ]{
@@ -25,8 +33,11 @@ PROTO Window [
 		children [
 			Switch {
 				choice [
-					DEF Panel Inline {
-						url	["lightroom-glass-panel.wrl"]
+					DEF Panel PanelProto {
+						lod	IS lod
+						size 0.3429 0.67945 0.00635
+						diffuseColor 0.0 0.0 0.8
+						transparency 0.5
 					}
 					DEF	Line2 Group	{
 						children [
@@ -152,7 +163,7 @@ PROTO Window [
 				choice [
 					USE	Window
 					LOD	{
-						range [10]
+						range [200]
 						level [
 							USE	Window
 							Group {}
