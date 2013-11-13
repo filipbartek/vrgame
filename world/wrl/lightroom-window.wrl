@@ -18,128 +18,148 @@ WorldInfo {
 
 # http://www.bellrock.org.uk/lighthouse/lighthouse_stats.htm
 
-Switch {
-	choice [
-		DEF Panel Inline {
-			url	["lightroom-glass-panel.wrl"]
-		}
-		DEF	Line2 Group	{
-			children [
-				Transform {
-					children [
-						USE	Panel
-					]
-					translation	-0.17145 0 0
-				}
-				Transform {
-					children [
-						USE	Panel
-					]
-					translation	0.17145 0 0
-				}
-			]
-		}
-		DEF	Wood Shape {
-			appearance Appearance {
-				material Material {
-					diffuseColor 0.5 0.1 0
-				}
+PROTO Window [
+	exposedField SFInt32 lod 1
+]{
+	Group {
+		children [
+			Switch {
+				choice [
+					DEF Panel Inline {
+						url	["lightroom-glass-panel.wrl"]
+					}
+					DEF	Line2 Group	{
+						children [
+							Transform {
+								children [
+									USE	Panel
+								]
+								translation	-0.17145 0 0
+							}
+							Transform {
+								children [
+									USE	Panel
+								]
+								translation	0.17145 0 0
+							}
+						]
+					}
+					DEF	Wood Shape {
+						appearance Appearance {
+							material Material {
+								diffuseColor 0.5 0.1 0
+							}
+						}
+						geometry Box {
+							# 0.05: arbitrary
+							size 1 0.05 0.05
+						}
+					}
+					DEF	WoodHorizontalLong Transform {
+						children [
+							USE	Wood
+						]
+						# 0.99 to prevent face fitting artifacts
+						scale 0.6858 0.99 0.99
+					}
+					DEF	WoodVertical Transform {
+						children [
+							USE	Wood
+						]
+						# 1.57: 90 degrees
+						rotation 0 0 1 1.57
+					}
+					DEF	WoodVerticalLong Transform {
+						children [
+							USE	WoodVertical
+						]
+						scale 1 2.03835 1
+					}
+					DEF	Frame Group	{
+						children [
+							Transform {
+								children [
+									USE	WoodHorizontalLong
+								]
+								translation	0 -1.019175 0
+							}
+							Transform {
+								children [
+									USE	WoodHorizontalLong
+								]
+								translation	0 -0.339725 0
+							}
+							Transform {
+								children [
+									USE	WoodHorizontalLong
+								]
+								translation	0 0.339725 0
+							}
+							Transform {
+								children [
+									USE	WoodHorizontalLong
+								]
+								translation	0 1.019175 0
+							}
+							Transform {
+								children [
+									USE	WoodVerticalLong
+								]
+								translation	-0.3429 0 0
+							}
+							Transform {
+								children [
+									USE	WoodVerticalLong
+								]
+								translation	0 0 0
+							}
+							Transform {
+								children [
+									USE	WoodVerticalLong
+								]
+								translation	0.3429 0 0
+							}
+						]
+					}
+					DEF	Window Group {
+						children [
+							Transform {
+								children [
+									USE	Line2
+								]
+								translation	0 -0.67945 0
+							}
+							Transform {
+								children [
+									USE	Line2
+								]
+								translation	0 0 0
+							}
+							Transform {
+								children [
+									USE	Line2
+								]
+								translation	0 0.67945 0
+							}
+							USE	Frame
+						]
+					}
+				]
 			}
-			geometry Box {
-				# 0.05: arbitrary
-				size 1 0.05 0.05
-			}
-		}
-		DEF	WoodHorizontalLong Transform {
-			children [
-				USE	Wood
-			]
-			# 0.99 to prevent face fitting artifacts
-			scale 0.6858 0.99 0.99
-		}
-		DEF	WoodVertical Transform {
-			children [
-				USE	Wood
-			]
-			# 1.57: 90 degrees
-			rotation 0 0 1 1.57
-		}
-		DEF	WoodVerticalLong Transform {
-			children [
-				USE	WoodVertical
-			]
-			scale 1 2.03835 1
-		}
-		DEF	Frame Group	{
-			children [
-				Transform {
-					children [
-						USE	WoodHorizontalLong
-					]
-					translation	0 -1.019175 0
-				}
-				Transform {
-					children [
-						USE	WoodHorizontalLong
-					]
-					translation	0 -0.339725 0
-				}
-				Transform {
-					children [
-						USE	WoodHorizontalLong
-					]
-					translation	0 0.339725 0
-				}
-				Transform {
-					children [
-						USE	WoodHorizontalLong
-					]
-					translation	0 1.019175 0
-				}
-				Transform {
-					children [
-						USE	WoodVerticalLong
-					]
-					translation	-0.3429 0 0
-				}
-				Transform {
-					children [
-						USE	WoodVerticalLong
-					]
-					translation	0 0 0
-				}
-				Transform {
-					children [
-						USE	WoodVerticalLong
-					]
-					translation	0.3429 0 0
-				}
-			]
-		}
-		DEF	Window Group {
-			children [
-				Transform {
-					children [
-						USE	Line2
-					]
-					translation	0 -0.67945 0
-				}
-				Transform {
-					children [
-						USE	Line2
-					]
-					translation	0 0 0
-				}
-				Transform {
-					children [
-						USE	Line2
-					]
-					translation	0 0.67945 0
-				}
-				USE	Frame
-			]
-		}
-	]
-}
 
-USE	Window
+			Switch {
+				whichChoice	IS lod
+				choice [
+					USE	Window
+					LOD	{
+						range [10]
+						level [
+							USE	Window
+							Group {}
+						]
+					}
+				]
+			}
+		]
+	}
+}

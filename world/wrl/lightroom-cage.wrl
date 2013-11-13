@@ -11,10 +11,15 @@ WorldInfo {
 # cage width: 3.7338 (calculated below from lightroom masonry dimensions)
 # cage height = window height * scale = 2.03835 * 2.2493 = 4.5849
 
+EXTERNPROTO	WindowProto [
+	exposedField SFInt32 lod
+]
+"lightroom-window.wrl#Window"
+
 Switch {
 	choice [
-		DEF	Window Inline {
-			url	["lightroom-window.wrl"]
+		DEF	Window WindowProto {
+			lod	1
 		}
 		DEF	WindowTranslated Transform {
 			children [
