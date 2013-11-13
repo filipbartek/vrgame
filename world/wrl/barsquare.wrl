@@ -18,14 +18,17 @@ PROTO BarSquare [
 
 	# Color of the bar
 	exposedField SFColor diffuseColor 0.5 0.1 0
+	# texture of the bar
+	exposedField SFNode texture NULL
 
 ]{
 	Group {
 		children [
 			Switch {
 				choice [
-					DEF	Box Shape {
+					DEF	Box Shape {			
 						appearance DEF Appearance Appearance {
+							texture	IS texture
 							material Material {
 								diffuseColor IS	diffuseColor
 							}
@@ -40,7 +43,11 @@ PROTO BarSquare [
 							children Transform {
 								children Transform {
 									children Shape	{
-										appearance USE Appearance
+										appearance DEF Appearance Appearance {	 
+											material Material {
+											diffuseColor IS	diffuseColor
+											}
+										}
 										geometry ElevationGrid {
 											xDimension 2
 											zDimension 2

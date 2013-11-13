@@ -18,6 +18,11 @@ EXTERNPROTO	BalconyProto [
 ]
 "balcony.wrl#Balcony"
 
+EXTERNPROTO	BedRoomProto [
+	exposedField SFInt32 lod
+]
+"bedroom.wrl#BedRoom"
+
 PROTO Lighthouse [
 
 	# 1: LOD enabled
@@ -37,9 +42,9 @@ PROTO Lighthouse [
 					BalconyProto {
 						lod	IS lod
 					}
-					Inline {
-						url["bedroom.wrl"]
-					}
+					BedRoomProto {
+						lod	IS  lod
+					}				
 				]
 				# Lighthouse height
 				translation	0 29.7942 0

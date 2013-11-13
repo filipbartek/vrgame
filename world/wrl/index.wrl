@@ -62,7 +62,7 @@ Transform {
 	children [
 		LighthouseProto	{
 			# Central entry point where scene parameters are set
-			lod	1
+			lod	0
 		}
 		Viewpoint {
 			description	"Ortogonal: Balcony"
