@@ -18,19 +18,33 @@ EXTERNPROTO	BalconyProto [
 ]
 "balcony.wrl#Balcony"
 
-Body {
-	lod 1
-}
+PROTO Lighthouse [
 
-Transform {
-	children [
-		BalconyProto {
-			lod	1
-		}
-		Inline {
-			url["bedroom.wrl"]
-		}
-	]
-	# Lighthouse height
-	translation	0 29.7942 0
+	# 1: LOD enabled
+	# 0: LOD disabled
+	exposedField SFInt32 lod 1
+
+]{
+	Group {
+		children [
+
+			Body {
+				lod IS lod
+			}
+
+			Transform {
+				children [
+					BalconyProto {
+						lod	IS lod
+					}
+					Inline {
+						url["bedroom.wrl"]
+					}
+				]
+				# Lighthouse height
+				translation	0 29.7942 0
+			}
+
+		]
+	}
 }
