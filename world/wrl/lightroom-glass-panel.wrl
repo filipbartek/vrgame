@@ -33,7 +33,6 @@ PROTO Panel [
 							children Transform {
 								children Shape	{
 									appearance USE Appearance
-									#appearance Appearance {material Material {}}
 									geometry ElevationGrid {
 										xDimension 2
 										zDimension 2
