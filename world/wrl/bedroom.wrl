@@ -123,8 +123,8 @@ Transform {
 						}
 						Viewpoint {
 							description	"Inside Apartment"
-							orientation	1 0 0 -1.18
-							position 1.2 -2.2 -0.2
+							orientation	0 0 1 0
+							position -0.2 -2.2 1.2
 							jump FALSE
 						}
 					]
