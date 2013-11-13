@@ -12,71 +12,85 @@ EXTERNPROTO	CageProto [
 ]
 "lightroom-cage.wrl#Cage"
 
-Switch {
-	choice [
-		DEF	Chandelier Inline {
-			url	["lightroom-chandelier.wrl"]
-		}
-		DEF	Cage CageProto {
-			lod	1
-		}
-		DEF	Masonry Inline {
-			url	["lightroom-masonry.wrl"]
-		}
-		DEF	Roof Inline	{
-			url	["lightroom-roof.wrl"]
-		}
-		DEF	Clock Inline {
-			url	["clock.wrl"]
-		}
-		DEF	Winding Inline {
-			url	["winding.wrl"]
-		}
-	]
-}
+PROTO Lightroom [
 
-USE	Masonry
+	# 1: LOD enabled
+	# 0: LOD disabled
+	exposedField SFInt32 lod 1
 
-Transform {
-	children [
-		USE	Clock
-	]
-	translation	0 1.6 -1.6764
-}
+]{
+	Group {
+		children [
 
-Transform {
-	children [
-		Transform {
-			children [
-				USE	Winding
-			]
-			translation	-0.2 1.6 0
-		}
-	]
-	rotation 0 1 0 0.52
-}
+			Switch {
+				choice [
+					DEF	Chandelier Inline {
+						url	["lightroom-chandelier.wrl"]
+					}
+					DEF	Cage CageProto {
+						lod	IS lod
+					}
+					DEF	Masonry Inline {
+						url	["lightroom-masonry.wrl"]
+					}
+					DEF	Roof Inline	{
+						url	["lightroom-roof.wrl"]
+					}
+					DEF	Clock Inline {
+						url	["clock.wrl"]
+					}
+					DEF	Winding Inline {
+						url	["winding.wrl"]
+					}
+				]
+			}
 
-Transform {
-	children [
-		USE	Cage
-		Transform {
-			children [
-				USE	Chandelier
-			]
-			# To match the picture on:
-			# http://www.bellrock.org.uk/lighthouse/lighthouse_lightroom.htm
-			rotation 0 1 0 1.57
-			# Cage height / 2
-			translation	0 2.037 0
-		}
-		Transform {
-			children [
-				USE	Roof
-			]
-			# Cage height
-			translation	0 4.5849 0
-		}
-	]
-	# Masonry height
-	translation	0 1.80975 0
+			USE	Masonry
+
+			Transform {
+				children [
+					USE	Clock
+				]
+				translation	0 1.6 -1.6764
+			}
+
+			Transform {
+				children [
+					Transform {
+						children [
+							USE	Winding
+						]
+						translation	-0.2 1.6 0
+					}
+				]
+				rotation 0 1 0 0.52
+			}
+
+			Transform {
+				children [
+					USE	Cage
+					Transform {
+						children [
+							USE	Chandelier
+						]
+						# To match the picture on:
+						# http://www.bellrock.org.uk/lighthouse/lighthouse_lightroom.htm
+						rotation 0 1 0 1.57
+						# Cage height / 2
+						translation	0 2.037 0
+					}
+					Transform {
+						children [
+							USE	Roof
+						]
+						# Cage height
+						translation	0 4.5849 0
+					}
+				]
+				# Masonry height
+				translation	0 1.80975 0
+			}
+
+		]
+	}
 }

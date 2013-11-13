@@ -5,6 +5,11 @@ WorldInfo {
 	info ["Filip Bártek", "Eva Pešková"]
 }
 
+EXTERNPROTO	LightroomProto [
+	exposedField SFInt32 lod
+]
+"lightroom.wrl#Lightroom"
+
 Transform {
 	children [
 		Transform {
@@ -35,8 +40,8 @@ Switch {
 	]
 }
 
-Inline {
-	url	["lightroom.wrl"]
+LightroomProto {
+	lod	1
 }
 
 Transform {
