@@ -5,137 +5,151 @@ WorldInfo {
 	info ["Eva Pešková", "Filip Bártek"]
 }
 
-Switch {
-	choice [
-		DEF Bed Transform {
-			children [
-				Inline {
-					url	["../blend/bed.wrl"]
-				}
-			]
-			translation	-0.7 0 0
-		}
-			
-		DEF Stair Inline {
-			url	["../blend/stair.wrl"]
-		}
-		DEF	LadyBug Transform {
-			children [
-				Inline {
-					url	["../blend/ladybug.wrl"]
-				}
-			]
-			scale 0.01 0.01 0.01 
-		}
-		DEF	Shelf Transform {
-			children Inline {
-				url	["../blend/library.wrl"]
-			}
-		}
-		DEF	Glass Transform	{
-			children Inline {
-				url	["../blend/glass.wrl"]
-			}
-			translation	0 0.1 0
-			scale 0.07 0.07 0.07
-		}
-	]
-}
+EXTERNPROTO	LadyBugProto [
+	exposedField SFInt32 lod
+]
+"ladyBugLods.wrl#LadyBug"
 
-Transform {
+
+PROTO BedRoom [
+	exposedField SFInt32 lod 1
+]{
+	Group {
 		children [
-			Transform {
-				children	[
-					Inline {
-						url	["../blend/apartment.wrl"]
+			Switch {
+				choice [
+					DEF Bed Transform {
+						children [
+							Inline {
+								url	["../blend/bed.wrl"]
+							}
+						]
+						translation	-0.7 0 0
+					}
+			
+					DEF Stair Inline {
+						url	["../blend/stair.wrl"]
+					}	  
+		   
+					DEF	LadyBugInstance Transform {
+						children [
+							LadyBugProto {
+								lod	IS lod
+							}
+						]					
+					}
+
+					DEF	Shelf Transform {
+						children Inline {
+							url	["../blend/library.wrl"]
+						}
+					}
+					DEF	Glass Transform	{
+						children Inline {
+							url	["../blend/glass.wrl"]
+						}
+						translation	0 0.1 0
+						scale 0.07 0.07 0.07
 					}
 				]
 			}
-		Transform {
-			children [
-				USE	Bed
-			]
-			translation	0 0 0.3
-		}
-		Transform {
-			children [
-				USE LadyBug
-			]
-			translation	0 0.58 0
-		}
-		Transform {
-			children [
-				USE	Bed
-			]
-			translation	0 0 -0.3
-		}
-		Transform {
-			children [
-				USE Shelf
-				Transform {
-					children	USE	LadyBug
-					translation 1.0 0.5 -1.0
-				}
-			]
-			translation	0 2 0
-			rotation 0 1 0 1.6
-		}
-		Transform {
-			children [ 
-				USE Shelf
-				Transform {
-					children  [ USE Glass
+			Transform {
+					children [
 						Transform {
-							children [ USE Glass 
-								Transform {
-									children USE Glass
-									translation	0.1 0.12 0.3
-									rotation 0 1 1 2.17
+							children	[
+								Inline {
+									url	["../blend/apartment.wrl"]
 								}
 							]
-							translation	0.1 0 0.25
 						}
-					] 
-					translation	1 0 0
-				}
-			]
-			translation	0 1.5 0
-			rotation 0 1 0 1.6
-		}
-		USE	Stair
-		Transform {
-			children [
-				Inline {
-					url	["../blend/balconyPlatform.wrl"]
-				}
+					Transform {
+						children [
+							USE	Bed
+						]
+						translation	0 0 0.3
+					}
+					Transform {
+						children [
+							USE LadyBugInstance
+						]
+						translation	0 0.58 0
+					}
+					Transform {
+						children [
+							USE	Bed
+						]
+						translation	0 0 -0.3
+					}
+					Transform {
+						children [
+							USE Shelf
+							Transform {
+								children	USE	LadyBugInstance
+								translation 1.0 0.5 -1.0
+							}
+						]
+						translation	0 2 0
+						rotation 0 1 0 1.6
+					}
+					Transform {
+						children [ 
+							USE Shelf
+							Transform {
+								children  [ USE Glass
+									Transform {
+										children [ USE Glass 
+											Transform {
+												children USE Glass
+												translation	0.1 0.12 0.3
+												rotation 0 1 1 2.17
+											}
+										]
+										translation	0.1 0 0.25
+									}
+								] 
+								translation	1 0 0
+							}
+						]
+						translation	0 1.5 0
+						rotation 0 1 0 1.6
+					}
+					USE	Stair
+					Transform {
+						children [
+							Inline {
+								url	["../blend/balconyPlatform.wrl"]
+							}
 
-				Inline {
-					url	["../blend/PlatformWithHole.wrl"]
-				}
+							Inline {
+								url	["../blend/PlatformWithHole.wrl"]
+							}
 
-				Transform {
-					children [
-						Viewpoint {
-							description	"Apartment"
-							orientation	1 0 0 -1.18
-							position 1.2 0.5 0
-							jump FALSE
-						}
-						Viewpoint {
-							description	"Inside Apartment"
-							orientation	0 0 1 0
-							position -0.2 -2.2 1.2
-							jump FALSE
-						}
-					]
-					rotation 0 1 0 -0.60
-				}
-			]
-			# Translastion of the balcony platform
-			translation	0 2.9 0
-		}
+							Transform {
+								children [
+									Viewpoint {
+										description	"Apartment"
+										orientation	1 0 0 -1.18
+										position 1.2 0.5 0
+										jump FALSE
+									}
+									Viewpoint {
+										description	"Inside Apartment"
+										orientation	0 0 1 0
+										position -0.2 -2.2 1.2
+										jump FALSE
+									}
+								]
+								rotation 0 1 0 -0.60
+							}
+						]
+						# Translastion of the balcony platform
+						translation	0 2.9 0
+					}
 
-	]
-	#all is moved  "down" so that the ceiling is at "0"
-	translation	0 -2.9 0
+				]
+				#all is moved  "down" so that the ceiling is at "0"
+				translation	0 -2.9 0
+			}				   
+		]
+	}
 }
