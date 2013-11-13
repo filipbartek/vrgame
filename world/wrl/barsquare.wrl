@@ -6,9 +6,19 @@ WorldInfo {
 }
 
 PROTO BarSquare [
+
+	# 1: LOD enabled
+	# 0: LOD disabled
 	exposedField SFInt32 lod 1
+
+	# Size of the bar
+	# Should be longer along one of the axes
+	# The longer axis must be the Y axis
 	field SFVec3f size 0.5 1 0.5
+
+	# Color of the bar
 	exposedField SFColor diffuseColor 0.5 0.1 0
+
 ]{
 	Group {
 		children [
