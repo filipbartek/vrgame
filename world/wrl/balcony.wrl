@@ -10,67 +10,77 @@ EXTERNPROTO	LightroomProto [
 ]
 "lightroom.wrl#Lightroom"
 
-Transform {
-	children [
-		Transform {
-			children [
-				Transform {
-					children [
-						Viewpoint {
-							description	"Balcony"
-							position 0 0 15
-							jump FALSE
-						}
-					]
-					# pi / 32 ~ 0.10
-					rotation 1 0 0 -0.10
-				}
-			]
-			rotation 0 1 0 -1.05
-		}
-	]
-	translation	0 4.1022 0
-}
+PROTO Balcony [
+	exposedField SFInt32 lod 1
+]{
+	Group {
+		children [
 
-Switch {
-	choice [
-		DEF	Bell Inline	{
-			url	["bell.wrl"]
-		}
-	]
-}
+			Transform {
+				children [
+					Transform {
+						children [
+							Transform {
+								children [
+									Viewpoint {
+										description	"Balcony"
+										position 0 0 15
+										jump FALSE
+									}
+								]
+								# pi / 32 ~ 0.10
+								rotation 1 0 0 -0.10
+							}
+						]
+						rotation 0 1 0 -1.05
+					}
+				]
+				translation	0 4.1022 0
+			}
 
-LightroomProto {
-	lod	1
-}
+			Switch {
+				choice [
+					DEF	Bell Inline	{
+						url	["bell.wrl"]
+					}
+				]
+			}
 
-Transform {
-	children [
-		Inline {
-			url	["barrier.wrl"]
-		}
-	]
-	scale 1.5 1.5 1.5
-}
+			LightroomProto {
+				lod	IS lod
+			}
 
-# Bells positioned according to a picture on:
-# http://www.bellrock.org.uk/lighthouse/lighthouse_courses.htm
-# balcony diameter = 2.9972
-# lightroom masonry outer diameter = 2.0574
-# bell distance from center = (balcony diameter + masonry diameter) / 2 = 2.5273
+			Transform {
+				children [
+					Inline {
+						url	["barrier.wrl"]
+					}
+				]
+				scale 1.5 1.5 1.5
+			}
 
-# Southern bell
-Transform {
-	children [
-		USE	Bell
-	]
-	translation	0 0 2.5273
-}
+			# Bells positioned according to a picture on:
+			# http://www.bellrock.org.uk/lighthouse/lighthouse_courses.htm
+			# balcony diameter = 2.9972
+			# lightroom masonry outer diameter = 2.0574
+			# bell distance from center = (balcony diameter + masonry diameter) / 2 = 2.5273
 
-# Northern bell
-Transform {
-	children [
-		USE	Bell
-	]
-	translation	0 0 -2.5273
+			# Southern bell
+			Transform {
+				children [
+					USE	Bell
+				]
+				translation	0 0 2.5273
+			}
+
+			# Northern bell
+			Transform {
+				children [
+					USE	Bell
+				]
+				translation	0 0 -2.5273
+			}
+
+		]
+	}
 }

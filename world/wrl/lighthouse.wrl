@@ -13,14 +13,19 @@ EXTERNPROTO	Body [
 ]
 "lighthouse-body.wrl#LighthouseBody"
 
+EXTERNPROTO	BalconyProto [
+	exposedField SFInt32 lod
+]
+"balcony.wrl#Balcony"
+
 Body {
-	lod	1
+	lod 1
 }
 
 Transform {
 	children [
-		Inline {
-			url	["balcony.wrl"]
+		BalconyProto {
+			lod	1
 		}
 		Inline {
 			url["bedroom.wrl"]
