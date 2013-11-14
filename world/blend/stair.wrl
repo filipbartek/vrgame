@@ -32,7 +32,7 @@ PROTO Stairs [
 		   DEF DiffShape Shape {
 				appearance Appearance {
 					material Material {		   
-						diffuseColor 0.2 0.1 0.1
+						diffuseColor 0.8 0.8 1
 					}
 				}
 				geometry IndexedFaceSet {
@@ -46,7 +46,14 @@ PROTO Stairs [
 			   whichChoice	IS lod
 				choice [
 					USE	MaterialShape
-					USE	DiffShape
+					LOD	{
+						range [10 200]
+						level [
+							USE	MaterialShape
+							USE	DiffShape
+							Group {}
+						]
+					}
 				]
 		   }
 	   ]
