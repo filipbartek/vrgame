@@ -36,10 +36,9 @@ PROTO BedRoom [
 							}
 						]
 						translation	-0.7 0 0
-					}
-						  
+					}					
 					DEF StairInstance StairsProto {
-						lod	IS lod				  
+						lod	IS lod		
 					}
 		   
 					DEF	LadyBugInstance Transform {
