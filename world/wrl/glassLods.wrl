@@ -1,0 +1,51 @@
+#VRML V2.0 utf8
+
+WorldInfo {
+	title "Glass parameters"
+	info ["Filip Bártek"]
+}
+
+PROTO Cups [
+    # 1: LOD enabled
+	# 0: LOD disabled
+	exposedField SFInt32 lod 1	  
+	exposedField SFColor color 0 0 0
+]{
+	Group {
+		children [
+			Switch {
+				choice [
+					DEF	Glass1 Transform {
+							children [
+								Inline {
+									url	["../blend/glass.wrl"]
+								}
+							]					 
+						}  
+					DEF	Glass2 Transform {
+							children [
+								Inline {
+									url	["../blend/glass_lod2.wrl"]
+								}
+							]					 
+						} 
+				]
+			}
+			Switch {
+				whichChoice	IS lod
+				choice [
+					USE	Glass1
+					LOD	{
+						range [20 50]
+						level [
+							USE	Glass1
+							USE	Glass2
+							Group {}
+						]
+					}
+				]
+			}
+
+		]
+	}
+}
