@@ -1,6 +1,11 @@
 #VRML V2.0 utf8
 #modeled using blender3d http://blender.org
 
+WorldInfo {
+	title "Inner stair"
+	info ["Eva Pešková"]
+}
+
 # 'Cylinder'
 Shape {
 	appearance Appearance {
