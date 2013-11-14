@@ -28,7 +28,7 @@ PROTO BarSquare [
 			Switch {
 				choice [
 					DEF	Box Shape {			
-						appearance DEF Appearance Appearance {
+						appearance Appearance {
 							texture	IS texture
 							material Material {
 								diffuseColor IS	diffuseColor
@@ -44,7 +44,7 @@ PROTO BarSquare [
 							children Transform {
 								children Transform {
 									children Shape	{
-										appearance DEF Appearance Appearance {	 
+										appearance Appearance {	 
 											material Material {
 											diffuseColor IS	diffuseColor
 											}
