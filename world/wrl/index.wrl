@@ -90,7 +90,7 @@ Transform {
 					translation	0.5 0 0
 				}
 			]
-			translation	0 0 20
+			translation	0 0 10
 		}
 		Transform {
 			children [
@@ -111,7 +111,28 @@ Transform {
 					translation	0.5 0 0
 				}
 			]
-			translation	0 0 200
+			translation	0 0 100
+		}
+		Transform {
+			children [
+				Transform {
+					children Viewpoint {
+						description	"Test: FPS farthest left"
+						position 0 0 0
+						jump FALSE
+					}
+					translation	-0.5 0 0
+				}
+				Transform {
+					children Viewpoint {
+						description	"Test: FPS farthest right"
+						position 0 0 0
+						jump FALSE
+					}
+					translation	0.5 0 0
+				}
+			]
+			translation	0 0 1000
 		}
 	]
 	rotation 0 1 0 -1.05
