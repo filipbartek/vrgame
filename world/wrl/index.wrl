@@ -64,31 +64,9 @@ Transform {
 			# Central entry point where scene parameters are set
 			lod	0
 		}
-		Viewpoint {
-			description	"Ortogonal: Balcony"
-			orientation	0 1 0 1.57
-			position 1000 33.8964 0
-			fieldOfView	0.012
-			jump TRUE
-		}
 	]
 	# Sea level
 	translation	0 -4.7752 0
-}
-
-Viewpoint {
-	description	"Ortogonal: Front"
-	position 0 16.9482 4000
-	fieldOfView	0.012
-	jump TRUE
-}
-
-Viewpoint {
-	description	"Ortogonal: Top"
-	orientation	1 0 0 -1.57
-	position 0 1500 0
-	fieldOfView	0.012
-	jump TRUE
 }
 
 Transform {
@@ -97,7 +75,7 @@ Transform {
 			children [
 				Transform {
 					children Viewpoint {
-						description	"Test: FPS close left"
+						description	"Test: FPS near left"
 						position 0 0 0
 						jump FALSE
 					}
@@ -105,7 +83,7 @@ Transform {
 				}
 				Transform {
 					children Viewpoint {
-						description	"Test: FPS close right"
+						description	"Test: FPS near right"
 						position 0 0 0
 						jump FALSE
 					}
