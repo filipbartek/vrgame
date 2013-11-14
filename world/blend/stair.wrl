@@ -43,7 +43,7 @@ PROTO Stairs [
 				}					
 		   }	   
 		   Switch {
-			   whichChoice	IS lod
+			   whichChoice IS lod
 				choice [
 					USE	MaterialShape
 					LOD	{
@@ -51,9 +51,9 @@ PROTO Stairs [
 						level [
 							USE	MaterialShape
 							USE	DiffShape
-							Group {}
-						]
-					}
+							Group {}	 
+						]				   
+					}					 
 				]
 		   }
 	   ]
