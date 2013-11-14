@@ -136,7 +136,7 @@ Transform {
 			translation	0 0 200
 		}
 	]
-	rotation 0 1 0 0.79
+	rotation 0 1 0 -1.05
 	translation	0 29.7942 0
 }
 
