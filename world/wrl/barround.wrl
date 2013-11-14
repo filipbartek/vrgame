@@ -68,7 +68,7 @@ PROTO BarRound [
 											xDimension 2
 											zDimension 2
 											height [0 0, 0 0]
-											solid FALSE
+											solid TRUE
 										}
 									}
 									translation	-0.5 0 -0.5
