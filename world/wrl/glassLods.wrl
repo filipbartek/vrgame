@@ -2,14 +2,24 @@
 
 WorldInfo {
 	title "Glass parameters"
-	info ["Filip Bártek"]
+	info ["Eva Pešková"]
 }
+
+EXTERNPROTO	OneCup [
+	exposedField SFColor color
+]
+"..\blend\glass.wrl#Glass1"
+
+EXTERNPROTO	SecondCup [
+	exposedField SFColor color
+]
+"..\blend\glass_lod2.wrl#Glass2"
 
 PROTO Cups [
     # 1: LOD enabled
 	# 0: LOD disabled
 	exposedField SFInt32 lod 1	  
-	exposedField SFColor color 0 0 0
+	exposedField SFColor color 0.2 0.5 0.8
 ]{
 	Group {
 		children [
@@ -17,15 +27,15 @@ PROTO Cups [
 				choice [
 					DEF	Glass1 Transform {
 							children [
-								Inline {
-									url	["../blend/glass.wrl"]
+								OneCup {
+									color IS color
 								}
 							]					 
 						}  
 					DEF	Glass2 Transform {
-							children [
-								Inline {
-									url	["../blend/glass_lod2.wrl"]
+							children [		
+								SecondCup {
+									color IS color
 								}
 							]					 
 						} 
