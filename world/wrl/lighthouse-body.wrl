@@ -101,7 +101,7 @@ PROTO LighthouseBody [
 				choice [
 					USE	BodyExtrusion
 					LOD	{
-						range [500 1000]
+						range [500 2000]
 						level [
 							USE	BodyExtrusion
 							USE	BodyCylinder

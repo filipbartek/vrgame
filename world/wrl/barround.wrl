@@ -1,42 +1,57 @@
 #VRML V2.0 utf8
 
 WorldInfo {
-	title "Bar with square cross section"
+	title "Bar with circular cross section"
 	info ["Filip Bártek"]
 }
 
-PROTO BarSquare [
+PROTO BarRound [
 
 	# 1: LOD enabled
 	# 0: LOD disabled
 	exposedField SFInt32 lod 1
 
+	# LOD ranges
+	field MFFloat range [50 200]
+
 	# Size of the bar
-	# Should be longer along one of the axes
-	# The longer axis must be the Y axis
-	field SFVec3f size 0.5 1 0.5
+	# Should be longer along Y axis
+	# The dimensions in axes X and Z should match
+	field SFVec3f scale 0.5 1 0.5
 
 	# Color of the bar
-	exposedField SFColor diffuseColor 0.5 0.1 0
+	exposedField SFColor diffuseColor 1 1 1
 
 	# Texture of the bar
 	exposedField SFNode texture NULL
+
+	# Render bottom cap?
+	field SFBool bottom TRUE
+
+	# Render top cap?
+	field SFBool top TRUE
 
 ]{
 	Group {
 		children [
 			Switch {
 				choice [
-					DEF	Box Shape {
-						appearance Appearance {
-							texture	IS texture
-							material Material {
-								diffuseColor IS	diffuseColor
+					DEF	Cylinder Transform {
+						children Shape {
+							appearance Appearance {
+								texture	IS texture
+								material Material {
+									diffuseColor IS	diffuseColor
+								}
+							}
+							geometry Cylinder {
+								height 1
+								radius 0.5
+								bottom IS bottom
+								top	IS top
 							}
 						}
-						geometry Box {
-							size IS	size
-						}
+						scale IS scale
 					}
 					DEF	Billboard Billboard	{
 						axisOfRotation 0 1 0
@@ -60,7 +75,7 @@ PROTO BarSquare [
 								}
 								rotation 1 0 0 1.57
 							}
-							scale IS size
+							scale IS scale
 						}
 					}
 				]
@@ -68,11 +83,11 @@ PROTO BarSquare [
 			Switch {
 				whichChoice	IS lod
 				choice [
-					USE	Box
+					USE	Cylinder
 					LOD	{
-						range [50 150]
+						range IS range
 						level [
-							USE	Box
+							USE	Cylinder
 							USE	Billboard
 							Group {}
 						]
