@@ -20,7 +20,7 @@ EXTERNPROTO	StairsProto [
 	exposedField SFInt32 lod  
 	exposedField SFNode	texture
 ]
-"../blender.stair.wrl#Stairs"
+"../blend/stair.wrl#Stairs"
 
 PROTO BedRoom [
 	exposedField SFInt32 lod 1
