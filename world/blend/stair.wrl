@@ -51,19 +51,9 @@ PROTO Stairs [
 						level [
 							USE	MaterialShape
 							USE	DiffShape
-							Group {}
-<<<<<<< HEAD
-<<<<<<< HEAD
+							Group {}	 
 						]				   
-					}					
-=======
-						]
-					}
->>>>>>> b696ed62bac0345fa67942ca154972513e58182e
-=======
-						]
-					}
->>>>>>> b696ed62bac0345fa67942ca154972513e58182e
+					}					 
 				]
 		   }
 	   ]
