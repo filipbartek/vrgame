@@ -16,6 +16,11 @@ EXTERNPROTO	GlassProto [
 ]
 "glassLods.wrl#Cups"
 
+EXTERNPROTO	StairsProto [
+	exposedField SFInt32 lod  
+	exposedField SFNode	texture
+]
+"../blender.stair.wrl#Stairs"
 
 PROTO BedRoom [
 	exposedField SFInt32 lod 1
@@ -33,9 +38,9 @@ PROTO BedRoom [
 						translation	-0.7 0 0
 					}
 			
-					DEF Stair Inline {
-						url	["../blend/stair.wrl"]
-					}	  
+					DEF StairInstance StairsProto {
+						lod	IS lod
+					}
 		   
 					DEF	LadyBugInstance Transform {
 						children [
@@ -119,7 +124,7 @@ PROTO BedRoom [
 						translation	0 1.5 0
 						rotation 0 1 0 1.6
 					}
-					USE	Stair
+					USE	StairInstance
 					Transform {
 						children [
 							Inline {
