@@ -75,7 +75,7 @@ PROTO Window [
 							repeatS	TRUE
 							repeatT	TRUE
 						}
-						diffuseColor 0.5 0.1 0
+						diffuseColor 0.8 0.6 0.2
 						size 0.05 1 0.05
 					}
 					DEF	WoodHorizontal Transform {
