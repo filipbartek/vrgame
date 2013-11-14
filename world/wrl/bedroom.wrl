@@ -20,7 +20,7 @@ EXTERNPROTO	StairsProto [
 	exposedField SFInt32 lod  
 	exposedField SFNode	texture
 ]
-"../blender.stair.wrl#Stairs"
+"../blend/stair.wrl#Stairs"
 
 PROTO BedRoom [
 	exposedField SFInt32 lod 1
@@ -39,14 +39,7 @@ PROTO BedRoom [
 					}					
 					DEF StairInstance StairsProto {
 						lod	IS lod		
-					}
-<<<<<<< HEAD
-=======
-			
-					DEF Stair Inline {
-						url	["../blend/stair.wrl"]
-					}
->>>>>>> 804283a01b2625190275ccf113d2547c354bf875
+					}							
 		   
 					DEF	LadyBugInstance Transform {
 						children [
