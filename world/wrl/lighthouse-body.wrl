@@ -22,6 +22,9 @@ PROTO LighthouseBody [
 	# 0: LOD disabled
 	exposedField SFInt32 lod 1
 
+	# Lighthouse color
+	exposedField SFColor diffuseColor 1 1 1
+
 ]{
 	Group {
 		children [
@@ -32,7 +35,7 @@ PROTO LighthouseBody [
 					DEF BodyExtrusion Shape {
 						appearance Appearance {
 							material Material {
-								diffuseColor 1 1 1
+								diffuseColor IS	diffuseColor
 							}
 						}
 						geometry Extrusion {
@@ -84,7 +87,7 @@ PROTO LighthouseBody [
 					DEF	BarRound BarRoundProto {
 						bottom FALSE
 						top	FALSE
-						diffuseColor 1 1 1
+						diffuseColor IS	diffuseColor
 						lod	IS lod
 					}
 

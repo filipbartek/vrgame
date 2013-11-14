@@ -10,6 +10,7 @@ WorldInfo {
 
 EXTERNPROTO	Body [
 	exposedField SFInt32 lod
+	exposedField SFColor diffuseColor
 ]
 "lighthouse-body.wrl#LighthouseBody"
 
