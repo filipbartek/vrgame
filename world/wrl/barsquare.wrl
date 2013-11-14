@@ -18,7 +18,8 @@ PROTO BarSquare [
 
 	# Color of the bar
 	exposedField SFColor diffuseColor 0.5 0.1 0
-	# texture of the bar
+
+	# Texture of the bar
 	exposedField SFNode texture NULL
 
 ]{
