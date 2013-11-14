@@ -52,8 +52,13 @@ PROTO Stairs [
 							USE	MaterialShape
 							USE	DiffShape
 							Group {}
+<<<<<<< HEAD
 						]				   
 					}					
+=======
+						]
+					}
+>>>>>>> b696ed62bac0345fa67942ca154972513e58182e
 				]
 		   }
 	   ]
