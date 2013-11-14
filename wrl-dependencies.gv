@@ -28,6 +28,7 @@ node [shape=box];
 "wrl/reflector.wrl";
 "wrl/sea.wrl";
 "wrl/winding.wrl";
+"wrl/barround.wrl";
 
 // blend
 node [shape=ellipse];
@@ -87,6 +88,7 @@ edge [arrowhead=diamond style=bold];
 "wrl/lightroom-cage.wrl" -> "wrl/lightroom-window.wrl";
 "wrl/lightroom-window.wrl" -> "wrl/lightroom-glass-panel.wrl";
 "wrl/lightroom-window.wrl" -> "wrl/barsquare.wrl";
+"wrl/lighthouse-body.wrl" -> "wrl/barround.wrl";
 
 overlap=false
 label="Lighthouse dependencies"
