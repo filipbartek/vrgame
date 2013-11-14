@@ -62,79 +62,83 @@ Transform {
 	children [
 		LighthouseProto	{
 			# Central entry point where scene parameters are set
-			lod	0
+			lod	1
 		}
+
+		Transform {
+			children [
+				Transform {
+					children [
+						Transform {
+							children Viewpoint {
+								description	"Test: FPS near left"
+								position 0 0 0
+								jump FALSE
+							}
+							translation	-0.5 0 0
+						}
+						Transform {
+							children Viewpoint {
+								description	"Test: FPS near right"
+								position 0 0 0
+								jump FALSE
+							}
+							translation	0.5 0 0
+						}
+					]
+					translation	0 0 10
+				}
+				Transform {
+					children [
+						Transform {
+							children Viewpoint {
+								description	"Test: FPS far left"
+								position 0 0 0
+								jump FALSE
+							}
+							translation	-0.5 0 0
+						}
+						Transform {
+							children Viewpoint {
+								description	"Test: FPS far right"
+								position 0 0 0
+								jump FALSE
+							}
+							translation	0.5 0 0
+						}
+					]
+					translation	0 0 100
+				}
+				Transform {
+					children [
+						Transform {
+							children Viewpoint {
+								description	"Test: FPS farthest left"
+								position 0 0 0
+								jump FALSE
+							}
+							translation	-0.5 0 0
+						}
+						Transform {
+							children Viewpoint {
+								description	"Test: FPS farthest right"
+								position 0 0 0
+								jump FALSE
+							}
+							translation	0.5 0 0
+						}
+					]
+					translation	0 0 1000
+				}
+			]
+			rotation 0 1 0 -1.05
+			# translation = lighthouse height + masonry height + window height * window scale / 2
+			# 33.8963803275 = 29.7942 + 1.80975 + 2.03835 * 2.2493 / 2
+			translation	0 33.8963803275 0
+		}
+
 	]
 	# Sea level
 	translation	0 -4.7752 0
 }
 
-Transform {
-	children [
-		Transform {
-			children [
-				Transform {
-					children Viewpoint {
-						description	"Test: FPS near left"
-						position 0 0 0
-						jump FALSE
-					}
-					translation	-0.5 0 0
-				}
-				Transform {
-					children Viewpoint {
-						description	"Test: FPS near right"
-						position 0 0 0
-						jump FALSE
-					}
-					translation	0.5 0 0
-				}
-			]
-			translation	0 0 10
-		}
-		Transform {
-			children [
-				Transform {
-					children Viewpoint {
-						description	"Test: FPS far left"
-						position 0 0 0
-						jump FALSE
-					}
-					translation	-0.5 0 0
-				}
-				Transform {
-					children Viewpoint {
-						description	"Test: FPS far right"
-						position 0 0 0
-						jump FALSE
-					}
-					translation	0.5 0 0
-				}
-			]
-			translation	0 0 100
-		}
-		Transform {
-			children [
-				Transform {
-					children Viewpoint {
-						description	"Test: FPS farthest left"
-						position 0 0 0
-						jump FALSE
-					}
-					translation	-0.5 0 0
-				}
-				Transform {
-					children Viewpoint {
-						description	"Test: FPS farthest right"
-						position 0 0 0
-						jump FALSE
-					}
-					translation	0.5 0 0
-				}
-			]
-			translation	0 0 1000
-		}
-	]
-	rotation 0 1 0 -1.05
-	translation	0 29.7942 0
-}
