@@ -53,8 +53,13 @@ PROTO Stairs [
 							USE	DiffShape
 							Group {}
 <<<<<<< HEAD
+<<<<<<< HEAD
 						]				   
 					}					
+=======
+						]
+					}
+>>>>>>> b696ed62bac0345fa67942ca154972513e58182e
 =======
 						]
 					}
