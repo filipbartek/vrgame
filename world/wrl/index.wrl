@@ -10,135 +10,144 @@ EXTERNPROTO	LighthouseProto [
 ]
 "lighthouse.wrl#Lighthouse"
 
-NavigationInfo {
-	headlight TRUE
-	# radius, height, foot length (climb height)
-	avatarSize [0.15, 1.6, 0.4]
+PROTO Index [
+	exposedField SFInt32 lod 1
+]{
+	Group {
+		children [
+
+			NavigationInfo {
+				headlight TRUE
+				# radius, height, foot length (climb height)
+				avatarSize [0.15, 1.6, 0.4]
+			}
+
+			Transform {
+				children [
+					Transform {
+						children [
+							Viewpoint {
+								description	"Far"
+								jump FALSE
+							}
+						]
+						# pi / 32 ~ 0.10
+						rotation 1 0 0 0.20
+						translation	0 0 100
+					}
+					Transform {
+						children [
+							Viewpoint {
+								description	"Near"
+								jump FALSE
+							}
+						]
+						# pi / 3 ~ 1.05
+						rotation 1 0 0 1.05
+						translation	0 0 10
+					}
+				]
+				rotation 0 1 0 -1.05
+			}
+
+			# Night
+			Background {
+				skyColor [0.0 0.0 0]
+				groundColor [0 0.0625 0.125]
+			}
+
+			# Moonlight
+			DirectionalLight {
+				color 1 1 1
+				direction 0 -1 0
+				intensity 0.25
+				ambientIntensity 0.125
+			}
+
+			Transform {
+				children [
+					LighthouseProto	{
+						# Central entry point where scene parameters are set
+						lod	IS lod
+					}
+
+					Transform {
+						children [
+							Transform {
+								children [
+									Transform {
+										children Viewpoint {
+											description	"Test: FPS near left"
+											position 0 0 0
+											jump FALSE
+										}
+										translation	-0.5 0 0
+									}
+									Transform {
+										children Viewpoint {
+											description	"Test: FPS near right"
+											position 0 0 0
+											jump FALSE
+										}
+										translation	0.5 0 0
+									}
+								]
+								translation	0 0 10
+							}
+							Transform {
+								children [
+									Transform {
+										children Viewpoint {
+											description	"Test: FPS far left"
+											position 0 0 0
+											jump FALSE
+										}
+										translation	-0.5 0 0
+									}
+									Transform {
+										children Viewpoint {
+											description	"Test: FPS far right"
+											position 0 0 0
+											jump FALSE
+										}
+										translation	0.5 0 0
+									}
+								]
+								translation	0 0 100
+							}
+							Transform {
+								children [
+									Transform {
+										children Viewpoint {
+											description	"Test: FPS farthest left"
+											position 0 0 0
+											jump FALSE
+										}
+										translation	-0.5 0 0
+									}
+									Transform {
+										children Viewpoint {
+											description	"Test: FPS farthest right"
+											position 0 0 0
+											jump FALSE
+										}
+										translation	0.5 0 0
+									}
+								]
+								translation	0 0 1000
+							}
+						]
+						rotation 0 1 0 -1.05
+						# translation = lighthouse height + masonry height + window height * window scale / 2
+						# 33.8963803275 = 29.7942 + 1.80975 + 2.03835 * 2.2493 / 2
+						translation	0 33.8963803275 0
+					}
+
+				]
+				# Sea level
+				translation	0 -4.7752 0
+			}
+
+		]
+	}
 }
-
-Transform {
-	children [
-		Transform {
-			children [
-				Viewpoint {
-					description	"Far"
-					jump FALSE
-				}
-			]
-			# pi / 32 ~ 0.10
-			rotation 1 0 0 0.20
-			translation	0 0 100
-		}
-		Transform {
-			children [
-				Viewpoint {
-					description	"Near"
-					jump FALSE
-				}
-			]
-			# pi / 3 ~ 1.05
-			rotation 1 0 0 1.05
-			translation	0 0 10
-		}
-	]
-	rotation 0 1 0 -1.05
-}
-
-# Night
-Background {
-	skyColor [0.0 0.0 0]
-	groundColor [0 0.0625 0.125]
-}
-
-# Moonlight
-DirectionalLight {
-	color 1 1 1
-	direction 0 -1 0
-	intensity 0.25
-	ambientIntensity 0.125
-}
-
-Transform {
-	children [
-		LighthouseProto	{
-			# Central entry point where scene parameters are set
-			lod	1
-		}
-
-		Transform {
-			children [
-				Transform {
-					children [
-						Transform {
-							children Viewpoint {
-								description	"Test: FPS near left"
-								position 0 0 0
-								jump FALSE
-							}
-							translation	-0.5 0 0
-						}
-						Transform {
-							children Viewpoint {
-								description	"Test: FPS near right"
-								position 0 0 0
-								jump FALSE
-							}
-							translation	0.5 0 0
-						}
-					]
-					translation	0 0 10
-				}
-				Transform {
-					children [
-						Transform {
-							children Viewpoint {
-								description	"Test: FPS far left"
-								position 0 0 0
-								jump FALSE
-							}
-							translation	-0.5 0 0
-						}
-						Transform {
-							children Viewpoint {
-								description	"Test: FPS far right"
-								position 0 0 0
-								jump FALSE
-							}
-							translation	0.5 0 0
-						}
-					]
-					translation	0 0 100
-				}
-				Transform {
-					children [
-						Transform {
-							children Viewpoint {
-								description	"Test: FPS farthest left"
-								position 0 0 0
-								jump FALSE
-							}
-							translation	-0.5 0 0
-						}
-						Transform {
-							children Viewpoint {
-								description	"Test: FPS farthest right"
-								position 0 0 0
-								jump FALSE
-							}
-							translation	0.5 0 0
-						}
-					]
-					translation	0 0 1000
-				}
-			]
-			rotation 0 1 0 -1.05
-			# translation = lighthouse height + masonry height + window height * window scale / 2
-			# 33.8963803275 = 29.7942 + 1.80975 + 2.03835 * 2.2493 / 2
-			translation	0 33.8963803275 0
-		}
-
-	]
-	# Sea level
-	translation	0 -4.7752 0
-}
-

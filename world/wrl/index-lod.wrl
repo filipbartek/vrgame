@@ -5,6 +5,11 @@ WorldInfo {
 	info ["Filip Bártek", "Eva Pešková"]
 }
 
-Inline {
-	url ["wrl/index-lod.wrl"]
+EXTERNPROTO	IndexProto [
+	exposedField SFInt32 lod
+]
+"index.wrl#Index"
+
+IndexProto {
+	lod	1
 }
