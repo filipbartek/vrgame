@@ -1,20 +1,79 @@
 #VRML V2.0 utf8
 
 WorldInfo {
-	title "Lightroom window glass panel"
+	title "Glass panel"
 	info ["Filip Bártek"]
 }
 
-Shape {
-	appearance Appearance {
-		material Material {
-			diffuseColor 0 0 0.8
-			transparency 0.5
-		}
-	}
-	geometry Box {
-		# http://www.bellrock.org.uk/lighthouse/lighthouse_stats.htm
-		# Each glass plate measured 13½ inches (34.2cm) by 26¾ inches (67.9cm) and was ¼ of an inch (6.35mm) thick.
-		size 0.3429 0.67945 0.00635
+PROTO Panel [
+
+	# 1: LOD enabled
+	# 0: LOD disabled
+	exposedField SFInt32 lod 1
+
+	# Size of the panel
+	# Should be stretched along XY plane and thin along Z axis
+	field SFVec3f size 0.3429 0.67945 0.00635
+	# Default values respect Bell Rock:
+	# http://www.bellrock.org.uk/lighthouse/lighthouse_stats.htm
+	# > Each glass plate measured 13½ inches (34.2cm) by 26¾ inches (67.9cm) and was ¼ of an inch (6.35mm) thick.
+
+	# Color of the glass
+	exposedField SFColor diffuseColor 0.0 0.0 0.8
+
+	# Transparency of the glass
+	exposedField SFFloat transparency 0.5
+
+]{
+	Group {
+		children [
+			Switch {
+				choice [
+					DEF	Box Shape {
+						appearance DEF Appearance Appearance {
+							material Material {
+								diffuseColor IS	diffuseColor
+								transparency IS	transparency
+							}
+						}
+						geometry Box {
+							size IS	size
+						}
+					}
+					DEF	Plane Transform	{
+						children Transform {
+							children Transform {
+								children Shape	{
+									appearance USE Appearance
+									geometry ElevationGrid {
+										xDimension 2
+										zDimension 2
+										height [0 0, 0 0]
+										solid FALSE
+									}
+								}
+								translation	-0.5 0 -0.5
+							}
+							rotation 1 0 0 1.57
+						}
+						scale IS size
+					}
+				]
+			}
+			Switch {
+				whichChoice	IS lod
+				choice [
+					USE	Box
+					LOD	{
+						range [1 200]
+						level [
+							USE	Box
+							USE	Plane
+							Group {}
+						]
+					}
+				]
+			}
+		]
 	}
 }

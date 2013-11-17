@@ -10,17 +10,156 @@
     <p>Webová 3D počítačová hra pro malé děti</p>
     <p><a href="world.html">Hrát</a></p>
     <p><a href="vse.zip">Stáhnout</a></p>
-    <p><a href="https://github.com/filipbartek/vrgame">Domovská stránka na GitHubu</a> (obsahuje zejm. aktuální verzi)</p>
+    <p><a href="https://github.com/filipbartek/vrgame">Domovská stránka na
+      GitHubu</a> (obsahuje zejm. aktuální verzi)</p>
+
     <h2>Motivace</h2>
-    <p>Tato hra vznikla jako zápočtový projekt pro předmět NPGR012 Virtuální realita (semestr zima 2013) vyučovaného na Univerzitě Karlově v Praze.</p>
+    <p>Tato hra vznikla jako zápočtový projekt pro předmět NPGR012 Virtuální
+      realita (semestr zima 2013) vyučovaného na Univerzitě Karlově
+      v&nbsp;Praze.</p>
+
     <h2>Zadání</h2>
-    <p><a href="http://dcgi.felk.cvut.cz/home/zara/PGR012/ulohy/index.html">Oficiální zadání</a></p>
-    <p>Filip Bártek: animace světla majáku, reakce na den/noc/mlha zapnutím správného signálu</p>
-    <p>Eva Pešková: doplňování tekutin, animovaný živočich</p>
-    <h2>Členové týmu</h2>
+    <p><a href="http://dcgi.felk.cvut.cz/home/zara/PGR012/ulohy/index.html">
+      Oficiální zadání</a></p>
     <ul>
-      <li>Filip Bártek</li>
-      <li>Eva Pešková</li>
+      <li>Filip Bártek: animace světla majáku, reakce na den/noc/mlha zapnutím
+        správného signálu</li>
+      <li>Eva Pešková: doplňování tekutin, animovaný živočich</li>
     </ul>
+
+    <h2>FPS</h2>
+    <p><a href="detaily.html">Stránka s&nbsp;měřeními FPS</a></p>
+
+    <h2>Textury</h2>
+    <p><a href="textury.html">Stránka s&nbsp;texturami</a></p>
+
+    <h2>Prototypy</h2>
+    <p><a href="wrl-dependencies.svg">Graf závislostí WRL souborů</a></p>
+    <p>Následující tabulka obsahuje výběr VRML prototypů použitých v&nbsp;projektu.</p>
+    <table border="1">
+      <thead>
+        <tr>
+          <td>Soubor</td>
+          <td>Hlavička</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>lighthouse.wrl</td>
+          <td>
+<pre>PROTO Lighthouse [
+
+	# 1: LOD enabled
+	# 0: LOD disabled
+	exposedField SFInt32 lod 1
+
+]</pre>
+          </td>
+        </tr>
+        <tr>
+          <td>balcony.wrl</td>
+          <td>
+<pre>PROTO Balcony [
+
+	# 1: LOD enabled
+	# 0: LOD disabled
+	exposedField SFInt32 lod 1
+
+]</pre>
+          </td>
+        </tr>
+        <tr>
+          <td>lightroom.wrl</td>
+          <td>
+<pre>PROTO Lightroom [
+
+	# 1: LOD enabled
+	# 0: LOD disabled
+	exposedField SFInt32 lod 1
+
+]</pre>
+          </td>
+        </tr>
+        <tr>
+          <td>lightroom-cage.wrl</td>
+          <td>
+<pre>PROTO Cage [
+
+	# 1: LOD enabled
+	# 0: LOD disabled
+	exposedField SFInt32 lod 1
+
+]</pre>
+          </td>
+        </tr>
+        <tr>
+          <td>lightroom-window.wrl</td>
+          <td>
+<pre>PROTO Window [
+
+	# 1: LOD enabled
+	# 0: LOD disabled
+	exposedField SFInt32 lod 1
+
+]</pre>
+          </td>
+        </tr>
+        <tr>
+          <td>lightroom-glass-panel.wrl</td>
+          <td>
+<pre>PROTO Panel [
+
+	# 1: LOD enabled
+	# 0: LOD disabled
+	exposedField SFInt32 lod 1
+
+	# Size of the panel
+	# Should be stretched along XY plane and thin along Z axis
+	field SFVec3f size 0.3429 0.67945 0.00635
+	# Default values respect Bell Rock:
+	# http://www.bellrock.org.uk/lighthouse/lighthouse_stats.htm
+	# > Each glass plate measured 13½ inches (34.2cm) by 26¾ inches (67.9cm) and was ¼ of an inch (6.35mm) thick.
+
+	# Color of the glass
+	exposedField SFColor diffuseColor 0.0 0.0 0.8
+
+	# Transparency of the glass
+	exposedField SFFloat transparency 0.5
+
+]</pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- <table border="1">
+      <thead>
+        <tr>
+          <td rowspan="3">Název</td>
+          <td rowspan="3">Soubor</td>
+          <td colspan="5">Parametr</td>
+        </tr>
+        <tr>
+          <td colspan="2">Typ</td>
+          <td rowspan="2">Název</td>
+          <td rowspan="2">Implicitní hodnota</td>
+          <td rowspan="2">Popis</td>
+        </tr>
+        <tr>
+          <td>Přístup</td>
+          <td>Data</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Lighthouse</td>
+          <td>lighthouse.wrl</td>
+          <td>exposedField</td>
+          <td>SFInt32</td>
+          <td>lod</td>
+          <td>1</td>
+          <td>LOD</td>
+        </tr>
+      </tbody>
+    </table> -->
   </body>
 </html>

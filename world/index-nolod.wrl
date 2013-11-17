@@ -6,5 +6,5 @@ WorldInfo {
 }
 
 Inline {
-	url ["wrl/index-lod.wrl"]
+	url ["wrl/index-nolod.wrl"]
 }

@@ -5,8 +5,26 @@ WorldInfo {
 	info ["Filip Bártek"]
 }
 
+EXTERNPROTO	BarRoundProto [
+	exposedField SFInt32 lod
+	field MFFloat range
+	field SFVec3f scale
+	exposedField SFColor diffuseColor
+	exposedField SFNode texture
+	field SFBool bottom
+	field SFBool top
+]
+"barround.wrl#BarRound"
+
 PROTO LighthouseBody [
+
+	# 1: LOD enabled
+	# 0: LOD disabled
 	exposedField SFInt32 lod 1
+
+	# Lighthouse color
+	exposedField SFColor diffuseColor 1 1 1
+
 ]{
 	Group {
 		children [
@@ -17,7 +35,7 @@ PROTO LighthouseBody [
 					DEF BodyExtrusion Shape {
 						appearance Appearance {
 							material Material {
-								diffuseColor 1 1 1
+								diffuseColor IS	diffuseColor
 							}
 						}
 						geometry Extrusion {
@@ -66,28 +84,25 @@ PROTO LighthouseBody [
 						}
 					}
 
+					DEF	BarRound BarRoundProto {
+						bottom FALSE
+						top	FALSE
+						diffuseColor IS	diffuseColor
+						lod	IS lod
+					}
+
 					DEF	BodyCylinder Transform {
 						children [
 							Transform {
 								children [
-									Shape {
-										appearance Appearance {
-											material Material {
-												diffuseColor 1 1 1
-											}
-										}
-										geometry Cylinder {
-											height 1
-										}
-									}
+									USE	BarRound
 								]
+								scale 2 1 2
 								translation	0 0.5 0
 							}
 						]
 						scale 2.9972 29.7942 2.9972
 					}
-					
-					
 
 				]
 			}
@@ -97,7 +112,7 @@ PROTO LighthouseBody [
 				choice [
 					USE	BodyExtrusion
 					LOD	{
-						range [100 400]
+						range [500 2000]
 						level [
 							USE	BodyExtrusion
 							USE	BodyCylinder

@@ -1,0 +1,99 @@
+#VRML V2.0 utf8
+
+WorldInfo {
+	title "Bar with circular cross section"
+	info ["Filip Bártek"]
+}
+
+PROTO BarRound [
+
+	# 1: LOD enabled
+	# 0: LOD disabled
+	exposedField SFInt32 lod 1
+
+	# LOD ranges
+	field MFFloat range [50 200]
+
+	# Size of the bar
+	# Should be longer along Y axis
+	# The dimensions in axes X and Z should match
+	field SFVec3f scale 0.5 1 0.5
+
+	# Color of the bar
+	exposedField SFColor diffuseColor 1 1 1
+
+	# Texture of the bar
+	exposedField SFNode texture NULL
+
+	# Render bottom cap?
+	field SFBool bottom TRUE
+
+	# Render top cap?
+	field SFBool top TRUE
+
+]{
+	Group {
+		children [
+			Switch {
+				choice [
+					DEF	Cylinder Transform {
+						children Shape {
+							appearance Appearance {
+								texture	IS texture
+								material Material {
+									diffuseColor IS	diffuseColor
+								}
+							}
+							geometry Cylinder {
+								height 1
+								radius 0.5
+								bottom IS bottom
+								top	IS top
+							}
+						}
+						scale IS scale
+					}
+					DEF	Billboard Billboard	{
+						axisOfRotation 0 1 0
+						children Transform	{
+							children Transform {
+								children Transform {
+									children Shape	{
+										appearance Appearance {
+											material Material {
+												diffuseColor IS	diffuseColor
+											}
+										}
+										geometry ElevationGrid {
+											xDimension 2
+											zDimension 2
+											height [0 0, 0 0]
+											solid TRUE
+										}
+									}
+									translation	-0.5 0 -0.5
+								}
+								rotation 1 0 0 1.57
+							}
+							scale IS scale
+						}
+					}
+				]
+			}
+			Switch {
+				whichChoice	IS lod
+				choice [
+					USE	Cylinder
+					LOD	{
+						range IS range
+						level [
+							USE	Cylinder
+							USE	Billboard
+							Group {}
+						]
+					}
+				]
+			}
+		]
+	}
+}

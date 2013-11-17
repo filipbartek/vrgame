@@ -10,22 +10,47 @@ WorldInfo {
 
 EXTERNPROTO	Body [
 	exposedField SFInt32 lod
+	exposedField SFColor diffuseColor
 ]
 "lighthouse-body.wrl#LighthouseBody"
 
-Body {
-	lod	1
-}
+EXTERNPROTO	BalconyProto [
+	exposedField SFInt32 lod
+]
+"balcony.wrl#Balcony"
 
-Transform {
-	children [
-		Inline {
-			url	["balcony.wrl"]
-		}
-		Inline {
-			url["bedroom.wrl"]
-		}
-	]
-	# Lighthouse height
-	translation	0 29.7942 0
+EXTERNPROTO	BedRoomProto [
+	exposedField SFInt32 lod
+]
+"bedroom.wrl#BedRoom"
+
+PROTO Lighthouse [
+
+	# 1: LOD enabled
+	# 0: LOD disabled
+	exposedField SFInt32 lod 1
+
+]{
+	Group {
+		children [
+
+			Body {
+				lod IS lod
+			}
+
+			Transform {
+				children [
+					BalconyProto {
+						lod	IS lod
+					}
+					BedRoomProto {
+						lod	IS  lod
+					}
+				]
+				# Lighthouse height
+				translation	0 29.7942 0
+			}
+
+		]
+	}
 }
