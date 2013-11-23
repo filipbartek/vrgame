@@ -1,0 +1,84 @@
+#VRML V2.0 utf8
+
+
+# This file prepresent completely empty apartment. Apartment consists od
+#	- walls with transparent windows
+#	- stairs that goes up
+#	- ceiling
+#Possible parameters are:
+#	- rotation of the apartment	walls in XY plane
+#   - rotation of the stairs and ceiling in the XY plane
+#	- color/texture of the window
+#	- 
+WorldInfo {
+	title "Apartment"
+	info ["Eva Pešková"]
+}
+
+
+EXTERNPROTO	UpStairsProto [
+	exposedField SFInt32 lod  
+	exposedField SFNode	texture
+]
+"../blend/stair.wrl#Stairs"
+
+EXTERNPROTO	Ceiling [
+	exposedField SFInt32 lod  
+	exposedField SFNode	texture
+]
+"../blend/ceiling.wrl#Ceiling" 
+
+EXTERNPROTO	ApartmentWalls [
+	
+	# lod from windows etc
+    exposedField SFInt32 lod
+	
+	# texture of the walls  
+	exposedField SFNode	texture
+
+    #rotation of the walls so the windows might be elsewhere	
+	exposedField SFInt32 zAngle	   
+]
+"../blend/apartmentWalls.wrl#ApartmentWalls"
+
+PROTO Apartment [
+	exposedField SFInt32 lod 1
+	exposedField SFNode windowTexture NULL
+	exposedField SFInt32 zCeilingRotation 0
+]{
+	Group {
+		children [
+			#forward declaration so it won't show
+			Switch {
+				choice [
+                    DEF	ApartmentWallsInstance ApartmentWalls	{
+						lod	IS lod
+						#todo!			 Rest of it. walls etc
+					}			
+					DEF StairInstance UpStairsProto {
+						lod	IS lod		
+					}
+					DEF	CeilingInstance Ceiling	{
+						lod	IS lod
+						#texture TODO
+					}
+				]
+			}
+			Transform {
+					children [
+					USE	ApartmentWallsInstance				
+					USE	StairInstance
+					
+					Transform { 
+						children [
+						   USE	CeilingInstance 
+					   ]
+					translation	0 2.9 0
+					}
+				]
+				#all is moved  "down" so that the ceiling is at "0"
+				#translation	0 -2.9 0
+			}
+		]
+	}
+}
