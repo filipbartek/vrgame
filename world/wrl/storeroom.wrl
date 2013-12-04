@@ -68,26 +68,28 @@ PROTO StoreRoom [
 					children [
 						Switch {
 							choice [
-								  DEF CrateMove Transform {
-									  translation	0 0 0 # initial translation		 
-									  rotation 1 0 0 -1.57         # otočení zpět do roviny xz
-									  children [ 
-										DEF CrateSensor PlaneSensor { } # this will move according to rotation
-										Transform {
-											children USE Crate
-											rotation 1 0 0 1.57 
-											}		 
-										]
-									ROUTE CrateSensor.translation_changed TO CrateMove.translation
-								}
+								DEF	CrateMove Transform {
+    							rotation 1 0 0 -1.57         # rotate back to the original plane
+    							translation -0.23 0.6 0.15   # iniciální poloha lampy na stole
+    							children [
+    								DEF CrateChangePos PlaneSensor { maxPosition 1 1 minPosition -1 -1}
+
+        							DEF CrateSensored Transform { 
+        								rotation 1 0 0 1.57  # rotate to the place that we want to move in
+        								children USE Crate
+        							}
+								]
+							}
 							]
 						}
-						
 						Transform {
 							children	[
 								USE	ApartmentInstance
-								USE	CrateMove			  
+								USE	CrateMove	
 							]
+
+							ROUTE CrateChangePos.translation_changed TO CrateSensored.translation			  
+							
 						}
 							  
 						Transform {
