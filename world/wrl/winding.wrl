@@ -29,7 +29,7 @@ EXTERNPROTO	BarRoundProto [
 
 Switch {
 	choice [
-		DEF	Winding Transform {
+		DEF	Drum Transform {
 			children [
 				Shape {
 					appearance Appearance {
@@ -43,7 +43,40 @@ Switch {
 			scale 0.2 0.2 0.2
 			rotation 0 0 1 1.57
 		}
+		DEF	Hinge Group	{
+			children [
+				Transform {
+					children [
+						Transform {
+							children BarSquareProto {
+								diffuseColor 0.1 0.1 0.2
+								size 0.05 1 0.05
+							}
+							translation	0.025 0.5 0
+						}
+						Transform {
+							children Transform {
+								children BarRoundProto {
+									diffuseColor 0.1 0.1 0.2
+									scale 0.05 1 0.05
+									bottom FALSE
+								}
+								translation	0 0.5 0
+							}
+							rotation 0 0 1 -1.57
+							translation	0 0.975 0
+						}
+					]
+					scale 0.4 0.4 0.4
+				}
+			]
+		}
 	]
 }
 
-USE	Winding
+USE	Drum
+
+Transform {
+	children USE Hinge
+	translation	0.2 0 0
+}
