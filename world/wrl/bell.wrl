@@ -54,6 +54,15 @@ Switch {
 Transform {
 	children [
 		USE	BellExtrusion
+		DEF	BellTS TouchSensor {}
+		Sound {
+			source DEF BellAudioClip AudioClip {
+				url	["../wav/bell.wav"]
+				description	"bell"
+			}
+		}
 	]
 	scale 0.35 0.35 0.35
 }
+
+ROUTE BellTS.touchTime TO BellAudioClip.startTime
