@@ -55,9 +55,49 @@ PROTO StoreRoom [
 			}
 			Transform {
 					children [
+						Switch {
+							choice [
+								DEF	Crate Transform	{
+									children [
+										Shape {
+											geometry Box {
+												size 1 1 1
+											}
+											appearance Appearance {
+												material Material {
+													diffuseColor 0.1 1 0.7
+												}
+											}
+										}
+									]
+									translation	0 0.5 0
+								}
+							]
+						}
 						Transform {
 							children	[
 								USE	ApartmentInstance
+								USE	Crate
+								Transform	{
+									children USE Crate
+									translation	2 0 0
+								}	 
+
+								Transform	{
+									children USE Crate
+									translation	2 0 2
+								}	 
+
+								Transform	{
+									children USE Crate
+									translation	1.2 0 1
+								}
+						   	 
+								Transform	{
+									children USE Crate
+									scale 0.5 1 1.2
+									translation	1.2 0 1
+								}
 							]
 						}
 							  
@@ -72,7 +112,7 @@ PROTO StoreRoom [
 											jump FALSE
 										}
 										Viewpoint {
-											description	"Inside Apartment"
+											description	"Inside StoreRoom"
 											orientation	0 0 1 0
 											position -0.2 -2.2 1.2
 											jump FALSE
