@@ -52,15 +52,13 @@ PROTO Apartment [
 			Switch {
 				choice [
                     DEF	ApartmentWallsInstance ApartmentWalls	{
-						lod	IS lod
-						#todo!			 Rest of it. walls etc
+						lod	IS lod								
 					}			
 					DEF StairInstance UpStairsProto {
 						lod	IS lod		
 					}
 					DEF	CeilingInstance Ceiling	{
-						lod	IS lod
-						#texture TODO
+						lod	IS lod	   
 					}
 				]
 			}

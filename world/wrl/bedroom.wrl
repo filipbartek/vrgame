@@ -22,6 +22,13 @@ EXTERNPROTO	StairsProto [
 ]
 "../blend/stair.wrl#Stairs"
 
+EXTERNPROTO ApartmentProto [
+	exposedField SFInt32 lod 
+	exposedField SFNode windowTexture
+	exposedField SFInt32 zCeilingRotation
+]
+"apartment.wrl#Apartment"
+
 PROTO BedRoom [
 	exposedField SFInt32 lod 1
 ]{
@@ -29,6 +36,10 @@ PROTO BedRoom [
 		children [
 			Switch {
 				choice [
+					DEF ApartmentInstance ApartmentProto {
+						lod	IS lod		
+					}
+
 					DEF Bed Transform {
 						children [
 							Inline {
@@ -83,9 +94,7 @@ PROTO BedRoom [
 					children [
 						Transform {
 							children	[
-								Inline {
-									url	["../blend/apartment.wrl"]
-								}
+								USE	ApartmentInstance
 							]
 						}
 					Transform {
