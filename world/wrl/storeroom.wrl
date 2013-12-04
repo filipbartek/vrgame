@@ -17,16 +17,15 @@ EXTERNPROTO ApartmentProto [
 ]
 "apartment.wrl#Apartment"
 
-PROTO CrateProto [
-	exposedField SFVec3f crateScale	1 1 1
-	exposedField SFVec3f crateMove 0 0 0
+
+PROTO StoreRoom [
+	exposedField SFInt32 lod 1
 ]{
 	Group {
 		children [
-			Transform {
-				children Transform	{
-				children [
-					Shape {
+			Switch {
+				choice [
+					DEF Crate Shape {
 						geometry Box {
 							size 1 1 1
 						}
@@ -36,24 +35,6 @@ PROTO CrateProto [
 							}
 						}
 					}
-				]
-				translation	0 0.5 0
-			}
-			translation	IS crateMove
-			scale IS crateScale
-			}
-			
-		]
-	}
-}
-
-PROTO StoreRoom [
-	exposedField SFInt32 lod 1
-]{
-	Group {
-		children [
-			Switch {
-				choice [
 					DEF ApartmentInstance ApartmentProto {
 						lod	IS lod		
 					}
@@ -84,26 +65,33 @@ PROTO StoreRoom [
 				]
 			}
 			Transform {
-					children [	
+					children [
+						Switch {
+							choice [
+								  DEF CrateMove Transform {
+									children [
+										
+										DEF	CratePos Transform {
+											translation	0 0 0 # initial translation		 
+											rotation 1 0 0 -1.57         # otočení zpět do roviny xz
+											children [
+												DEF CrateSensor PlaneSensor { } # this will move according to rotation
+												Transform {
+													children USE Crate
+													rotation 1 0 0 1.57 
+												}		 
+											]
+										}				
+									]
+									ROUTE CrateSensor.translation_changed TO CrateMove.translation
+								}
+							]
+						}
+						
 						Transform {
 							children	[
 								USE	ApartmentInstance
-								CrateProto {
-									crateScale 0.2 1 0.3
-								}
-								CrateProto {
-									crateMove 2 0 0
-								}
-								CrateProto {
-									crateMove 2 0 2
-								}				   
-								CrateProto {
-									crateMove 1.2 0 1
-								}	
-						   		CrateProto {
-									crateScale 0.5 1 1.2
-									crateMove -1.2 0 1
-								}					  
+								USE	CrateMove			  
 							]
 						}
 							  
