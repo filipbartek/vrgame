@@ -18,8 +18,7 @@ Switch {
 							diffuseColor 0.4 0.2 0.1
 						}
 					}
-					geometry Cylinder {
-					}
+					geometry Cylinder {}
 				}
 			]
 			scale 0.2 0.2 0.2
