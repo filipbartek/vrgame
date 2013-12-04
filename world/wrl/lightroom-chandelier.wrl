@@ -28,6 +28,10 @@ PROTO LightCone [
 													material Material {
 														transparency IS	coneTransparency
 														emissiveColor IS color
+														diffuseColor 0 0 0
+														shininess 0
+														specularColor 0 0 0
+														ambientIntensity 0
 													}
 												}
 												geometry Cone {
