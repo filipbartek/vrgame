@@ -18,8 +18,8 @@ EXTERNPROTO ApartmentProto [
 "apartment.wrl#Apartment"
 
 
-PROTO StoreRoom [
-	exposedField SFInt32 lod 1
+PROTO CrateC [
+	exposedField SFVec3f initialPosition 0 0 0
 ]{
 	Group {
 		children [
@@ -35,6 +35,36 @@ PROTO StoreRoom [
 							}
 						}
 					}
+				    
+					DEF	CrateMove Transform {
+    				rotation 1 0 0 -1.57         # rotate back to the original plane
+    				translation IS initialPosition  # iniciální poloha lampy na stole
+    				children [
+    					DEF CrateChangePos PlaneSensor { maxPosition 2 2 minPosition -2 -2}
+
+        				DEF CrateSensored Transform { 
+        					rotation 1 0 0 1.57  # rotate to the place that we want to move in
+        					children USE Crate
+        				}
+					]		
+				}
+				]
+			}
+			USE	CrateMove
+		]																 
+	}
+
+	ROUTE CrateChangePos.translation_changed TO CrateSensored.translation
+}
+
+
+PROTO StoreRoom [
+	exposedField SFInt32 lod 1
+]{
+	Group {
+		children [
+			Switch {
+				choice [
 					DEF ApartmentInstance ApartmentProto {
 						lod	IS lod		
 					}
@@ -66,29 +96,21 @@ PROTO StoreRoom [
 			}
 			Transform {
 					children [
-						Switch {
-							choice [
-								DEF	CrateMove Transform {
-    							rotation 1 0 0 -1.57         # rotate back to the original plane
-    							translation -0.23 0.6 0.15   # iniciální poloha lampy na stole
-    							children [
-    								DEF CrateChangePos PlaneSensor { maxPosition 1 1 minPosition -1 -1}
-
-        							DEF CrateSensored Transform { 
-        								rotation 1 0 0 1.57  # rotate to the place that we want to move in
-        								children USE Crate
-        							}
-								]
-							}
-							]
-						}
+						
 						Transform {
 							children	[
 								USE	ApartmentInstance
-								USE	CrateMove	
+								CrateC	{
+									initialPosition	1 0 1
+								}
+								CrateC {
+									initialPosition	0 0 2
+								}
+								CrateC {
+									initialPosition	-1 0 -1
+								}
 							]
-
-							ROUTE CrateChangePos.translation_changed TO CrateSensored.translation			  
+																							   			  
 							
 						}
 							  
