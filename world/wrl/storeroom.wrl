@@ -17,6 +17,36 @@ EXTERNPROTO ApartmentProto [
 ]
 "apartment.wrl#Apartment"
 
+PROTO CrateProto [
+	exposedField SFVec3f crateScale	1 1 1
+	exposedField SFVec3f crateMove 0 0 0
+]{
+	Group {
+		children [
+			Transform {
+				children Transform	{
+				children [
+					Shape {
+						geometry Box {
+							size 1 1 1
+						}
+						appearance Appearance {
+							material Material {
+								diffuseColor 0.1 1 0.7
+							}
+						}
+					}
+				]
+				translation	0 0.5 0
+			}
+			translation	IS crateMove
+			scale IS crateScale
+			}
+			
+		]
+	}
+}
+
 PROTO StoreRoom [
 	exposedField SFInt32 lod 1
 ]{
@@ -54,50 +84,26 @@ PROTO StoreRoom [
 				]
 			}
 			Transform {
-					children [
-						Switch {
-							choice [
-								DEF	Crate Transform	{
-									children [
-										Shape {
-											geometry Box {
-												size 1 1 1
-											}
-											appearance Appearance {
-												material Material {
-													diffuseColor 0.1 1 0.7
-												}
-											}
-										}
-									]
-									translation	0 0.5 0
-								}
-							]
-						}
+					children [	
 						Transform {
 							children	[
 								USE	ApartmentInstance
-								USE	Crate
-								Transform	{
-									children USE Crate
-									translation	2 0 0
-								}	 
-
-								Transform	{
-									children USE Crate
-									translation	2 0 2
-								}	 
-
-								Transform	{
-									children USE Crate
-									translation	1.2 0 1
+								CrateProto {
+									crateScale 0.2 1 0.3
 								}
-						   	 
-								Transform	{
-									children USE Crate
-									scale 0.5 1 1.2
-									translation	1.2 0 1
+								CrateProto {
+									crateMove 2 0 0
 								}
+								CrateProto {
+									crateMove 2 0 2
+								}				   
+								CrateProto {
+									crateMove 1.2 0 1
+								}	
+						   		CrateProto {
+									crateScale 0.5 1 1.2
+									crateMove -1.2 0 1
+								}					  
 							]
 						}
 							  
