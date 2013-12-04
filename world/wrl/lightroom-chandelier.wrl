@@ -7,58 +7,55 @@ WorldInfo {
 
 PROTO LightCone [
 	exposedField SFColor color 1 1 0
-	exposedField SFFloat transparency 0.7
-	exposedField SFVec3f scale 100 100 100
-	exposedField SFBool lightOn FALSE
+	exposedField SFFloat coneTransparency 0.7
+	exposedField SFVec3f coneScale 100 100 100
 	exposedField SFBool pointLightOn TRUE
+	# Z+: forward
+	exposedField SFVec3f pointLightLocation 0 0 0.5
 ]{
-	Transform {
+	Group {
 		children [
-			Transform	{
+			Transform {
 				children [
 					Transform	{
 						children [
-							Transform {
+							Transform	{
 								children [
-									Shape {
-										appearance Appearance {
-											material Material {
-												transparency IS	transparency
-												emissiveColor IS color
+									Transform {
+										children [
+											Shape {
+												appearance Appearance {
+													material Material {
+														transparency IS	coneTransparency
+														emissiveColor IS color
+													}
+												}
+												geometry Cone {
+													bottom FALSE
+												}
 											}
-										}
-										geometry Cone {
-											bottom FALSE
-										}
+										]
+										translation	0 -1 0
 									}
 								]
-								translation	0 -1 0
+								# 270 degrees
+								rotation 1 0 0 4.71
 							}
 						]
-						# 270 degrees
-						rotation 1 0 0 4.71
+						# 22.5 * 2 degrees beam angle
+						scale 0.21 0.21 1
 					}
 				]
-				scale 0.21 0.21 1
-			}
-			SpotLight {
-				color IS color
-				beamWidth 0.39 # 22.5 degrees
-				cutOffAngle	0.39 # 22.5 degrees
-				ambientIntensity 0
-				on IS lightOn
+				scale IS coneScale
 			}
 			PointLight {
 				color IS color
-				location 0 0 1
-				radius 1
-				ambientIntensity 0
-				attenuation	0 0.1 0
-				intensity 1
+				location IS	pointLightLocation
+				radius 10
+				attenuation	0 0 1
 				on IS pointLightOn
 			}
 		]
-		scale IS scale
 	}
 }
 
