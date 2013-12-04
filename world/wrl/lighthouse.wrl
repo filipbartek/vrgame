@@ -24,6 +24,11 @@ EXTERNPROTO	BedRoomProto [
 ]
 "bedroom.wrl#BedRoom"
 
+EXTERNPROTO	StoreRoomProto [
+	exposedField SFInt32 lod
+]
+"storeroom.wrl#StoreRoom"
+
 PROTO Lighthouse [
 
 	# 1: LOD enabled
@@ -43,9 +48,50 @@ PROTO Lighthouse [
 					BalconyProto {
 						lod	IS lod
 					}
-					BedRoomProto {
-						lod	IS  lod
+					Transform {
+						children [   
+							Transform {
+								children [																    
+									Inline {
+										url	["../blend/balconyplatform.wrl"]
+									}
+									BedRoomProto {
+										lod	IS  lod
+									}
+									
+								]
+								rotation 0 1 0 1
+								translation	0 2.9 0
+							}
+							StoreRoomProto {
+										lod	IS lod
+									}
+							# floor
+							Transform {
+									children [
+										Shape {
+											geometry Cylinder {
+												height 0.1
+												radius 5.4
+												bottom TRUE
+												top	TRUE
+											}
+											appearance Appearance
+											{
+												material Material {
+													diffuseColor 0.0 0.2 .2
+												}
+											}
+										}
+									]
+									translation	0 -2.9 0
+							}
+							
+						]
+						translation	 0 -2.9 0
+						scale 0.33 1 0.33
 					}
+					
 				]
 				# Lighthouse height
 				translation	0 29.7942 0

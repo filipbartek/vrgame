@@ -1,0 +1,140 @@
+#VRML V2.0 utf8
+
+WorldInfo {
+	title "Store room"
+	info ["Eva Pešková"]
+}
+
+EXTERNPROTO	LadyBugProto [
+	exposedField SFInt32 lod
+]
+"ladyBugLods.wrl#LadyBug"
+
+EXTERNPROTO ApartmentProto [
+	exposedField SFInt32 lod 
+	exposedField SFNode windowTexture
+	exposedField SFInt32 zCeilingRotation
+]
+"apartment.wrl#Apartment"
+
+PROTO CrateProto [
+	exposedField SFVec3f crateScale	1 1 1
+	exposedField SFVec3f crateMove 0 0 0
+]{
+	Group {
+		children [
+			Transform {
+				children Transform	{
+				children [
+					Shape {
+						geometry Box {
+							size 1 1 1
+						}
+						appearance Appearance {
+							material Material {
+								diffuseColor 0.1 1 0.7
+							}
+						}
+					}
+				]
+				translation	0 0.5 0
+			}
+			translation	IS crateMove
+			scale IS crateScale
+			}
+			
+		]
+	}
+}
+
+PROTO StoreRoom [
+	exposedField SFInt32 lod 1
+]{
+	Group {
+		children [
+			Switch {
+				choice [
+					DEF ApartmentInstance ApartmentProto {
+						lod	IS lod		
+					}
+
+					DEF Bed Transform {
+						children [
+							Inline {
+								url	["../blend/bed.wrl"]
+							}
+						]
+						translation	-0.7 0 0
+					}							
+		   
+					DEF	LadyBugInstance Transform {
+						children [
+							LadyBugProto {
+								lod	IS lod
+							}
+						]
+					}
+
+					DEF	Shelf Transform {
+						children Inline {
+							url	["../blend/library.wrl"]
+						}
+						scale 1 1 2
+					}
+				]
+			}
+			Transform {
+					children [	
+						Transform {
+							children	[
+								USE	ApartmentInstance
+								CrateProto {
+									crateScale 0.2 1 0.3
+								}
+								CrateProto {
+									crateMove 2 0 0
+								}
+								CrateProto {
+									crateMove 2 0 2
+								}				   
+								CrateProto {
+									crateMove 1.2 0 1
+								}	
+						   		CrateProto {
+									crateScale 0.5 1 1.2
+									crateMove -1.2 0 1
+								}					  
+							]
+						}
+							  
+						Transform {
+							children [
+								Transform {
+									children [
+										Viewpoint {
+											description	"Store room"
+											orientation	1 0 0 -1.18
+											position 1.2 0.5 0
+											jump FALSE
+										}
+										Viewpoint {
+											description	"Inside StoreRoom"
+											orientation	0 0 1 0
+											position -0.2 -2.2 1.2
+											jump FALSE
+										}
+								]
+								rotation 0 1 0 -0.60
+							}
+						]
+						# Translastion of the balcony platform
+						translation	0 2.9 0
+					}
+
+				]
+				#all is moved  "down" so that the ceiling is at "0"
+				translation	0 -2.9 0
+			}
+		]
+	}
+}
