@@ -85,6 +85,7 @@ PROTO Lighthouse [
 							}
 							
 						]
+						translation	 0 -2.9 0
 						scale 0.33 1 0.33
 					}
 					
