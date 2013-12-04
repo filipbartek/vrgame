@@ -69,7 +69,7 @@ PROTO Lightroom [
 			Transform {
 				children [
 					USE	Cage
-					Transform {
+					DEF ChandelierTransform Transform {
 						children [
 							USE	Chandelier
 						]
@@ -93,4 +93,14 @@ PROTO Lightroom [
 
 		]
 	}
+	DEF	ChandelierTimer TimeSensor {
+		cycleInterval 4
+		loop TRUE
+	}
+	DEF	ChandelierOI OrientationInterpolator {
+		key      [0         , 1         ]
+		keyValue [0 1 0 1.57, 0 1 0 4.71]
+	}
+	ROUTE ChandelierTimer.fraction_changed TO ChandelierOI.set_fraction
+	ROUTE ChandelierOI.value_changed TO	ChandelierTransform.rotation
 }
