@@ -177,21 +177,21 @@ Switch {
 				}
 				Transform {
 					children [
-						#USE	Side7
+						USE	Side7
 					]
 					rotation 0 1 0 3.14
 					translation	0 0 -0.3175
 				}
 				Transform {
 					children [
-						#USE	Side5
+						USE	Side5
 					]
 					rotation 0 1 0 1.57
 					translation	0.6350 0 0
 				}
 				Transform {
 					children [
-						#USE	Side5
+						USE	Side5
 					]
 					rotation 0 1 0 4.71
 					translation	-0.6350 0 0
