@@ -157,6 +157,7 @@ Switch {
 				}
 				LightCone {
 					color 1 0 0
+					coneTransparency 0.8
 				}
 				Transform {
 					children [
