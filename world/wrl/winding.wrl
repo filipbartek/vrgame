@@ -74,7 +74,9 @@ Switch {
 					scale 0.4 0.4 0.4
 					rotation 0 0 1 1.57
 				}
-				DEF HingeCS CylinderSensor	{}
+				DEF HingeCS CylinderSensor	{
+					enabled	FALSE
+				}
 			]
 			rotation 0 0 1 -1.57
 		}
@@ -97,4 +99,9 @@ Transform {
 	rotation 0 0 1 -1.57
 }
 
+DEF PS ProximitySensor	{
+	size 5 5 5
+}
+
+ROUTE PS.isActive TO HingeCS.enabled
 ROUTE HingeCS.rotation_changed TO Winding.rotation
