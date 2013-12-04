@@ -69,20 +69,15 @@ PROTO StoreRoom [
 						Switch {
 							choice [
 								  DEF CrateMove Transform {
-									children [
-										
-										DEF	CratePos Transform {
-											translation	0 0 0 # initial translation		 
-											rotation 1 0 0 -1.57         # otočení zpět do roviny xz
-											children [
-												DEF CrateSensor PlaneSensor { } # this will move according to rotation
-												Transform {
-													children USE Crate
-													rotation 1 0 0 1.57 
-												}		 
-											]
-										}				
-									]
+									  translation	0 0 0 # initial translation		 
+									  rotation 1 0 0 -1.57         # otočení zpět do roviny xz
+									  children [ 
+										DEF CrateSensor PlaneSensor { } # this will move according to rotation
+										Transform {
+											children USE Crate
+											rotation 1 0 0 1.57 
+											}		 
+										]
 									ROUTE CrateSensor.translation_changed TO CrateMove.translation
 								}
 							]
