@@ -69,11 +69,33 @@ PROTO StoreRoom [
 						lod	IS lod		
 					}
 
+					DEF	TopCylinder Transform {
+						children [
+							Shape {
+								geometry Cylinder {
+									height 0.02
+									radius 0.4
+									top	TRUE
+									bottom TRUE
+								}
+								appearance Appearance {
+									material Material {
+										diffuseColor 0.7 0.5 0.8 # todo change
+									}
+								}
+							}
+						]
+						translation	0 0.5 0
+					}
+
 					DEF	Barrel Transform {
-						children Inline	{
-							url	["../blend/barrel.wrl"]
+						children [
+								Inline	{
+									url	["../blend/barrel.wrl"]
+							}					
 							# Add top cylinder that can be moved
-						}					
+							USE	TopCylinder
+						]
 					}
 					DEF	BarrelWater Transform {
 						children [

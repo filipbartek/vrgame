@@ -90,6 +90,7 @@ DEF BellPI PositionInterpolator {
 DEF TimeSLong TimeSensor {
 	cycleInterval 1
 }
+
 DEF TimeS TimeSensor {
 	cycleInterval 0.1
 	loop TRUE
