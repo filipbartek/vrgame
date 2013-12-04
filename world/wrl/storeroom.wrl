@@ -86,6 +86,13 @@ PROTO StoreRoom [
 						]
 					}
 
+					DEF	Barrel Transform {
+						children Inline	{
+							url	["../blend/barrel.wrl"]
+						}
+						translation	-2.5 0 -2
+					}
+
 					DEF	Shelf Transform {
 						children Inline {
 							url	["../blend/library.wrl"]
@@ -109,6 +116,7 @@ PROTO StoreRoom [
 								CrateC {
 									initialPosition	-1 0 -1
 								}
+								USE	Barrel
 							]
 																							   			  
 							
