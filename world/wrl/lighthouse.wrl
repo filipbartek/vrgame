@@ -49,9 +49,12 @@ PROTO Lighthouse [
 						lod	IS lod
 					}
 					Transform {
-						children [	   
+						children [   
 							Transform {
-								children [
+								children [																    
+									Inline {
+										url	["../blend/balconyplatform.wrl"]
+									}
 									BedRoomProto {
 										lod	IS  lod
 									}
