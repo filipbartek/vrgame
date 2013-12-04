@@ -94,7 +94,7 @@ PROTO Lightroom [
 		]
 	}
 	DEF	ChandelierTimer TimeSensor {
-		cycleInterval 8
+		cycleInterval 16
 		loop TRUE
 	}
 	DEF	ChandelierOI OrientationInterpolator {
