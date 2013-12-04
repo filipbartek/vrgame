@@ -43,9 +43,15 @@ PROTO Lighthouse [
 					BalconyProto {
 						lod	IS lod
 					}
-					BedRoomProto {
-						lod	IS  lod
+					Transform {
+						children [
+							BedRoomProto {
+								lod	IS  lod
+							}
+						]
+						scale 0.33 1 0.33
 					}
+					
 				]
 				# Lighthouse height
 				translation	0 29.7942 0
