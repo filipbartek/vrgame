@@ -8,6 +8,25 @@ WorldInfo {
 # http://www.bellrock.org.uk/lighthouse/lighthouse_lightroom.htm (looks, dimensions)
 # http://www.bellrock.org.uk/lighthouse/lighthouse_courses.htm (position)
 
+EXTERNPROTO	BarSquareProto [
+	exposedField SFInt32 lod
+	field SFVec3f size
+	exposedField SFColor diffuseColor
+	exposedField SFNode texture
+]
+"barsquare.wrl#BarSquare"
+
+EXTERNPROTO	BarRoundProto [
+	exposedField SFInt32 lod
+	field MFFloat range
+	field SFVec3f scale
+	exposedField SFColor diffuseColor
+	exposedField SFNode texture
+	field SFBool bottom
+	field SFBool top
+]
+"barround.wrl#BarRound"
+
 Switch {
 	choice [
 		DEF	Winding Transform {
