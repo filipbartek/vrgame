@@ -17,32 +17,165 @@ EXTERNPROTO ApartmentProto [
 ]
 "apartment.wrl#Apartment"
 
-PROTO CrateProto [
-	exposedField SFVec3f crateScale	1 1 1
-	exposedField SFVec3f crateMove 0 0 0
+
+PROTO CrateC [
+	exposedField SFVec3f initialPosition 0 0 0
+	exposedField SFInt32 lod 1
 ]{
 	Group {
 		children [
-			Transform {
-				children Transform	{
-				children [
-					Shape {
+			Switch {
+				choice [
+					DEF Crate Shape {
 						geometry Box {
 							size 1 1 1
 						}
-						appearance Appearance {
-							material Material {
-								diffuseColor 0.1 1 0.7
+						appearance Appearance {	 
+										texture	ImageTexture {
+											url	["..\textures\wood.jpeg"]
+										}
+									}
+					}
+				    
+					DEF	CrateMove Transform {
+    				rotation 1 0 0 -1.57         # rotate back to the original plane
+    				translation IS initialPosition  # initil position of object on the table
+    				children [
+    					DEF CrateChangePos PlaneSensor { maxPosition 2 2 minPosition -2 -2}
+
+        				DEF CrateSensored Transform { 
+        					rotation 1 0 0 1.57  # rotate to the place that we want to move in
+        					children USE Crate
+        				}
+					]		
+				}
+				]
+			}
+			USE	CrateMove
+		]																 
+	}
+
+	ROUTE CrateChangePos.translation_changed TO CrateSensored.translation
+}
+
+PROTO BarrelProto [
+	exposedField SFInt32 lod 1
+]{
+	Group {
+		children [
+			Switch {
+				choice [	 
+					DEF	TopCylinder Transform {
+						children [
+							Transform  {
+								children 
+								[ Shape {
+								geometry Cylinder {
+									height 0.02
+									radius 0.4
+									top	TRUE
+									bottom TRUE
+								}	 
+									appearance Appearance {	 
+										texture	ImageTexture {
+											url	["..\textures\wood.jpeg"]
+										}
+									}
+
+								}
+								Sound {
+									source DEF CrateAudioClip AudioClip {
+										url	["../wav/crateOpen.wav"]
+										description	"OpeningCrate"
+									}
+									maxBack	1000
+									maxFront 1000
+								}
+							]
+
+								translation	0 0.5 0
 							}
+							
+							DEF	BarrelLidSensor TouchSensor {}	 
+
+						DEF BarrelLidPosition PositionInterpolator	{	## for the lid
+							key [0, 1]
+							keyValue [ 0 0 0, 0 1 0 ]
 						}
+
+						DEF BarrelLidOrientation OrientationInterpolator	{
+							key [0, 1]
+							keyValue [1 0 0 0, 1 0 0 1.8]
+						}
+
+						DEF BarrelSensor TimeSensor {
+						
+									#how much the interval should take
+									cycleInterval 0.5	
+
+									#for barrel, repeat just once
+									#loop TRUE
+								}							
+						]				   
+					}								
+					
+
+					DEF	Barrel Transform {
+						children [
+								Inline	{
+									url	["../blend/barrel.wrl"]
+							}					
+							# Add top cylinder that can be moved
+							USE	TopCylinder
+						]
 					}
 				]
-				translation	0 0.5 0
 			}
-			translation	IS crateMove
-			scale IS crateScale
+			USE	Barrel
+		]
+	}
+	ROUTE BarrelLidSensor.touchTime TO CrateAudioClip.startTime
+	ROUTE BarrelLidSensor.touchTime	TO BarrelSensor.startTime
+	ROUTE BarrelSensor.fraction_changed	TO BarrelLidOrientation.set_fraction
+	ROUTE BarrelSensor.fraction_changed	TO BarrelLidPosition.set_fraction
+	ROUTE BarrelLidOrientation.value_changed TO	TopCylinder.rotation
+	ROUTE BarrelLidPosition.value_changed TO TopCylinder.translation 
+}	
+
+PROTO BarrelLiquid [
+	exposedField SFInt32 lod 1
+	exposedField SFColor color 0 0.1 0.8
+	exposedField SFFloat tranp 0.2	
+]{
+	Group {
+		children [
+			Switch {
+			   choice [
+				   DEF	BarrelWater Transform {
+						children [
+							BarrelProto	{ lod IS lod }
+							Transform {
+								children Shape {
+									appearance Appearance {
+										material DEF Water Material {
+											diffuseColor IS	color
+											transparency IS	tranp
+										}
+									}
+									geometry Cylinder {
+										radius 0.4
+										height 0.1
+										top	TRUE
+									}
+								}
+								# water is somewhere up
+								translation	0 0.15 0
+							}							
+						]
+					}
+			   ]
 			}
-			
+			USE	BarrelWater	
 		]
 	}
 }
@@ -57,54 +190,33 @@ PROTO StoreRoom [
 					DEF ApartmentInstance ApartmentProto {
 						lod	IS lod		
 					}
-
-					DEF Bed Transform {
-						children [
-							Inline {
-								url	["../blend/bed.wrl"]
-							}
-						]
-						translation	-0.7 0 0
-					}							
-		   
-					DEF	LadyBugInstance Transform {
-						children [
-							LadyBugProto {
-								lod	IS lod
-							}
-						]
-					}
-
-					DEF	Shelf Transform {
-						children Inline {
-							url	["../blend/library.wrl"]
-						}
-						scale 1 1 2
-					}
-				]
+				]		   
 			}
 			Transform {
-					children [	
+					children [
+						
 						Transform {
 							children	[
 								USE	ApartmentInstance
-								CrateProto {
-									crateScale 0.2 1 0.3
+								CrateC	{
+									initialPosition	1 0 1
 								}
-								CrateProto {
-									crateMove 2 0 0
+								CrateC {
+									initialPosition	0 0 2
 								}
-								CrateProto {
-									crateMove 2 0 2
-								}				   
-								CrateProto {
-									crateMove 1.2 0 1
-								}	
-						   		CrateProto {
-									crateScale 0.5 1 1.2
-									crateMove -1.2 0 1
-								}					  
+								CrateC {
+									initialPosition	-1 0 -1
+								}
+								BarrelProto	{}
+								Transform {
+									children [
+										BarrelLiquid { tranp 0.1 }
+									]
+									translation	0 0 -2
+								}
 							]
+																							   			  
+							
 						}
 							  
 						Transform {
