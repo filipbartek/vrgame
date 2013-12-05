@@ -100,12 +100,12 @@ PROTO BarrelProto [
 
 						DEF BarrelLidPosition PositionInterpolator	{	## for the lid
 							key [0, 1]
-							keyValue [ 0 0 0, 0 1 0 ]
+							keyValue [ 0 0 0, 0 0.5 -0.17 ]
 						}
 
 						DEF BarrelLidOrientation OrientationInterpolator	{
 							key [0, 1]
-							keyValue [1 0 0 0, 1 0 0 1]
+							keyValue [0 0 0 0, 1 1 0 1.2]
 						}
 
 						DEF BarrelSensor TimeSensor {
