@@ -96,11 +96,6 @@ PROTO BarrelProto [
 							keyValue [1 0 0 0, 1 0 0 1.8]
 						}
 
-						DEF BarrelWaterColor ColorInterpolator {
-							key [0, 0.25, 0.5, 0.75, 1]
-							keyValue [0 0 0, 0 0.2 0, 0 0.4 0, 0 0.6 0, 0 0.8 0]
-						}
-
 						DEF BarrelSensor TimeSensor {
 						
 									#how much the interval should take
@@ -131,31 +126,27 @@ PROTO BarrelProto [
 	ROUTE BarrelLidSensor.touchTime	TO BarrelSensor.startTime
 	ROUTE BarrelSensor.fraction_changed	TO BarrelLidOrientation.set_fraction
 	ROUTE BarrelSensor.fraction_changed	TO BarrelLidPosition.set_fraction
-	ROUTE BarrelSensor.fraction_changed	TO BarrelWaterColor.set_fraction
 	ROUTE BarrelLidOrientation.value_changed TO	TopCylinder.rotation
 	ROUTE BarrelLidPosition.value_changed TO TopCylinder.translation 
-}
+}	
 
-
-PROTO StoreRoom [
-	exposedField SFInt32 lod 1
+PROTO BarrelLiquid [
+	exposedField SFColor color 0 0.1 0.8
+	exposedField SFFloat tranp 0.2	
 ]{
 	Group {
 		children [
 			Switch {
-				choice [
-					DEF ApartmentInstance ApartmentProto {
-						lod	IS lod		
-					}
-					DEF	BarrelWater Transform {
+			   choice [
+				   DEF	BarrelWater Transform {
 						children [
 							BarrelProto	{}
 							Transform {
 								children Shape {
 									appearance Appearance {
 										material DEF Water Material {
-											diffuseColor 0.2 0 0.8
-											transparency 0.5
+											diffuseColor IS	color
+											transparency IS	tranp
 										}
 									}
 									geometry Cylinder {
@@ -168,6 +159,23 @@ PROTO StoreRoom [
 								translation	0 0.15 0
 							}							
 						]
+					}
+			   ]
+			}
+			USE	BarrelWater	
+		]
+	}
+}
+
+PROTO StoreRoom [
+	exposedField SFInt32 lod 1
+]{
+	Group {
+		children [
+			Switch {
+				choice [
+					DEF ApartmentInstance ApartmentProto {
+						lod	IS lod		
 					}
 				]		   
 			}
@@ -189,7 +197,7 @@ PROTO StoreRoom [
 								BarrelProto	{}
 								Transform {
 									children [
-										BarrelProto	{}
+										BarrelLiquid { tranp 0.1 }
 									]
 									translation	0 0 -2
 								}
