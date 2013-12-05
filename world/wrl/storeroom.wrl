@@ -69,6 +69,23 @@ PROTO StoreRoom [
 						lod	IS lod		
 					}
 
+					DEF BarrelLidPosition PositionInterpolator	{	## for the lid
+						key [0, 0.25, 0.5, 0.75, 1]
+						keyValue [ 1 0 0, 1 0 0, 1 0 0, 1 0 0, 1 0 0 ]
+					}
+
+					DEF BarrelLidOrientation OrientationInterpolator	{
+						key [0, 0.25, 0.5, 0.75, 1]
+						keyValue [1 0 0 0, 1 0 0 0.01, 1 0 0 0, 1 0 0 -0.01, 1 0 0 0]
+					}
+
+					DEF BarrelWaterColor ColorInterpolator {
+						key [0, 0.25, 0.5, 0.75, 1]
+						keyValue [0 0 0, 0 0.2 0, 0 0.4 0, 0 0.6 0, 0 0.8 0]
+					}
+
+					DEF	BarrelLidSensor TouchSensor {}
+
 					DEF	TopCylinder Transform {
 						children [
 							Shape {
@@ -86,7 +103,8 @@ PROTO StoreRoom [
 							}
 						]
 						translation	0 0.5 0
-					}
+					}								
+					
 
 					DEF	Barrel Transform {
 						children [
@@ -97,6 +115,16 @@ PROTO StoreRoom [
 							USE	TopCylinder
 						]
 					}
+
+					DEF BarrelSensor TimeSensor {
+						
+						#how much the interval should take
+						cycleInterval 0.5	
+
+						#for barrel, repeas just once
+						loop FALSE
+					}
+
 					DEF	BarrelWater Transform {
 						children [
 							USE	Barrel
@@ -120,6 +148,9 @@ PROTO StoreRoom [
 						]
 					}
 				]
+				ROUTE BarrelLidSensor.touchTime	TO BarrelSensor.startTime
+				ROUTE BarrelSensor.fraction_changed	TO BarrelLidOrientation.set_fraction
+				ROUTE BarrelLidOrientation.value_changed TO	Barrel.rotation
 			}
 			Transform {
 					children [
