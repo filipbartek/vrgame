@@ -72,9 +72,15 @@ DEF BellTransform Transform {
 			}
 			translation	0 1.4 0
 		}
-		DEF	BellTS TouchSensor {}
+		DEF	BellTS TouchSensor {
+			enabled	FALSE
+		}
 	]
 	scale 0.35 0.35 0.35
+}
+
+DEF	PS ProximitySensor {
+	size 3 3 3
 }
 
 DEF BellOI OrientationInterpolator	{
@@ -96,6 +102,7 @@ DEF TimeS TimeSensor {
 	stopTime 1
 }
 
+ROUTE PS.isActive TO BellTS.enabled
 ROUTE BellTS.touchTime TO BellAudioClip.startTime
 ROUTE BellTS.touchTime TO TimeSLong.startTime
 ROUTE TimeS.fraction_changed TO	BellOI.set_fraction
