@@ -95,7 +95,7 @@ PROTO BarrelProto [
 
 								translation	0 0.5 0
 							}
-							
+							DEF BarrelTouch ProximitySensor { size 1 1 1 }
 							DEF	BarrelLidSensor TouchSensor {}	 
 
 						DEF BarrelLidPosition PositionInterpolator	{	## for the lid
@@ -134,6 +134,7 @@ PROTO BarrelProto [
 			USE	Barrel
 		]
 	}
+	ROUTE BarrelTouch.isActive TO  BarrelSensor.enabled
 	ROUTE BarrelLidSensor.touchTime TO CrateAudioClip.startTime
 	ROUTE BarrelLidSensor.touchTime	TO BarrelSensor.startTime
 	ROUTE BarrelSensor.fraction_changed	TO BarrelLidOrientation.set_fraction
