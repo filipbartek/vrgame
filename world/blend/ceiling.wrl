@@ -1,6 +1,11 @@
 #VRML V2.0 utf8
 #modeled using blender3d http://blender.org
 
+WorldInfo {
+	title "Ceiling"
+	info ["Eva Pešková"]
+}
+
 PROTO	Ceiling [
 	exposedField SFInt32 lod 1  
 	exposedField SFNode	texture NULL
