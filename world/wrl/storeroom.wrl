@@ -84,7 +84,14 @@ PROTO StoreRoom [
 						keyValue [0 0 0, 0 0.2 0, 0 0.4 0, 0 0.6 0, 0 0.8 0]
 					}
 
-					DEF	BarrelLidSensor TouchSensor {}
+					DEF BarrelSensor TimeSensor {
+						
+								#how much the interval should take
+								cycleInterval 0.5	
+
+								#for barrel, repeas just once
+								#loop TRUE
+							}
 
 					DEF	TopCylinder Transform {
 						children [
@@ -101,6 +108,9 @@ PROTO StoreRoom [
 									}
 								}
 							}
+							DEF	BarrelLidSensor TouchSensor {}
+
+							
 						]
 						translation	0 0.5 0
 					}								
@@ -114,15 +124,6 @@ PROTO StoreRoom [
 							# Add top cylinder that can be moved
 							USE	TopCylinder
 						]
-					}
-
-					DEF BarrelSensor TimeSensor {
-						
-						#how much the interval should take
-						cycleInterval 0.5	
-
-						#for barrel, repeas just once
-						loop FALSE
 					}
 
 					DEF	BarrelWater Transform {
