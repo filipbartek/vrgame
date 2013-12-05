@@ -114,12 +114,11 @@ PROTO Bell [
 	ROUTE PS.isActive TO BellTS.enabled
 	ROUTE BellTS.touchTime TO BellAudioClip.startTime
 	ROUTE BellTS.touchTime TO TimeSLong.startTime
+	ROUTE TimeSLong.isActive TO	TimeS.enabled
+	ROUTE TimeSLong.startTime TO TimeS.startTime
 	ROUTE TimeS.fraction_changed TO	BellOI.set_fraction
 	ROUTE TimeS.fraction_changed TO	BellPI.set_fraction
 	ROUTE BellOI.value_changed TO BellRotation.rotation
 	ROUTE BellPI.value_changed TO BellRotation.translation
-	ROUTE TimeSLong.startTime TO TimeS.startTime
-	#ROUTE TimeSLong.stopTime TO TimeS.stopTime
-	ROUTE TimeSLong.isActive TO	TimeS.enabled
 
 }
