@@ -10,6 +10,8 @@ EXTERNPROTO	LightroomProto [
 ]
 "lightroom.wrl#Lightroom"
 
+EXTERNPROTO	BellProto [] "bell.wrl#Bell"
+
 PROTO Balcony [
 
 	# 1: LOD enabled
@@ -42,14 +44,6 @@ PROTO Balcony [
 				translation	0 4.1022 0
 			}
 
-			Switch {
-				choice [
-					DEF	Bell Inline	{
-						url	["bell.wrl"]
-					}
-				]
-			}
-
 			LightroomProto {
 				lod	IS lod
 			}
@@ -72,7 +66,7 @@ PROTO Balcony [
 			# Southern bell
 			Transform {
 				children [
-					USE	Bell
+					BellProto {}
 				]
 				translation	0 0 2.5273
 			}
@@ -80,7 +74,7 @@ PROTO Balcony [
 			# Northern bell
 			Transform {
 				children [
-					USE	Bell
+					BellProto {}
 				]
 				translation	0 0 -2.5273
 			}

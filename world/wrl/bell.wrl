@@ -5,110 +5,121 @@ WorldInfo {
 	info ["Filip Bártek"]
 }
 
-Switch {
-	choice [
-		DEF	BellExtrusion Shape	{
-			appearance Appearance {
-				material Material {
-					diffuseColor 0 0.1 0.1
-				}
+PROTO Bell [
+]{
+	Group {
+		children [
+			Switch {
+				choice [
+
+					DEF	BellExtrusion Shape	{
+						appearance Appearance {
+							material Material {
+								diffuseColor 0 0.1 0.1
+							}
+						}
+						geometry Extrusion {
+							# http://www.wiley.com/legacy/compbooks/vrml2sbk/ch15/15fig07.htm
+							# circle - 16 vertices
+							crossSection [
+								 1.00  0.00,   0.92 -0.38,
+								 0.71 -0.71,   0.38 -0.92,
+								 0.00 -1.00,  -0.38 -0.92,
+								-0.71 -0.71,  -0.92 -0.38,
+								-1.00 -0.00,  -0.92  0.38,
+								-0.71  0.71,  -0.38  0.92,
+								 0.00  1.00,   0.38  0.92,
+								 0.71  0.71,   0.92  0.38,
+								 1.00  0.00
+							]
+
+							spine [
+								0 0.0 0,
+								0 0.5 0,
+								0 1.4 0,
+								0 1.5 0,
+								0 1.6 0
+							]
+
+							scale [
+								1.0 1.0,
+								0.6 0.6,
+								0.5 0.5,
+								0.1 0.1,
+								0.1 0.1
+							]
+
+							beginCap FALSE
+							creaseAngle	0.79 # 45 degrees
+						}
+					}
+				]
 			}
-			geometry Extrusion {
-				# http://www.wiley.com/legacy/compbooks/vrml2sbk/ch15/15fig07.htm
-				# circle - 16 vertices
-				crossSection [
-					 1.00  0.00,   0.92 -0.38,
-					 0.71 -0.71,   0.38 -0.92,
-					 0.00 -1.00,  -0.38 -0.92,
-					-0.71 -0.71,  -0.92 -0.38,
-					-1.00 -0.00,  -0.92  0.38,
-					-0.71  0.71,  -0.38  0.92,
-					 0.00  1.00,   0.38  0.92,
-					 0.71  0.71,   0.92  0.38,
-					 1.00  0.00
-				]
 
-				spine [
-					0 0.0 0,
-					0 0.5 0,
-					0 1.4 0,
-					0 1.5 0,
-					0 1.6 0
-				]
-
-				scale [
-					1.0 1.0,
-					0.6 0.6,
-					0.5 0.5,
-					0.1 0.1,
-					0.1 0.1
-				]
-
-				beginCap FALSE
-				creaseAngle	0.79 # 45 degrees
-			}
-		}
-	]
-}
-
-DEF BellTransform Transform {
-	children [
-		Transform {
-			children DEF BellRotation Transform {
+			DEF BellTransform Transform {
 				children [
 					Transform {
-						children USE	BellExtrusion
-						translation	0 -1.4 0
-					}
-					Sound {
-						source DEF BellAudioClip AudioClip {
-							url	["../wav/bell.wav"]
-							description	"bell"
+						children DEF BellRotation Transform {
+							children [
+								Transform {
+									children USE	BellExtrusion
+									translation	0 -1.4 0
+								}
+								Sound {
+									source DEF BellAudioClip AudioClip {
+										url	["../wav/bell.wav"]
+										description	"bell"
+									}
+									maxBack	1000
+									maxFront 1000
+								}
+							]
 						}
-						maxBack	1000
-						maxFront 1000
+						translation	0 1.4 0
+					}
+					DEF	BellTS TouchSensor {
+						enabled	FALSE
 					}
 				]
+				scale 0.35 0.35 0.35
 			}
-			translation	0 1.4 0
-		}
-		DEF	BellTS TouchSensor {
-			enabled	FALSE
-		}
-	]
-	scale 0.35 0.35 0.35
-}
 
-DEF	PS ProximitySensor {
-	size 3 3 3
-}
+			DEF	PS ProximitySensor {
+				size 3 3 3
+			}
 
-DEF BellOI OrientationInterpolator	{
-	key [0, 0.25, 0.5, 0.75, 1]
-	keyValue [1 0 0 0, 1 0 0 0.01, 1 0 0 0, 1 0 0 -0.01, 1 0 0 0]
-}
+		]
+	}
 
-DEF BellPI PositionInterpolator {
-	key [0, 0.25, 0.5, 0.75, 1]
-	keyValue [0 0 0, 0 0.01 0, 0 0 0, 0 0.01 0, 0 0 0]
-}
+	DEF BellOI OrientationInterpolator	{
+		key [0, 0.25, 0.5, 0.75, 1]
+		keyValue [1 0 0 0, 1 0 0 0.01, 1 0 0 0, 1 0 0 -0.01, 1 0 0 0]
+	}
 
-DEF TimeSLong TimeSensor {
-	cycleInterval 1
-}
-DEF TimeS TimeSensor {
-	cycleInterval 0.1
-	loop TRUE
-	stopTime 1
-}
+	DEF BellPI PositionInterpolator {
+		key [0, 0.25, 0.5, 0.75, 1]
+		keyValue [0 0 0, 0 0.01 0, 0 0 0, 0 0.01 0, 0 0 0]
+	}
 
-ROUTE PS.isActive TO BellTS.enabled
-ROUTE BellTS.touchTime TO BellAudioClip.startTime
-ROUTE BellTS.touchTime TO TimeSLong.startTime
-ROUTE TimeS.fraction_changed TO	BellOI.set_fraction
-ROUTE TimeS.fraction_changed TO	BellPI.set_fraction
-ROUTE BellOI.value_changed TO BellRotation.rotation
-ROUTE BellPI.value_changed TO BellRotation.translation
-ROUTE TimeSLong.startTime TO TimeS.startTime
-#ROUTE TimeSLong.stopTime TO TimeS.stopTime
-ROUTE TimeSLong.isActive TO	TimeS.enabled
+	DEF TimeSLong TimeSensor {
+		cycleInterval 1
+	}
+
+	DEF TimeS TimeSensor {
+		cycleInterval 0.1
+		loop TRUE
+		stopTime 1
+	}
+
+	ROUTE PS.isActive TO BellTS.enabled
+	ROUTE BellTS.touchTime TO BellAudioClip.startTime
+	ROUTE BellTS.touchTime TO TimeSLong.startTime
+	ROUTE TimeS.fraction_changed TO	BellOI.set_fraction
+	ROUTE TimeS.fraction_changed TO	BellPI.set_fraction
+	ROUTE BellOI.value_changed TO BellRotation.rotation
+	ROUTE BellPI.value_changed TO BellRotation.translation
+	ROUTE TimeSLong.startTime TO TimeS.startTime
+	#ROUTE TimeSLong.stopTime TO TimeS.stopTime
+	ROUTE TimeSLong.isActive TO	TimeS.enabled
+
+}
