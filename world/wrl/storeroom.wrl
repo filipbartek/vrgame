@@ -151,7 +151,7 @@ PROTO StoreRoom [
 				]
 				ROUTE BarrelLidSensor.touchTime	TO BarrelSensor.startTime
 				ROUTE BarrelSensor.fraction_changed	TO BarrelLidOrientation.set_fraction
-				ROUTE BarrelLidOrientation.value_changed TO	Barrel.rotation
+				ROUTE BarrelLidOrientation.value_changed TO	TopCylinder.rotation
 			}
 			Transform {
 					children [
