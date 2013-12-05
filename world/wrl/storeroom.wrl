@@ -21,16 +21,15 @@ EXTERNPROTO CrateC [
 					
 EXTERNPROTO BarrelProto [
 	exposedField SFInt32 lod
-]
-
-"barrels.wrl#BarreLiquid"
+]			 
+"barrels.wrl#BarrelProto"
 
 EXTERNPROTO BarrelLiquid [
 	exposedField SFInt32 lod 
 	exposedField SFColor color 
 	exposedField SFFloat tranp	
 ]
-"barrels.wrl#BarreLiquid"
+"barrels.wrl#BarrelLiquid"
 
 PROTO StoreRoom [
 	exposedField SFInt32 lod 1

@@ -43,7 +43,7 @@ PROTO BarrelProto [
 								translation	0 0.5 0
 							}
 							DEF BarrelTouch ProximitySensor { size 3 3 3 }
-							DEF	BarrelLidSensor TouchSensor { enabled FALSE }	 
+							DEF	BarrelLidSensor TouchSensor { enabled FALSE }	   
 
 						DEF BarrelLidPosition PositionInterpolator	{	## for the lid
 							key [0, 1]
@@ -61,7 +61,8 @@ PROTO BarrelProto [
 									cycleInterval 0.5	
 
 									#for barrel, repeat just once
-									#loop TRUE
+									loop FALSE
+									
 								}							
 						]				   
 					}								
