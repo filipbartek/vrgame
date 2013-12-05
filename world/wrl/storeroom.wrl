@@ -57,42 +57,13 @@ PROTO CrateC [
 	ROUTE CrateChangePos.translation_changed TO CrateSensored.translation
 }
 
+PROTO BarrelProto [
 
-PROTO StoreRoom [
-	exposedField SFInt32 lod 1
 ]{
 	Group {
 		children [
 			Switch {
-				choice [
-					DEF ApartmentInstance ApartmentProto {
-						lod	IS lod		
-					}
-
-					DEF BarrelLidPosition PositionInterpolator	{	## for the lid
-						key [0, 1]
-						keyValue [ 0 0 0, 0 1 0 ]
-					}
-
-					DEF BarrelLidOrientation OrientationInterpolator	{
-						key [0, 1]
-						keyValue [1 0 0 0, 1 0 0 1.8]
-					}
-
-					DEF BarrelWaterColor ColorInterpolator {
-						key [0, 0.25, 0.5, 0.75, 1]
-						keyValue [0 0 0, 0 0.2 0, 0 0.4 0, 0 0.6 0, 0 0.8 0]
-					}
-
-					DEF BarrelSensor TimeSensor {
-						
-								#how much the interval should take
-								cycleInterval 0.5	
-
-								#for barrel, repeat just once
-								#loop TRUE
-							}
-
+				choice [	 
 					DEF	TopCylinder Transform {
 						children [
 							Transform  {
@@ -114,7 +85,30 @@ PROTO StoreRoom [
 							}
 							
 							DEF	BarrelLidSensor TouchSensor {}	 
-							
+
+						DEF BarrelLidPosition PositionInterpolator	{	## for the lid
+							key [0, 1]
+							keyValue [ 0 0 0, 0 1 0 ]
+						}
+
+						DEF BarrelLidOrientation OrientationInterpolator	{
+							key [0, 1]
+							keyValue [1 0 0 0, 1 0 0 1.8]
+						}
+
+						DEF BarrelWaterColor ColorInterpolator {
+							key [0, 0.25, 0.5, 0.75, 1]
+							keyValue [0 0 0, 0 0.2 0, 0 0.4 0, 0 0.6 0, 0 0.8 0]
+						}
+
+						DEF BarrelSensor TimeSensor {
+						
+									#how much the interval should take
+									cycleInterval 0.5	
+
+									#for barrel, repeat just once
+									#loop TRUE
+								}							
 						]				   
 					}								
 					
@@ -128,10 +122,34 @@ PROTO StoreRoom [
 							USE	TopCylinder
 						]
 					}
+				]
+			}
+			USE	Barrel
+		]
+	}
 
+	ROUTE BarrelLidSensor.touchTime	TO BarrelSensor.startTime
+	ROUTE BarrelSensor.fraction_changed	TO BarrelLidOrientation.set_fraction
+	ROUTE BarrelSensor.fraction_changed	TO BarrelLidPosition.set_fraction
+	ROUTE BarrelSensor.fraction_changed	TO BarrelWaterColor.set_fraction
+	ROUTE BarrelLidOrientation.value_changed TO	TopCylinder.rotation
+	ROUTE BarrelLidPosition.value_changed TO TopCylinder.translation 
+}
+
+
+PROTO StoreRoom [
+	exposedField SFInt32 lod 1
+]{
+	Group {
+		children [
+			Switch {
+				choice [
+					DEF ApartmentInstance ApartmentProto {
+						lod	IS lod		
+					}
 					DEF	BarrelWater Transform {
 						children [
-							USE	Barrel
+							BarrelProto	{}
 							Transform {
 								children Shape {
 									appearance Appearance {
@@ -151,14 +169,7 @@ PROTO StoreRoom [
 							}							
 						]
 					}
-				]
-				ROUTE BarrelLidSensor.touchTime	TO BarrelSensor.startTime
-				ROUTE BarrelSensor.fraction_changed	TO BarrelLidOrientation.set_fraction
-				ROUTE BarrelSensor.fraction_changed	TO BarrelLidPosition.set_fraction
-				ROUTE BarrelSensor.fraction_changed	TO BarrelWaterColor.set_fraction
-				ROUTE BarrelLidOrientation.value_changed TO	TopCylinder.rotation
-				ROUTE BarrelLidPosition.value_changed TO TopCylinder.translation
-				ROUTE BarrelWaterColor.value_changed TO	Water.diffuseColor
+				]		   
 			}
 			Transform {
 					children [
@@ -175,10 +186,10 @@ PROTO StoreRoom [
 								CrateC {
 									initialPosition	-1 0 -1
 								}
-								USE	Barrel
+								BarrelProto	{}
 								Transform {
 									children [
-										USE	BarrelWater
+										BarrelProto	{}
 									]
 									translation	0 0 -2
 								}
