@@ -95,7 +95,7 @@ PROTO BarrelProto [
 
 								translation	0 0.5 0
 							}
-							DEF BarrelTouch ProximitySensor { size 1 1 1 }
+							DEF BarrelTouch ProximitySensor { size 0 0 0 }
 							DEF	BarrelLidSensor TouchSensor {}	 
 
 						DEF BarrelLidPosition PositionInterpolator	{	## for the lid
@@ -105,7 +105,7 @@ PROTO BarrelProto [
 
 						DEF BarrelLidOrientation OrientationInterpolator	{
 							key [0, 1]
-							keyValue [1 0 0 0, 1 0 0 1.8]
+							keyValue [1 0 0 0, 1 0 0 1]
 						}
 
 						DEF BarrelSensor TimeSensor {
@@ -134,7 +134,7 @@ PROTO BarrelProto [
 			USE	Barrel
 		]
 	}
-	ROUTE BarrelTouch.isActive TO  BarrelSensor.enabled
+	ROUTE BarrelTouch.isActive TO  BarrelLidSensor.enabled
 	ROUTE BarrelLidSensor.touchTime TO CrateAudioClip.startTime
 	ROUTE BarrelLidSensor.touchTime	TO BarrelSensor.startTime
 	ROUTE BarrelSensor.fraction_changed	TO BarrelLidOrientation.set_fraction
@@ -198,7 +198,11 @@ PROTO StoreRoom [
 						
 						Transform {
 							children	[
-								USE	ApartmentInstance
+								Transform {
+									children 
+									USE	ApartmentInstance
+									rotation 0 1 0 0.6
+								}					
 								CrateC	{
 									initialPosition	1 0 1
 								}
