@@ -54,7 +54,7 @@ PROTO Balcony [
 						url	["barrier.wrl"]
 					}
 				]
-				scale 1.5 1.5 1.5
+				scale 1.5 1.2 1.5
 			}
 
 			# Bells positioned according to a picture on:
