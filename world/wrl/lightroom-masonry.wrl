@@ -83,7 +83,7 @@ Transform {
 					description	"Lightroom"
 					position 0 0 0
 					jump FALSE
-					fieldOfView	1.05
+					fieldOfView	1.05 # 60 degrees
 				}
 			]
 			rotation 0 1 0 1.57

@@ -54,7 +54,7 @@ PROTO Balcony [
 						url	["barrier.wrl"]
 					}
 				]
-				scale 1.5 1.5 1.5
+				scale 1.5 1.2 1.5
 			}
 
 			# Bells positioned according to a picture on:
@@ -69,6 +69,18 @@ PROTO Balcony [
 					BellProto {}
 				]
 				translation	0 0 2.5273
+			}
+
+			Transform {
+				children Viewpoint {
+					description	"Bell"
+					jump FALSE
+					fieldOfView	1.05 # 60 degrees
+					position 0 0 0
+					orientation	1 0 0 -0.39 # 45 degrees
+				}
+				rotation 0 1 0 -1.57 # 90 degrees
+				translation	-1 1.6 2.5273
 			}
 
 			# Northern bell
