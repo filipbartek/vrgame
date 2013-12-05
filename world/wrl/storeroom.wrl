@@ -100,7 +100,7 @@ PROTO BarrelProto [
 
 						DEF BarrelLidPosition PositionInterpolator	{	## for the lid
 							key [0, 1]
-							keyValue [ 0 0 0, 0 0.5 -0.17 ]
+							keyValue [ 0 0 0, 0 0.3 -0.13 ]
 						}
 
 						DEF BarrelLidOrientation OrientationInterpolator	{
@@ -227,13 +227,7 @@ PROTO StoreRoom [
 						Transform {
 							children [
 								Transform {
-									children [
-										Viewpoint {
-											description	"Store room"
-											orientation	1 0 0 -1.18
-											position 1.2 0.5 0
-											jump FALSE
-										}
+									children [ 
 										Viewpoint {
 											description	"Inside StoreRoom"
 											orientation	0 0 1 0
