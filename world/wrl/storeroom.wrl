@@ -20,6 +20,7 @@ EXTERNPROTO ApartmentProto [
 
 PROTO CrateC [
 	exposedField SFVec3f initialPosition 0 0 0
+	exposedField SFInt32 lod 1
 ]{
 	Group {
 		children [
@@ -29,11 +30,11 @@ PROTO CrateC [
 						geometry Box {
 							size 1 1 1
 						}
-						appearance Appearance {
-							material Material {
-								diffuseColor 0.1 1 0.7
-							}
-						}
+						appearance Appearance {	 
+										texture	ImageTexture {
+											url	["..\textures\wood.jpeg"]
+										}
+									}
 					}
 				    
 					DEF	CrateMove Transform {
@@ -58,7 +59,7 @@ PROTO CrateC [
 }
 
 PROTO BarrelProto [
-
+	exposedField SFInt32 lod 1
 ]{
 	Group {
 		children [
@@ -74,12 +75,12 @@ PROTO BarrelProto [
 									radius 0.4
 									top	TRUE
 									bottom TRUE
-								}
-								appearance Appearance {
-									material Material {
-										diffuseColor 0.7 0.5 0.8 # todo change
+								}	 
+									appearance Appearance {	 
+										texture	ImageTexture {
+											url	["..\textures\wood.jpeg"]
+										}
 									}
-								}
 
 								}
 								Sound {
@@ -142,6 +143,7 @@ PROTO BarrelProto [
 }	
 
 PROTO BarrelLiquid [
+	exposedField SFInt32 lod 1
 	exposedField SFColor color 0 0.1 0.8
 	exposedField SFFloat tranp 0.2	
 ]{
@@ -151,7 +153,7 @@ PROTO BarrelLiquid [
 			   choice [
 				   DEF	BarrelWater Transform {
 						children [
-							BarrelProto	{}
+							BarrelProto	{ lod IS lod }
 							Transform {
 								children Shape {
 									appearance Appearance {
