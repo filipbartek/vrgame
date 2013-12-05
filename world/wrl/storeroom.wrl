@@ -67,7 +67,8 @@ PROTO BarrelProto [
 					DEF	TopCylinder Transform {
 						children [
 							Transform  {
-								children Shape {
+								children 
+								[ Shape {
 								geometry Cylinder {
 									height 0.02
 									radius 0.4
@@ -79,7 +80,17 @@ PROTO BarrelProto [
 										diffuseColor 0.7 0.5 0.8 # todo change
 									}
 								}
-							}
+
+								}
+								Sound {
+									source DEF CrateAudioClip AudioClip {
+										url	["../wav/crateOpen.wav"]
+										description	"OpeningCrate"
+									}
+									maxBack	1000
+									maxFront 1000
+								}
+							]
 
 								translation	0 0.5 0
 							}
@@ -122,7 +133,7 @@ PROTO BarrelProto [
 			USE	Barrel
 		]
 	}
-
+	ROUTE BarrelLidSensor.touchTime TO CrateAudioClip.startTime
 	ROUTE BarrelLidSensor.touchTime	TO BarrelSensor.startTime
 	ROUTE BarrelSensor.fraction_changed	TO BarrelLidOrientation.set_fraction
 	ROUTE BarrelSensor.fraction_changed	TO BarrelLidPosition.set_fraction
