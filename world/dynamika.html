@@ -13,33 +13,39 @@
         <tr>
           <td>Soubor WRL</td>
           <td>Schéma</td>
+          <td>Autor</td>
           <td>Popis</td>
         </tr>
       </thead>
       <tbody>
 	    <tr>
-          <td><a href="wrl/bell.wrl">crate.wrl</a></td>
-          <td><a href=""></a></td>
-          <td>Hráč sa musí dostať k barelu s vodou. K tomu potrebuje upratať z cesty krabice.Pohyb krabice je zviazaný so PlaneSenzorom, ktprý sa aktivuje pri dotyku</td>
+          <td><a href="wrl/crates.wrl">crates.wrl</a></td>
+          <td><a href="svg/crates.svg">crates.svg</a></td>
+          <td>Eva</td>
+          <td>Hráč sa musí dostať k&nbsp;barelu s&nbsp;vodou. K&nbsp;tomu potrebuje upratať z&nbsp;cesty krabice. Pohyb krabice je zviazaný so PlaneSenzorom, ktorý sa aktivuje pri dotyku.</td>
         </tr>
         <tr>
-          <td><a href="wrl/barrel.wrl">barrel.wrl</a></td>
-          <td><a href=""></a></td>
-          <td>na to, aby sa hráč dostal k vode, musí byť u barela dostatočne blízko. To je zabezpečené pomocou proximity senzora. Na dotyk (touchsenzor) sa spustí zvuk a viečko suda sa pohne. Len v jednej z tvoch sudov je voda. Hráč sa musí dostať k správnemu</td>
+          <td><a href="wrl/barrels.wrl">barrels.wrl</a></td>
+          <td><a href="svg/storeroom-barrel.svg">storeroom-barrel.svg</a></td>
+          <td>Eva</td>
+          <td>Na to, aby sa hráč dostal k&nbsp;vode, musí byť u barela dostatočne blízko. To je zabezpečené pomocou proximity senzora. Na dotyk (touchsenzor) sa spustí zvuk a viečko suda sa pohne. Len v&nbsp;jednom z&nbsp;dvoch sudov je voda. Hráč sa musí dostať k&nbsp;správnemu sudu.</td>
         </tr>
 		<tr>
           <td><a href="wrl/bell.wrl">bell.wrl</a></td>
           <td><a href="svg/bell.svg">bell.svg</a></td>
+          <td>Filip</td>
           <td>Hráč může na zvon zazvonit kliknutím (TouchSensor) teprve tehdy, když je v&nbsp;dosahu ProximitySensor. Aktivací TouchSensor se spustí zvuk (AudioClip) a odpočet TimeSensor_long. TimeSensor_long ovládá délku trvání animace. Animace je složená z&nbsp;podanimací - otřesů zvonu. Každý otřes je řízen odpočtem TimeSensor_loop. TimeSensor_loop prostřednictvím interpolátorů OrientationInterpolator a PositionInterpolator řídí Transform, který transformuje model zvonu.</td>
         </tr>
         <tr>
           <td><a href="wrl/lightroom.wrl">lightroom.wrl</a></td>
           <td><a href="svg/lightroom.svg">lightroom.svg</a></td>
+          <td>Filip</td>
           <td>TimeSensor má parametr loop nastavený na hodnotu TRUE, proto čítač spustí hned při načtení scény. Průběžně krmí OrientationInterpolator, který cyklicky rotuje podle osy&nbsp;Y a výslednou rotaci posílá do uzlu Transform, který ovládá lampu majáku.</td>
         </tr>
         <tr>
           <td><a href="wrl/winding.wrl">winding.wrl</a></td>
           <td><a href="svg/winding.svg">winding.svg</a></td>
+          <td>Filip</td>
           <td>ProximitySensor hlídá, aby byl hráč blízko, když používá naviják. Ten potom ovládá pomocí CylinderSensor. CylinderSensor snímá interakci s&nbsp;klikou, ale rotuje (přes uzel Transform) celým navijákem (včetně kliky).</td>
         </tr>
       </tbody>
