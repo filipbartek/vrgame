@@ -133,9 +133,9 @@ PROTO StoreRoom [
 						children [
 							USE	Barrel
 							Transform {
-								children  Shape {
+								children Shape {
 									appearance Appearance {
-										material Material {
+										material DEF Water Material {
 											diffuseColor 0.2 0 0.8
 											transparency 0.5
 										}
@@ -155,8 +155,10 @@ PROTO StoreRoom [
 				ROUTE BarrelLidSensor.touchTime	TO BarrelSensor.startTime
 				ROUTE BarrelSensor.fraction_changed	TO BarrelLidOrientation.set_fraction
 				ROUTE BarrelSensor.fraction_changed	TO BarrelLidPosition.set_fraction
+				ROUTE BarrelSensor.fraction_changed	TO BarrelWaterColor.set_fraction
 				ROUTE BarrelLidOrientation.value_changed TO	TopCylinder.rotation
 				ROUTE BarrelLidPosition.value_changed TO TopCylinder.translation
+				ROUTE BarrelWaterColor.value_changed TO	Water.diffuseColor
 			}
 			Transform {
 					children [
@@ -174,6 +176,12 @@ PROTO StoreRoom [
 									initialPosition	-1 0 -1
 								}
 								USE	Barrel
+								Transform {
+									children [
+										USE	BarrelWater
+									]
+									translation	0 0 -2
+								}
 							]
 																							   			  
 							
