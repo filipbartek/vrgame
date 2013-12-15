@@ -5,6 +5,9 @@ WorldInfo {
 	info ["Filip Bártek"]
 }
 
+# http://www.bellrock.org.uk/lighthouse/lighthouse_lightroom.htm
+# http://www.bellrock.org.uk/lighthouse/lighthouse_courses.htm
+
 EXTERNPROTO	BarRoundProto [
 	field SFVec3f scale
 	exposedField SFColor diffuseColor
