@@ -43,7 +43,7 @@ Transform {
 Transform {
 	children Transform {
 		children BarRoundProto {
-			bottom TRUE
+			bottom FALSE
 			top	TRUE
 			diffuseColor 0.8 0.8 0.8
 			scale 0.075 1 0.075
