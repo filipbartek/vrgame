@@ -54,7 +54,7 @@ Transform {
 	translation	0 0.1 0.2
 }
 
-# Gas tank
+# Oil reservoir
 Transform {
 	children Transform {
 		children BarRoundProto {
