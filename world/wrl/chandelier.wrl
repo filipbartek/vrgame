@@ -109,11 +109,29 @@ Switch {
 					]
 					translation	0.3175 0 0
 				}
+			]
+		}
+
+		DEF	Line2Side5 Group {
+			children [
+				USE	Line2
 				Transform {
 					children [
 						USE	RodHorizontal
 					]
 					scale 0.6350 1 1
+				}
+			]
+		}
+
+		DEF	Line2Side7 Group {
+			children [
+				USE	Line2
+				Transform {
+					children [
+						USE	RodHorizontal
+					]
+					scale 1.2700 1 1
 				}
 			]
 		}
@@ -165,14 +183,14 @@ Switch {
 			children [
 				Transform {
 					children [
-						USE	Line2
+						USE	Line2Side7
 					]
 					translation	0 -0.64 0
 				}
 				USE	Line3
 				Transform {
 					children [
-						USE	Line2
+						USE	Line2Side7
 					]
 					translation	0 0.64 0
 				}
@@ -219,14 +237,14 @@ Switch {
 			children [
 				Transform {
 					children [
-						USE	Line2
+						USE	Line2Side5
 					]
 					translation	0 -0.64 0
 				}
 				USE	Reflector
 				Transform {
 					children [
-						USE	Line2
+						USE	Line2Side5
 					]
 					translation	0 0.64 0
 				}
