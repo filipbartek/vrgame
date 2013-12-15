@@ -5,6 +5,15 @@ WorldInfo {
 	info ["Filip Bártek"]
 }
 
+EXTERNPROTO	BarRoundProto [
+	field SFVec3f scale
+	exposedField SFColor diffuseColor
+	exposedField SFNode texture
+	field SFBool bottom
+	field SFBool top
+]
+"barround.wrl#BarRound"
+
 PROTO LightCone [
 	exposedField SFColor color 1 1 0
 	exposedField SFFloat coneTransparency 0.7
@@ -70,16 +79,11 @@ Switch {
 			url	["reflector.wrl"]
 		}
 
-		DEF	Rod Shape {
-			appearance Appearance {
-				material Material {
-					diffuseColor 0.0 0.1 0.2
-				}
-			}
-			geometry Cylinder {
-				height 1
-				radius 0.02
-			}
+		DEF	Rod BarRoundProto {
+			bottom TRUE
+			top	TRUE
+			scale 0.02 1 0.02
+			diffuseColor 0.0 0.1 0.2
 		}
 
 		DEF	RodHorizontal Transform	{
