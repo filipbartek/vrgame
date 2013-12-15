@@ -1,0 +1,47 @@
+#VRML V2.0 utf8
+
+WorldInfo {
+	title "Crates"
+	info ["Eva Pešková"]
+}
+
+PROTO CrateC [
+	exposedField SFVec3f initialPosition 0 0 0
+	exposedField SFInt32 lod 1
+]{
+	Group {
+		children [
+			Switch {
+				choice [
+					DEF Crate Shape {
+						geometry Box {
+							size 1 1 1
+						}
+						appearance Appearance {	 
+										texture	ImageTexture {
+											url	["..\textures\wood.jpeg"]
+										}
+									}
+					}
+				    
+					DEF	CrateMove Transform {
+    				rotation 1 0 0 -1.57         # rotate back to the original plane
+    				translation IS initialPosition  # initil position of object on the table
+    				children [
+    					DEF CrateChangePos PlaneSensor { maxPosition 2 2 minPosition -2 -2}
+
+        				DEF CrateSensored Transform { 
+        					rotation 1 0 0 1.57  # rotate to the place that we want to move in
+        					children USE Crate
+        				}
+					]		
+				}
+				]
+			}
+			USE	CrateMove
+		]																 
+	}
+
+	ROUTE CrateChangePos.translation_changed TO CrateSensored.translation
+}
+					

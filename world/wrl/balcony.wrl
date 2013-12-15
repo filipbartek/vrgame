@@ -10,6 +10,8 @@ EXTERNPROTO	LightroomProto [
 ]
 "lightroom.wrl#Lightroom"
 
+EXTERNPROTO	BellProto [] "bell.wrl#Bell"
+
 PROTO Balcony [
 
 	# 1: LOD enabled
@@ -42,14 +44,6 @@ PROTO Balcony [
 				translation	0 4.1022 0
 			}
 
-			Switch {
-				choice [
-					DEF	Bell Inline	{
-						url	["bell.wrl"]
-					}
-				]
-			}
-
 			LightroomProto {
 				lod	IS lod
 			}
@@ -60,7 +54,7 @@ PROTO Balcony [
 						url	["barrier.wrl"]
 					}
 				]
-				scale 1.5 1.5 1.5
+				scale 1.5 1.2 1.5
 			}
 
 			# Bells positioned according to a picture on:
@@ -72,15 +66,27 @@ PROTO Balcony [
 			# Southern bell
 			Transform {
 				children [
-					USE	Bell
+					BellProto {}
 				]
 				translation	0 0 2.5273
+			}
+
+			Transform {
+				children Viewpoint {
+					description	"Bell"
+					jump FALSE
+					fieldOfView	1.05 # 60 degrees
+					position 0 0 0
+					orientation	1 0 0 -0.39 # 45 degrees
+				}
+				rotation 0 1 0 -1.57 # 90 degrees
+				translation	-1 1.6 2.5273
 			}
 
 			# Northern bell
 			Transform {
 				children [
-					USE	Bell
+					BellProto {}
 				]
 				translation	0 0 -2.5273
 			}

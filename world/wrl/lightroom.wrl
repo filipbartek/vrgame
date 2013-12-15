@@ -69,15 +69,15 @@ PROTO Lightroom [
 			Transform {
 				children [
 					USE	Cage
-					Transform {
-						children [
-							USE	Chandelier
-						]
-						# To match the picture on:
-						# http://www.bellrock.org.uk/lighthouse/lighthouse_lightroom.htm
-						rotation 0 1 0 1.57
-						# Cage height / 2
-						translation	0 2.037 0
+					DEF ChandelierTransform Transform {
+						children Transform {
+							children USE	Chandelier
+							# To match the picture on:
+							# http://www.bellrock.org.uk/lighthouse/lighthouse_lightroom.htm
+							rotation 0 1 0 1.57
+							# Cage height / 2
+							translation	0 2.037 0
+						}
 					}
 					Transform {
 						children [
@@ -93,4 +93,14 @@ PROTO Lightroom [
 
 		]
 	}
+	DEF	ChandelierTimer TimeSensor {
+		cycleInterval 16
+		loop TRUE
+	}
+	DEF	ChandelierOI OrientationInterpolator {
+		key [0, 0.25, 0.5, 0.75, 1]
+		keyValue [0 1 0 0, 0 1 0 1.57, 0 1 0 3.14, 0 1 0 4.71, 0 1 0 6.28]
+	}
+	ROUTE ChandelierTimer.fraction_changed TO ChandelierOI.set_fraction
+	ROUTE ChandelierOI.value_changed TO	ChandelierTransform.rotation
 }

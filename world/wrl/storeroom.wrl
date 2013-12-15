@@ -1,0 +1,101 @@
+#VRML V2.0 utf8
+
+WorldInfo {
+	title "Store room"
+	info ["Eva Pešková"]
+}
+
+EXTERNPROTO ApartmentProto [
+	exposedField SFInt32 lod 
+	exposedField SFNode windowTexture
+	exposedField SFInt32 zCeilingRotation
+]
+"apartment.wrl#Apartment"
+
+
+EXTERNPROTO CrateC [
+	exposedField SFVec3f initialPosition
+	exposedField SFInt32 lod 
+]
+"crates.wrl#CrateC"
+					
+EXTERNPROTO BarrelProto [
+	exposedField SFInt32 lod
+]			 
+"barrels.wrl#BarrelProto"
+
+EXTERNPROTO BarrelLiquid [
+	exposedField SFInt32 lod 
+	exposedField SFColor color 
+	exposedField SFFloat tranp	
+]
+"barrels.wrl#BarrelLiquid"
+
+PROTO StoreRoom [
+	exposedField SFInt32 lod 1
+]{
+	Group {
+		children [
+			Switch {
+				choice [
+					DEF ApartmentInstance ApartmentProto {
+						lod	IS lod		
+					}
+				]		   
+			}
+			Transform {
+					children [
+						
+						Transform {
+							children	[
+								Transform {
+									children 
+									USE	ApartmentInstance
+									rotation 0 1 0 0.6
+								}					
+								CrateC	{
+									initialPosition	1 0 1
+								}
+								CrateC {
+									initialPosition	0 0 2
+								}
+								CrateC {
+									initialPosition	-1 0 -1
+								}
+								BarrelProto	{}
+								Transform {
+									children [
+										BarrelLiquid { tranp 0.1 }
+									]
+									translation	0 0 -2
+								}
+							]
+																							   			  
+							
+						}
+							  
+						Transform {
+							children [
+								Transform {
+									children [ 
+										Viewpoint {
+											description	"Inside StoreRoom"
+											orientation	0 0 1 0
+											position -0.2 -2.2 1.2
+											jump FALSE
+										}
+								]
+								rotation 0 1 0 -0.60
+							}
+						]
+						# Translastion of the balcony platform
+						translation	0 2.9 0
+					}
+
+				]
+				#all is moved  "down" so that the ceiling is at "0"
+				translation	0 -2.9 0
+			}
+		]
+	}
+}

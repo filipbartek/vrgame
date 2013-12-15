@@ -5,6 +5,64 @@ WorldInfo {
 	info ["Filip Bártek"]
 }
 
+PROTO LightCone [
+	exposedField SFColor color 1 1 0
+	exposedField SFFloat coneTransparency 0.7
+	exposedField SFVec3f coneScale 100 100 100
+	exposedField SFBool pointLightOn TRUE
+	# Z+: forward
+	exposedField SFVec3f pointLightLocation 0 0 0.5
+]{
+	Group {
+		children [
+			Transform {
+				children [
+					Transform	{
+						children [
+							Transform	{
+								children [
+									Transform {
+										children [
+											Shape {
+												appearance Appearance {
+													material Material {
+														transparency IS	coneTransparency
+														emissiveColor IS color
+														diffuseColor 0 0 0
+														shininess 0
+														specularColor 0 0 0
+														ambientIntensity 0
+													}
+												}
+												geometry Cone {
+													bottom FALSE
+												}
+											}
+										]
+										translation	0 -1 0
+									}
+								]
+								# 270 degrees
+								rotation 1 0 0 4.71
+							}
+						]
+						# 22.5 * 2 degrees beam angle
+						scale 0.21 0.21 1
+					}
+				]
+				scale IS coneScale
+			}
+			PointLight {
+				color IS color
+				location IS	pointLightLocation
+				radius 10
+				attenuation	0 0 1
+				on IS pointLightOn
+			}
+		]
+	}
+}
+
 Switch {
 	choice [
 
@@ -47,80 +105,6 @@ Switch {
 			]
 		}
 
-		DEF	LightConeSimple Transform	{
-			children [
-				Transform	{
-					children [
-						Transform {
-							children [
-								Shape {
-									appearance Appearance {
-										material Material {
-											diffuseColor 0.5 0.5 0
-											transparency 0.5
-										}
-									}
-									geometry Cone {
-										bottom FALSE
-									}
-								}
-							]
-							translation	0 -1 0
-						}
-					]
-					rotation 1 0 0 4.71
-				}
-			]
-			scale 10 10 100
-		}
-
-		DEF	LightConeLight SpotLight {
-			color 1 1 0 # yellow
-			beamWidth 0.39 # 22.5 degrees
-			cutOffAngle	0.39 # 22.5 degrees
-			location 0 0 0.01 # To prevent flickering of the cone
-		}
-
-		DEF	LightCone Group	{
-			children [
-				USE	LightConeSimple
-				#USE	LightConeLight
-			]
-		}
-
-		DEF	LightRedCone Transform	{
-			children [
-				Transform	{
-					children [
-						Transform {
-							children [
-								Shape {
-									appearance Appearance {
-										material Material {
-											diffuseColor 0.5 0 0
-											transparency 0.5
-										}
-									}
-									geometry Cone {
-										bottom FALSE
-									}
-								}
-							]
-							translation	0 -1 0
-						}
-					]
-					rotation 1 0 0 4.71
-				}
-			]
-			scale 5 5 50
-		}
-
-		DEF	LightRed Group {
-			children [
-				USE	LightRedCone
-			]
-		}
-
 		DEF	Side7 Group {
 			children [
 				Transform {
@@ -136,7 +120,9 @@ Switch {
 					]
 					translation	0 0.64 0
 				}
-				USE	LightCone
+				LightCone {
+					color 1 1 0
+				}
 			]
 		}
 
@@ -169,7 +155,10 @@ Switch {
 					]
 					translation	0 0.64 0
 				}
-				USE	LightRed
+				LightCone {
+					color 1 0 0
+					coneTransparency 0.8
+				}
 				Transform {
 					children [
 						USE	RedPane

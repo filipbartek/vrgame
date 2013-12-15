@@ -19,7 +19,7 @@ PROTO Index [
 			NavigationInfo {
 				headlight TRUE
 				# radius, height, foot length (climb height)
-				avatarSize [0.15, 1.6, 0.4]
+				avatarSize [0.1, 1.6, 0.4]
 			}
 
 			Transform {

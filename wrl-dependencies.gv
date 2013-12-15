@@ -11,7 +11,7 @@ node [shape=diamond];
 
 // wrl
 node [shape=box];
-"wrl/bell.wrl"
+"wrl/bell.wrl";
 "wrl/index.wrl";
 "wrl/index-lod.wrl";
 "wrl/index-nolod.wrl";
