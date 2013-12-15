@@ -7,6 +7,16 @@ WorldInfo {
 	info ["Filip Bártek"]
 }
 
+EXTERNPROTO	BarRoundProto [
+	field SFVec3f scale
+	exposedField SFColor diffuseColor
+	exposedField SFNode texture
+	field SFBool bottom
+	field SFBool top
+]
+"barround.wrl#BarRound"
+
+# Reflector
 Transform {
 	children [
 		Shape {
@@ -27,4 +37,34 @@ Transform {
 	]
 	rotation 1 0 0 4.71
 	translation	0 0 0.15875
+}
+
+# Chimney
+Transform {
+	children Transform {
+		children BarRoundProto {
+			bottom TRUE
+			top	TRUE
+			diffuseColor 0.8 0.8 0.8
+			scale 0.075 1 0.075
+		}
+		translation	0 0.5 0
+	}
+	scale 1 0.3175 1
+	translation	0 0.1 0.2
+}
+
+# Gas tank
+Transform {
+	children Transform {
+		children BarRoundProto {
+			bottom TRUE
+			top	TRUE
+			diffuseColor 0 0 0.1
+			scale 0.075 1 0.075
+		}
+		translation	0 0.5 0
+	}
+	scale 1 0.3175 1
+	translation	0 0 -0.0375
 }
