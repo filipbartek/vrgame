@@ -1,22 +1,102 @@
 #VRML V2.0 utf8
 
+# Based on Bell Rock Lighthouse
+# http://www.bellrock.org.uk/
+
 WorldInfo {
 	title "Lighthouse"
 	info ["Filip Bártek", "Eva Pešková"]
 }
-Inline {
-	url	["lighthouse-body.wrl"]
-}
 
-Transform {
-	children [
-		Inline {
-			url	["balcony.wrl"]
-		}
-		Inline {
-			url["bedroom.wrl"]
-		}
-	]
-	# Lighthouse height
-	translation	0 29.7942 0
+EXTERNPROTO	Body [
+	exposedField SFInt32 lod
+	exposedField SFColor diffuseColor
+]
+"lighthouse-body.wrl#LighthouseBody"
+
+EXTERNPROTO	BalconyProto [
+	exposedField SFInt32 lod
+]
+"balcony.wrl#Balcony"
+
+EXTERNPROTO	BedRoomProto [
+	exposedField SFInt32 lod
+]
+"bedroom.wrl#BedRoom"
+
+EXTERNPROTO	StoreRoomProto [
+	exposedField SFInt32 lod
+]
+"storeroom.wrl#StoreRoom"
+
+PROTO Lighthouse [
+
+	# 1: LOD enabled
+	# 0: LOD disabled
+	exposedField SFInt32 lod 1
+
+]{
+	Group {
+		children [
+
+			Body {
+				lod IS lod
+			}
+
+			Transform {
+				children [
+					BalconyProto {
+						lod	IS lod
+					}
+					Transform {
+						children [   
+							Transform {
+								children [																    
+									Inline {
+										url	["../blend/balconyplatform.wrl"]
+									}
+									BedRoomProto {
+										lod	IS  lod
+									}
+									
+								]
+								rotation 0 1 0 1
+								translation	0 2.9 0
+							}
+							StoreRoomProto {
+										lod	IS lod
+									}
+							# floor
+							Transform {
+									children [
+										Shape {
+											geometry Cylinder {
+												height 0.1
+												radius 5.4
+												bottom TRUE
+												top	TRUE
+											}
+											appearance Appearance
+											{
+												material Material {
+													diffuseColor 0.0 0.2 .2
+												}
+											}
+										}
+									]
+									translation	0 -2.9 0
+							}
+							
+						]
+						translation	 0 -2.9 0
+						scale 0.33 1 0.33
+					}
+					
+				]
+				# Lighthouse height
+				translation	0 29.7942 0
+			}
+
+		]
+	}
 }

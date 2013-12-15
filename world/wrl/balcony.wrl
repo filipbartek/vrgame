@@ -5,67 +5,92 @@ WorldInfo {
 	info ["Filip Bártek", "Eva Pešková"]
 }
 
-Transform {
-	children [
-		Transform {
-			children [
-				Transform {
-					children [
-						Viewpoint {
-							description	"Balcony"
-							position 0 0 15
-							jump FALSE
-						}
-					]
-					# pi / 32 ~ 0.10
-					rotation 1 0 0 -0.10
+EXTERNPROTO	LightroomProto [
+	exposedField SFInt32 lod
+]
+"lightroom.wrl#Lightroom"
+
+EXTERNPROTO	BellProto [] "bell.wrl#Bell"
+
+PROTO Balcony [
+
+	# 1: LOD enabled
+	# 0: LOD disabled
+	exposedField SFInt32 lod 1
+
+]{
+	Group {
+		children [
+
+			Transform {
+				children [
+					Transform {
+						children [
+							Transform {
+								children [
+									Viewpoint {
+										description	"Balcony"
+										position 0 0 15
+										jump FALSE
+									}
+								]
+								# pi / 32 ~ 0.10
+								rotation 1 0 0 -0.10
+							}
+						]
+						rotation 0 1 0 -1.05
+					}
+				]
+				translation	0 4.1022 0
+			}
+
+			LightroomProto {
+				lod	IS lod
+			}
+
+			Transform {
+				children [
+					Inline {
+						url	["barrier.wrl"]
+					}
+				]
+				scale 1.5 1.2 1.5
+			}
+
+			# Bells positioned according to a picture on:
+			# http://www.bellrock.org.uk/lighthouse/lighthouse_courses.htm
+			# balcony diameter = 2.9972
+			# lightroom masonry outer diameter = 2.0574
+			# bell distance from center = (balcony diameter + masonry diameter) / 2 = 2.5273
+
+			# Southern bell
+			Transform {
+				children [
+					BellProto {}
+				]
+				translation	0 0 2.5273
+			}
+
+			Transform {
+				children Viewpoint {
+					description	"Bell"
+					jump FALSE
+					fieldOfView	1.05 # 60 degrees
+					position 0 0 0
+					orientation	1 0 0 -0.39 # 45 degrees
 				}
-			]
-			rotation 0 1 0 -1.05
-		}
-	]
-	translation	0 4.1022 0
-}
+				rotation 0 1 0 -1.57 # 90 degrees
+				translation	-1 1.6 2.5273
+			}
 
-Switch {
-	choice [
-		DEF	Bell Inline	{
-			url	["bell.wrl"]
-		}
-	]
-}
+			# Northern bell
+			Transform {
+				children [
+					BellProto {}
+				]
+				translation	0 0 -2.5273
+			}
 
-Inline {
-	url	["lightroom.wrl"]
-}
-
-Transform {
-	children [
-		Inline {
-			url	["barrier.wrl"]
-		}
-	]
-	scale 1.5 1.5 1.5
-}
-
-# Bells positioned according to a picture on:
-# http://www.bellrock.org.uk/lighthouse/lighthouse_courses.htm
-# balcony diameter = 2.9972
-# lightroom masonry outer diameter = 2.0574
-# bell distance from center = (balcony diameter + masonry diameter) / 2 = 2.5273
-
-# Southern bell
-Transform {
-	children [
-		USE	Bell
-	]
-	translation	0 0 2.5273
-}
-
-# Northern bell
-Transform {
-	children [
-		USE	Bell
-	]
-	translation	0 0 -2.5273
+		]
+	}
 }

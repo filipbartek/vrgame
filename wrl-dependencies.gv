@@ -1,0 +1,104 @@
+// Based on:
+// http://www.graphviz.org/content/traffic_lights
+
+digraph wrldependencies {
+
+// . (access WRLs)
+node [shape=diamond];
+"index.wrl";
+"index-fps.wrl";
+"index-nolod.wrl";
+
+// wrl
+node [shape=box];
+"wrl/bell.wrl";
+"wrl/index.wrl";
+"wrl/index-lod.wrl";
+"wrl/index-nolod.wrl";
+"wrl/balcony.wrl";
+"wrl/barrier.wrl";
+"wrl/barsquare.wrl";
+"wrl/bedroom.wrl";
+"wrl/clock.wrl";
+"wrl/fps.wrl";
+"wrl/ladyBugLods.wrl";
+"wrl/lighthouse.wrl";
+"wrl/lighthouse-body.wrl";
+"wrl/lightroom.wrl";
+"wrl/lightroom-cage.wrl";
+"wrl/lightroom-glass-panel.wrl";
+"wrl/lightroom-chandelier.wrl";
+"wrl/lightroom-masonry.wrl";
+"wrl/lightroom-roof.wrl";
+"wrl/lightroom-window.wrl";
+"wrl/reflector.wrl";
+"wrl/sea.wrl";
+"wrl/winding.wrl";
+"wrl/barround.wrl";
+
+// blend
+node [shape=ellipse];
+"blend/apartment.wrl";
+"blend/balconyPlatform.wrl";
+"blend/barrier.wrl";
+"blend/barrier_lod2.wrl";
+"blend/bed.wrl";
+"blend/blenderIndex.wrl";
+"blend/circled.wrl";
+"blend/entry.wrl";
+"blend/EntryTest.wrl";
+"blend/glass.wrl";
+"blend/glass_lod2.wrl";
+"blend/innerStair.wrl";
+"blend/ladybug.wrl";
+"blend/ladybug_lod2.wrl";
+"blend/library.wrl";
+"blend/LibraryTest.wrl";
+"blend/PlatformWithHole.wrl";
+"blend/smeaton.wrl";
+"blend/stair.wrl";
+
+// Inline
+edge [arrowhead=normal];
+"index-fps.wrl" -> "wrl/fps.wrl";
+"index-fps.wrl" -> "index.wrl";
+"index.wrl" -> "wrl/index-lod.wrl";
+"index-nolod.wrl" -> "wrl/index-nolod.wrl";
+"wrl/balcony.wrl" -> "wrl/bell.wrl"
+"wrl/balcony.wrl" -> "wrl/barrier.wrl"
+"wrl/barrier.wrl" -> "blend/barrier.wrl"
+"wrl/bedroom.wrl" -> "blend/bed.wrl";
+"wrl/bedroom.wrl" -> "blend/stair.wrl";
+"wrl/bedroom.wrl" -> "blend/library.wrl";
+"wrl/bedroom.wrl" -> "blend/glass.wrl";
+"wrl/bedroom.wrl" -> "blend/apartment.wrl";
+"wrl/bedroom.wrl" -> "blend/balconyPlatform.wrl";
+"wrl/bedroom.wrl" -> "blend/PlatformWithHole.wrl";
+"wrl/ladyBugLods.wrl" -> "blend/ladybug.wrl";
+"wrl/ladyBugLods.wrl" -> "blend/ladybug_lod2.wrl";
+"wrl/lightroom.wrl" -> "wrl/lightroom-chandelier.wrl";
+"wrl/lightroom.wrl" -> "wrl/lightroom-masonry.wrl";
+"wrl/lightroom.wrl" -> "wrl/lightroom-roof.wrl";
+"wrl/lightroom.wrl" -> "wrl/clock.wrl";
+"wrl/lightroom.wrl" -> "wrl/winding.wrl";
+"wrl/lightroom-chandelier.wrl" -> "wrl/reflector.wrl";
+
+// Prototype
+edge [arrowhead=diamond style=bold];
+"wrl/index.wrl" -> "wrl/lighthouse.wrl";
+"wrl/index-lod.wrl" -> "wrl/index.wrl";
+"wrl/index-nolod.wrl" -> "wrl/index.wrl";
+"wrl/lighthouse.wrl" -> "wrl/lighthouse-body.wrl";
+"wrl/lighthouse.wrl" -> "wrl/balcony.wrl";
+"wrl/lighthouse.wrl" -> "wrl/bedroom.wrl";
+"wrl/balcony.wrl" -> "wrl/lightroom.wrl";
+"wrl/bedroom.wrl" -> "wrl/ladyBugLods.wrl";
+"wrl/lightroom.wrl" -> "wrl/lightroom-cage.wrl";
+"wrl/lightroom-cage.wrl" -> "wrl/lightroom-window.wrl";
+"wrl/lightroom-window.wrl" -> "wrl/lightroom-glass-panel.wrl";
+"wrl/lightroom-window.wrl" -> "wrl/barsquare.wrl";
+"wrl/lighthouse-body.wrl" -> "wrl/barround.wrl";
+
+overlap=false
+label="Lighthouse dependencies"
+}

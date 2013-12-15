@@ -1,77 +1,106 @@
 #VRML V2.0 utf8
 
 WorldInfo {
-	title "Light Room"
-	info ["Filip Bártek", "Eva Pešková"]
+	title "Lightroom"
+	info ["Filip Bártek"]
 }
 
 # http://www.bellrock.org.uk/lighthouse/lighthouse_lightroom.htm
 
-Switch {
-	choice [
-		DEF	Chandelier Inline {
-			url	["lightroom-chandelier.wrl"]
-		}
-		DEF	Cage Inline	{
-			url	["lightroom-cage.wrl"]
-		}
-		DEF	Masonry Inline {
-			url	["lightroom-masonry.wrl"]
-		}
-		DEF	Roof Inline	{
-			url	["lightroom-roof.wrl"]
-		}
-		DEF	Clock Inline {
-			url	["clock.wrl"]
-		}
-		DEF	Winding Inline {
-			url	["winding.wrl"]
-		}
-	]
-}
+EXTERNPROTO	CageProto [
+	exposedField SFInt32 lod
+]
+"lightroom-cage.wrl#Cage"
 
-USE	Masonry
+PROTO Lightroom [
 
-Transform {
-	children [
-		USE	Clock
-	]
-	translation	0 1.6 -1.6764
-}
+	# 1: LOD enabled
+	# 0: LOD disabled
+	exposedField SFInt32 lod 1
 
-Transform {
-	children [
-		Transform {
-			children [
-				USE	Winding
-			]
-			translation	-0.2 1.6 0
-		}
-	]
-	rotation 0 1 0 0.52
-}
+]{
+	Group {
+		children [
 
-Transform {
-	children [
-		USE	Cage
-		Transform {
-			children [
-				USE	Chandelier
-			]
-			# To match the picture on:
-			# http://www.bellrock.org.uk/lighthouse/lighthouse_lightroom.htm
-			rotation 0 1 0 1.57
-			# Cage height / 2
-			translation	0 2.037 0
-		}
-		Transform {
-			children [
-				USE	Roof
-			]
-			# Cage height
-			translation	0 4.5849 0
-		}
-	]
-	# Masonry height
-	translation	0 1.80975 0
+			Switch {
+				choice [
+					DEF	Chandelier Inline {
+						url	["lightroom-chandelier.wrl"]
+					}
+					DEF	Cage CageProto {
+						lod	IS lod
+					}
+					DEF	Masonry Inline {
+						url	["lightroom-masonry.wrl"]
+					}
+					DEF	Roof Inline	{
+						url	["lightroom-roof.wrl"]
+					}
+					DEF	Clock Inline {
+						url	["clock.wrl"]
+					}
+					DEF	Winding Inline {
+						url	["winding.wrl"]
+					}
+				]
+			}
+
+			USE	Masonry
+
+			Transform {
+				children [
+					USE	Clock
+				]
+				translation	0 1.6 -1.6764
+			}
+
+			Transform {
+				children [
+					Transform {
+						children [
+							USE	Winding
+						]
+						translation	-0.2 1.6 0
+					}
+				]
+				rotation 0 1 0 0.52
+			}
+
+			Transform {
+				children [
+					USE	Cage
+					DEF ChandelierTransform Transform {
+						children Transform {
+							children USE	Chandelier
+							# To match the picture on:
+							# http://www.bellrock.org.uk/lighthouse/lighthouse_lightroom.htm
+							rotation 0 1 0 1.57
+							# Cage height / 2
+							translation	0 2.037 0
+						}
+					}
+					Transform {
+						children [
+							USE	Roof
+						]
+						# Cage height
+						translation	0 4.5849 0
+					}
+				]
+				# Masonry height
+				translation	0 1.80975 0
+			}
+
+		]
+	}
+	DEF	ChandelierTimer TimeSensor {
+		cycleInterval 16
+		loop TRUE
+	}
+	DEF	ChandelierOI OrientationInterpolator {
+		key [0, 0.25, 0.5, 0.75, 1]
+		keyValue [0 1 0 0, 0 1 0 1.57, 0 1 0 3.14, 0 1 0 4.71, 0 1 0 6.28]
+	}
+	ROUTE ChandelierTimer.fraction_changed TO ChandelierOI.set_fraction
+	ROUTE ChandelierOI.value_changed TO	ChandelierTransform.rotation
 }

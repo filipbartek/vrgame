@@ -1,0 +1,130 @@
+#VRML V2.0 utf8
+
+WorldInfo {
+	title "Barrels"
+	info ["Eva Pešková"]
+}
+
+PROTO BarrelProto [
+	exposedField SFInt32 lod 1
+]{
+	Group {
+		children [
+			Switch {
+				choice [	 
+					DEF	TopCylinder Transform {
+						children [
+							Transform  {
+								children 
+								[ Shape {
+								geometry Cylinder {
+									height 0.02
+									radius 0.4
+									top	TRUE
+									bottom TRUE
+								}	 
+									appearance Appearance {	 
+										texture	ImageTexture {
+											url	["..\textures\wood.jpeg"]
+										}
+									}
+
+								}
+								Sound {
+									source DEF CrateAudioClip AudioClip {
+										url	["../wav/crateOpen.wav"]
+										description	"OpeningCrate"
+									}
+									maxBack	1000
+									maxFront 1000
+								}
+							]
+
+								translation	0 0.5 0
+							}
+							DEF BarrelTouch ProximitySensor { size 3 3 3 }
+							DEF	BarrelLidSensor TouchSensor { enabled FALSE }	   
+
+						DEF BarrelLidPosition PositionInterpolator	{	## for the lid
+							key [0, 1]
+							keyValue [ 0 0 0, 0 0.3 -0.13 ]
+						}
+
+						DEF BarrelLidOrientation OrientationInterpolator	{
+							key [0, 1]
+							keyValue [0 0 0 0, 1 1 0 1.2]
+						}
+
+						DEF BarrelSensor TimeSensor {
+						
+									#how much the interval should take
+									cycleInterval 0.5	
+
+									#for barrel, repeat just once
+									loop FALSE
+									
+								}							
+						]				   
+					}								
+					
+
+					DEF	Barrel Transform {
+						children [
+								Inline	{
+									url	["../blend/barrel.wrl"]
+							}					
+							# Add top cylinder that can be moved
+							USE	TopCylinder
+						]
+					}
+				]
+			}
+			USE	Barrel
+		]
+	}
+	ROUTE BarrelTouch.isActive TO  BarrelLidSensor.enabled
+	ROUTE BarrelLidSensor.touchTime TO CrateAudioClip.startTime
+	ROUTE BarrelLidSensor.touchTime	TO BarrelSensor.startTime
+	ROUTE BarrelSensor.fraction_changed	TO BarrelLidOrientation.set_fraction
+	ROUTE BarrelSensor.fraction_changed	TO BarrelLidPosition.set_fraction
+	ROUTE BarrelLidOrientation.value_changed TO	TopCylinder.rotation
+	ROUTE BarrelLidPosition.value_changed TO TopCylinder.translation 
+}	
+
+PROTO BarrelLiquid [
+	exposedField SFInt32 lod 1
+	exposedField SFColor color 0 0.1 0.8
+	exposedField SFFloat tranp 0.2	
+]{
+	Group {
+		children [
+			Switch {
+			   choice [
+				   DEF	BarrelWater Transform {
+						children [
+							BarrelProto	{ lod IS lod }
+							Transform {
+								children Shape {
+									appearance Appearance {
+										material DEF Water Material {
+											diffuseColor IS	color
+											transparency IS	tranp
+										}
+									}
+									geometry Cylinder {
+										radius 0.4
+										height 0.1
+										top	TRUE
+									}
+								}
+								# water is somewhere up
+								translation	0 0.15 0
+							}							
+						]
+					}
+			   ]
+			}
+			USE	BarrelWater	
+		]
+	}
+}

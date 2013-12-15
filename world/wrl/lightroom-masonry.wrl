@@ -1,8 +1,8 @@
 #VRML V2.0 utf8
 
 WorldInfo {
-	title "Light masonry"
-	info ["Filip Bártek", "Eva Pešková"]
+	title "Lightroom masonry"
+	info ["Filip Bártek"]
 }
 
 # Height: 1.80975
@@ -83,6 +83,7 @@ Transform {
 					description	"Lightroom"
 					position 0 0 0
 					jump FALSE
+					fieldOfView	1.05 # 60 degrees
 				}
 			]
 			rotation 0 1 0 1.57
@@ -95,6 +96,7 @@ Transform {
 					position 0 0 0
 					orientation	1 0 0 -0.52
 					jump FALSE
+					fieldOfView	1.05
 				}
 			]
 			rotation 0 1 0 1.57

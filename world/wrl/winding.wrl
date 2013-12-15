@@ -1,16 +1,35 @@
 #VRML V2.0 utf8
 
 WorldInfo {
-	title "Winding"
-	info ["Filip Bártek", "Eva Pešková"]
+	title "Winding mechanism"
+	info ["Filip Bártek"]
 }
 
 # http://www.bellrock.org.uk/lighthouse/lighthouse_lightroom.htm (looks, dimensions)
 # http://www.bellrock.org.uk/lighthouse/lighthouse_courses.htm (position)
 
+EXTERNPROTO	BarSquareProto [
+	exposedField SFInt32 lod
+	field SFVec3f size
+	exposedField SFColor diffuseColor
+	exposedField SFNode texture
+]
+"barsquare.wrl#BarSquare"
+
+EXTERNPROTO	BarRoundProto [
+	exposedField SFInt32 lod
+	field MFFloat range
+	field SFVec3f scale
+	exposedField SFColor diffuseColor
+	exposedField SFNode texture
+	field SFBool bottom
+	field SFBool top
+]
+"barround.wrl#BarRound"
+
 Switch {
 	choice [
-		DEF	Winding Transform {
+		DEF	Drum Transform {
 			children [
 				Shape {
 					appearance Appearance {
@@ -18,15 +37,71 @@ Switch {
 							diffuseColor 0.4 0.2 0.1
 						}
 					}
-					geometry Cylinder {
-					}
+					geometry Cylinder {}
 				}
 			]
 			scale 0.2 0.2 0.2
 			rotation 0 0 1 1.57
-			translation	0 0 0
+		}
+		DEF	Hinge Transform	{
+			children [
+				Transform {
+					children [
+						Transform {
+							children [
+								Transform {
+									children BarSquareProto {
+										diffuseColor 0.1 0.1 0.2
+										size 0.05 1 0.05
+									}
+									translation	0.025 0.5 0
+								}
+								Transform {
+									children Transform {
+										children BarRoundProto {
+											diffuseColor 0.1 0.1 0.2
+											scale 0.05 1 0.05
+											bottom FALSE
+										}
+										translation	0 0.5 0
+									}
+									rotation 0 0 1 -1.57
+									translation	0 0.975 0
+								}
+							]
+						}
+					]
+					scale 0.4 0.4 0.4
+					rotation 0 0 1 1.57
+				}
+				DEF HingeCS CylinderSensor	{
+					enabled	FALSE
+				}
+			]
+			rotation 0 0 1 -1.57
 		}
 	]
 }
 
-USE	Winding
+Transform {
+	children DEF	Winding Transform {
+		children Transform {
+			children [
+				USE	Drum
+				Transform {
+					children USE Hinge
+					translation	0.2 0 0
+				}
+			]
+			rotation 0 0 1 1.57
+		}
+	}
+	rotation 0 0 1 -1.57
+}
+
+DEF PS ProximitySensor	{
+	size 3 3 3
+}
+
+ROUTE PS.isActive TO HingeCS.enabled
+ROUTE HingeCS.rotation_changed TO Winding.rotation
