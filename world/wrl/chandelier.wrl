@@ -95,6 +95,16 @@ Switch {
 			rotation 0 0 1 1.57
 		}
 
+		DEF	RodHorizontalSide5 Transform {
+			children USE RodHorizontal
+			scale 0.6350 1 1
+		}
+
+		DEF	RodHorizontalSide7 Transform {
+			children USE RodHorizontal
+			scale 1.2700 1 1
+		}
+
 		DEF	Line2 Group {
 			children [
 				Transform {
@@ -115,24 +125,14 @@ Switch {
 		DEF	Line2Side5 Group {
 			children [
 				USE	Line2
-				Transform {
-					children [
-						USE	RodHorizontal
-					]
-					scale 0.6350 1 1
-				}
+				USE	RodHorizontalSide5
 			]
 		}
 
 		DEF	Line2Side7 Group {
 			children [
 				USE	Line2
-				Transform {
-					children [
-						USE	RodHorizontal
-					]
-					scale 1.2700 1 1
-				}
+				USE	RodHorizontalSide7
 			]
 		}
 
@@ -151,12 +151,7 @@ Switch {
 					]
 					translation	0.6350 0 0
 				}
-				Transform {
-					children [
-						USE	RodHorizontal
-					]
-					scale 1.2700 1 1
-				}
+				USE	RodHorizontalSide7
 			]
 		}
 
