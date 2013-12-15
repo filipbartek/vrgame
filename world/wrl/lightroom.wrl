@@ -25,7 +25,7 @@ PROTO Lightroom [
 			Switch {
 				choice [
 					DEF	Chandelier Inline {
-						url	["lightroom-chandelier.wrl"]
+						url	["chandelier.wrl"]
 					}
 					DEF	Cage CageProto {
 						lod	IS lod
