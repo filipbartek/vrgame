@@ -105,6 +105,37 @@ Switch {
 			scale 1.2700 1 1
 		}
 
+		DEF	VerticalRod Group {
+			children USE Rod
+		}
+
+		DEF	VerticalRodFull Transform {
+			children USE VerticalRod
+			scale 1 1.28 1
+		}
+
+		DEF	VerticalRodHalf Transform {
+			children USE VerticalRodFull
+			scale 1 0.5 1
+		}
+
+		DEF	ReflectorWithVerticalRod Group {
+			children [
+				USE	Reflector
+				Transform {
+					children USE VerticalRodHalf
+					translation	0 0.32 0
+				}
+			]
+		}
+
+		DEF	Line1 Group	{
+			children [
+				USE	ReflectorWithVerticalRod
+				USE	RodHorizontalSide5
+			]
+		}
+
 		DEF	Line2 Group {
 			children [
 				Transform {
@@ -144,7 +175,7 @@ Switch {
 					]
 					translation	-0.6350 0 0
 				}
-				USE	Reflector
+				USE	ReflectorWithVerticalRod
 				Transform {
 					children [
 						USE	Reflector
@@ -208,6 +239,22 @@ Switch {
 					scale -1 -1 1
 					translation	0 0.64 0
 				}
+				Transform {
+					children USE VerticalRodFull
+					translation	0.6350 0 0
+				}
+				Transform {
+					children USE VerticalRodFull
+					translation	-0.6350 0 0
+				}
+				Transform {
+					children USE VerticalRodHalf
+					translation	0.3175 -0.32 0
+				}
+				Transform {
+					children USE VerticalRodHalf
+					translation	-0.3175 -0.32 0
+				}
 				LightCone {
 					color 1 1 0
 				}
@@ -236,7 +283,7 @@ Switch {
 					]
 					translation	0 -0.64 0
 				}
-				USE	Reflector
+				USE	Line1
 				Transform {
 					children [
 						USE	Line2Side5
