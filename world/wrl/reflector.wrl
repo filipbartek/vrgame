@@ -13,6 +13,7 @@ EXTERNPROTO	BarRoundProto [
 	exposedField SFNode texture
 	field SFBool bottom
 	field SFBool top
+	field SFBool solid
 ]
 "barround.wrl#BarRound"
 
@@ -44,7 +45,8 @@ Transform {
 	children Transform {
 		children BarRoundProto {
 			bottom FALSE
-			top	TRUE
+			top	FALSE
+			solid FALSE
 			diffuseColor 0.8 0.8 0.8
 			scale 0.075 1 0.075
 		}
