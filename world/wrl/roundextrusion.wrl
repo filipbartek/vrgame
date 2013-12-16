@@ -62,7 +62,7 @@ PROTO RoundExtrusion [
 			function initialize() {
 				//console.assert(complexity >= 1);
 				ext.set_crossSection = generateCylinderCrossSection(complexity, radius);
-			};
+			}
 		"
 	}
 }
