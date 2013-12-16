@@ -10,6 +10,19 @@ WorldInfo {
 # Supports Extrusion attributes solid and creaseAngle.
 # Supports new attribute complexity that describes the number of faces used to represent the cylinder.
 
+EXTERNPROTO	RoundExtrusion [
+	field MFVec3f spine
+	field MFVec2f scale
+	field MFRotation orientation
+	field SFBool beginCap
+	field SFBool endCap
+	field SFBool solid
+	field SFFloat creaseAngle
+	field SFFloat radius
+	field SFInt32 complexity
+]
+"roundextrusion.wrl#RoundExtrusion"
+
 PROTO CylinderExtrusion [
 
 	# Cylinder:
@@ -38,38 +51,23 @@ PROTO CylinderExtrusion [
 	field SFInt32 complexity 24 # as in Cylinder
 
 ]{
-	DEF Ext Extrusion {
-		beginCap IS bottom
+	DEF Ext RoundExtrusion {
+		beginCap IS	bottom
 		endCap IS top
 		solid IS solid
-		creaseAngle IS creaseAngle
-		#spine [0 -1 0, 0 1 0]
-		#crossSection
+		creaseAngle	IS creaseAngle
+		radius IS radius
+		complexity IS complexity
+
+		spine [0 -1 0, 0 1 0] # Generated in script
+		scale [1 1, 1 1]
+		orientation	0 0 1 0
 	}
-	DEF Init Script {
+	Script {
 		field SFNode ext USE Ext
-		field SFInt32 complexity IS complexity
-		field SFFloat radius IS radius
 		field SFFloat height IS height
 		directOutput TRUE
 		url "javascript:
-			function generateCylinderCrossSection(n, r) {
-				//console.assert(n >= 1);
-				var cs = new MFVec2f();
-				var x = 0;
-				var y = r;
-				var vec0 = new SFVec2f(x, y);
-				cs[0] = vec0;
-				for (var i = 1; i < n; i++) {
-					var angle = i / n * Math.PI * 2;
-					var x = r * Math.sin(angle);
-					var y = r * Math.cos(angle);
-					var vec = new SFVec2f(x, y);
-					cs[i] = vec;
-				}
-				cs[n] = vec0;
-				return cs;
-			}
 			function generateSpine(h) {
 				var halfH = h / 2;
 				var spineBegin = new SFVec3f(0, -halfH, 0);
@@ -77,12 +75,10 @@ PROTO CylinderExtrusion [
 				var spine = new MFVec3f(spineBegin, spineEnd);
 				return spine;
 			}
-			// Generates crossSection and spine
+			// Generate spine
 			function initialize() {
-				//console.assert(complexity >= 1);
-				ext.set_crossSection = generateCylinderCrossSection(complexity, radius);
-				ext.set_spine = generateSpine(height);
-			};
+				ext.spine = generateSpine(height);
+			}
 		"
 	}
 }

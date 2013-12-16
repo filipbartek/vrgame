@@ -1,0 +1,68 @@
+#VRML V2.0 utf8
+
+WorldInfo {
+	title "Extrusion with circular cross section"
+	info ["Author: Filip Bártek"]
+}
+
+PROTO RoundExtrusion [
+
+	# Extrusion:
+	field MFVec3f spine [0 0 0, 0 1 0]
+	field MFVec2f scale 1 1
+	field MFRotation orientation 0 0 1 0
+	field SFBool beginCap TRUE
+	field SFBool endCap TRUE
+	field SFBool solid TRUE
+	field SFFloat creaseAngle 0
+
+	# Cylinder:
+	field SFFloat radius 1
+
+	field SFInt32 complexity 24 # as in Cylinder
+
+]{
+	DEF Ext Extrusion {
+		spine IS spine
+		scale IS scale
+		orientation	IS orientation
+		beginCap IS	beginCap
+		endCap IS endCap
+		solid IS solid
+		creaseAngle	IS creaseAngle
+
+		#crossSection [1 1, 1 -1, -1 -1, -1 1, 1 1]
+		ccw	TRUE
+		convex TRUE
+	}
+	Script {
+		field SFNode ext USE Ext
+		field SFInt32 complexity IS complexity
+		field SFFloat radius IS radius
+		directOutput TRUE
+		url "javascript:
+			function generateCylinderCrossSection(n, r) {
+				//console.assert(n >= 1);
+				var cs = new MFVec2f();
+				var x = 0;
+				var y = r;
+				var vec0 = new SFVec2f(x, y);
+				cs[0] = vec0;
+				for (var i = 1; i < n; i++) {
+					var angle = i / n * Math.PI * 2;
+					var x = r * Math.sin(angle);
+					var y = r * Math.cos(angle);
+					var vec = new SFVec2f(x, y);
+					cs[i] = vec;
+				}
+				cs[n] = vec0;
+				return cs;
+			}
+			// Generates crossSection
+			function initialize() {
+				//console.assert(complexity >= 1);
+				ext.set_crossSection = generateCylinderCrossSection(complexity, radius);
+			}
+		"
+	}
+}
