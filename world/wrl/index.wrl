@@ -195,16 +195,20 @@ PROTO Index [
 		eventOut MFString hudTimeText
 		url	"javascript:
 			var time0 = Number.POSITIVE_INFINITY;
+			var timeNext = Number.NEGATIVE_INFINITY;
 			function ukaz(cas){
-				if (cas < time0) {
-					time0 = cas;
+				if (cas >= timeNext) {
+					if (cas < time0) {
+						time0 = cas;
+					}
+					var timeSeconds = cas - time0;
+					var timeSecondsMod = Math.floor(timeSeconds) % 60;
+					var timeMinutes = timeSeconds / 60;
+					var timeMinutesFloor = Math.floor(timeMinutes);
+					var text = timeMinutesFloor + ':' + timeSecondsMod;
+					hudTimeText = new MFString(text);
+					timeNext = cas + 1;
 				}
-				var timeSeconds = cas - time0;
-				var timeSecondsMod = Math.floor(timeSeconds) % 60;
-				var timeMinutes = timeSeconds / 60;
-				var timeMinutesFloor = Math.floor(timeMinutes);
-				var text = timeMinutesFloor + ':' + timeSecondsMod;
-				hudTimeText = new MFString(text);
 			}
 		"
 	}
