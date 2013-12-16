@@ -5,6 +5,17 @@ WorldInfo {
 	info ["Filip Bártek"]
 }
 
+EXTERNPROTO CylinderExtrusion [
+	field SFFloat radius
+	field SFFloat height
+	field SFBool bottom
+	field SFBool top
+	field SFBool solid
+	field SFFloat creaseAngle
+	field SFInt32 complexity
+]
+"cylinderextrusion.wrl#CylinderExtrusion"
+
 PROTO BarRound [
 
 	# 1: LOD enabled
@@ -31,6 +42,9 @@ PROTO BarRound [
 	# Render top cap?
 	field SFBool top TRUE
 
+	field SFBool solid TRUE
+	field SFInt32 complexity 24
+
 ]{
 	Group {
 		children [
@@ -44,11 +58,13 @@ PROTO BarRound [
 									diffuseColor IS	diffuseColor
 								}
 							}
-							geometry Cylinder {
+							geometry CylinderExtrusion {
 								height 1
 								radius 0.5
 								bottom IS bottom
 								top	IS top
+								solid IS solid
+								complexity IS complexity
 							}
 						}
 						scale IS scale
