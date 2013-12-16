@@ -148,6 +148,72 @@ PROTO Index [
 				translation	0 -4.7752 0
 			}
 
+			DEF	Proxim ProximitySensor {
+				size 100 100 100
+			}
+
+			# Inspired by: http://dcgi.felk.cvut.cz/cgg/LaskavyPruvodce/kap5/p-5-14.wrl
+			DEF	Hud Transform {
+				children [
+					Transform {
+						children [
+							Transform {
+								children Shape {
+									appearance Appearance {
+										material Material {
+											ambientIntensity 0
+											diffuseColor 0 0 0
+											emissiveColor 1 1 1
+											shininess 0
+											specularColor 0 0 0
+										}
+									}
+									geometry DEF HudTimeText Text {
+										maxExtent 20
+									}
+								}
+								scale 0.05 0.05 1
+								translation	0.25 -0.25 0
+							}
+						]
+						translation	0 0 -1
+					}
+				]
+			}
+
 		]
 	}
+
+	# Inspired by: fps.wrl
+
+	DEF	T TimeSensor {
+		cycleInterval 1000
+	}
+
+	DEF	S Script {
+		eventIn	SFTime ukaz
+		eventOut MFString hudTimeText
+		url	"javascript:
+			var time0 = Number.POSITIVE_INFINITY;
+			function ukaz(cas){
+				if (cas < time0) {
+					time0 = cas;
+				}
+				var timeSeconds = cas - time0;
+				var timeSecondsMod = Math.floor(timeSeconds) % 60;
+				var timeMinutes = timeSeconds / 60;
+				var timeMinutesFloor = Math.floor(timeMinutes);
+				var text = timeMinutesFloor + ':' + timeSecondsMod;
+				hudTimeText = new MFString(text);
+			}
+		"
+	}
+
+	ROUTE Proxim.position_changed TO Proxim.center
+	ROUTE Proxim.position_changed TO Hud.translation
+	ROUTE Proxim.orientation_changed TO	Hud.rotation
+	ROUTE Proxim.isActive TO T.loop
+	ROUTE T.cycleTime TO S.ukaz
+	ROUTE T.time TO	S.ukaz
+	ROUTE S.hudTimeText	TO HudTimeText.string
 }
