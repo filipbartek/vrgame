@@ -73,7 +73,6 @@ PROTO CylinderExtrusion [
 				var spineBegin = new SFVec3f(0, -halfH, 0);
 				var spineEnd = new SFVec3f(0, halfH, 0);
 				var spine = new MFVec3f(spineBegin, spineEnd);
-				print(spine);
 				return spine;
 			}
 			// Generate spine
