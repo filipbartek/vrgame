@@ -46,7 +46,7 @@ PROTO CylinderExtrusion [
 		#spine [0 -1 0, 0 1 0]
 		#crossSection
 	}
-	DEF Init Script {
+	Script {
 		field SFNode ext USE Ext
 		field SFInt32 complexity IS complexity
 		field SFFloat radius IS radius
