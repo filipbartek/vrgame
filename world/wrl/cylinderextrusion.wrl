@@ -1,0 +1,88 @@
+#VRML V2.0 utf8
+
+WorldInfo {
+	title "Cylinder with solid, creaseAngle and complexity"
+	info ["Author: Filip Bártek"]
+}
+
+# Cylinder-shaped extrusion
+# Doesn't support Cylinder attribute side.
+# Supports Extrusion attributes solid and creaseAngle.
+# Supports new attribute complexity that describes the number of faces used to represent the cylinder.
+
+PROTO CylinderExtrusion [
+
+	# Cylinder:
+	field SFFloat radius 1 # as in Cylinder
+	field SFFloat height 2 # as in Cylinder
+	field SFBool bottom TRUE # as in Cylinder
+	field SFBool top TRUE # as in Cylinder
+
+	# Extrusion:
+	field SFBool solid TRUE # as in Extrusion and Cylinder
+
+	# Crease angle
+	# Useful values:
+	# 0: no smoothing
+	# 1.57 (90 degrees - epsilon): smooth sides as long as complexity >= 5
+	field SFFloat creaseAngle 1.57 # 90 degrees - epsilon
+
+	# Complexity
+	# Must be at least 1.
+	# Possible values:
+	# 0 or below: undefined behavior
+	# 1: invisible
+	# 2: weird plane
+	# 3 to 4: no crease (not smooth)
+	# 5 and above: smooth surface
+	field SFInt32 complexity 24 # as in Cylinder
+
+]{
+	DEF Ext Extrusion {
+		beginCap IS bottom
+		endCap IS top
+		solid IS solid
+		creaseAngle IS creaseAngle
+		#spine [0 -1 0, 0 1 0]
+		#crossSection
+	}
+	DEF Init Script {
+		field SFNode ext USE Ext
+		field SFInt32 complexity IS complexity
+		field SFFloat radius IS radius
+		field SFFloat height IS height
+		directOutput TRUE
+		url "javascript:
+			function generateCylinderCrossSection(n, r) {
+				//console.assert(n >= 1);
+				var cs = new MFVec2f();
+				var x = 0;
+				var y = r;
+				var vec0 = new SFVec2f(x, y);
+				cs[0] = vec0;
+				for (var i = 1; i < n; i++) {
+					var angle = i / n * Math.PI * 2;
+					var x = r * Math.sin(angle);
+					var y = r * Math.cos(angle);
+					var vec = new SFVec2f(x, y);
+					cs[i] = vec;
+				}
+				cs[n] = vec0;
+				return cs;
+			}
+			function generateSpine(h) {
+				var halfH = h / 2;
+				var spineBegin = new SFVec3f(0, -halfH, 0);
+				var spineEnd = new SFVec3f(0, halfH, 0);
+				var spine = new MFVec3f(spineBegin, spineEnd);
+				return spine;
+			}
+			// Generates crossSection and spine
+			function initialize() {
+				//console.assert(complexity >= 1);
+				ext.set_crossSection = generateCylinderCrossSection(complexity, radius);
+				ext.set_spine = generateSpine(height);
+			};
+		"
+	}
+}
