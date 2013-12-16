@@ -12,6 +12,16 @@ EXTERNPROTO	LightroomProto [
 
 EXTERNPROTO	BellProto [] "bell.wrl#Bell"
 
+EXTERNPROTO CylinderExtrusion [
+	field SFFloat radius
+	field SFFloat height
+	field SFBool bottom
+	field SFBool top
+	field SFBool solid
+	field SFInt32 complexity
+]
+"cylinderextrusion.wrl#CylinderExtrusion"
+
 PROTO Balcony [
 
 	# 1: LOD enabled
@@ -48,13 +58,33 @@ PROTO Balcony [
 				lod	IS lod
 			}
 
-			Transform {
-				children [
-					Inline {
-						url	["barrier.wrl"]
+			Collision {
+				children Transform {
+					children [
+						Inline {
+							url	["barrier.wrl"]
+						}
+					]
+					scale 1.5 1.2 1.5
+				}
+				collide TRUE
+				proxy Transform {
+					children Transform {
+						children Shape {
+							geometry CylinderExtrusion {
+								bottom FALSE
+								top FALSE
+								height 1
+								radius 2.9972
+								solid FALSE
+								complexity 16 # to match lighthouse body
+							}
+						}
+						translation 0 0.5 0
 					}
-				]
-				scale 1.5 1.2 1.5
+					# Height is rather arbitrary; the value doesn't match the height of the lightroom
+					scale 1 5.5118 1
+				}
 			}
 
 			# Bells positioned according to a picture on:
