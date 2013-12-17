@@ -29,7 +29,9 @@ PROTO CylinderShape [
 
 	# Cylinder:
 	field SFFloat radius 1
+	eventIn	SFFloat	set_radius
 	field SFFloat height 2
+	eventIn	SFFloat	set_height
 	field SFBool top TRUE
 	field SFBool bottom TRUE
 
@@ -44,37 +46,40 @@ PROTO CylinderShape [
 		children [
 			Switch {
 				choice [
-					DEF	Cylinder Shape {
-						geometry CylinderExtrusion {
-							radius IS radius
-							height IS height
-							top	IS top
-							bottom IS bottom
-							solid IS solid
-							creaseAngle	IS creaseAngle
-							complexity IS complexity
-						}
-						appearance IS appearance
-					}
-					DEF	Billboard Billboard	{
-						axisOfRotation 0 1 0
-						children Transform {
-							children DEF BillboardTranslate Transform {
-								children Shape	{
-									appearance IS appearance
-									geometry DEF BillboardElevationGrid ElevationGrid {
-										xDimension 2
-										zDimension 2
-										height [0 0, 0 0] # Overwritten from script
-										solid TRUE
-										#xSpacing IS	radius # * 2: Set from script
-										zSpacing IS	height
-									}
-								}
-								translation	-1 0 -1
-								# translation set from script
+					DEF	Cylinder Transform {
+						children Shape {
+							geometry CylinderExtrusion {
+								radius 1
+								height 1
+								top	IS top
+								bottom IS bottom
+								solid IS solid
+								creaseAngle	IS creaseAngle
+								complexity IS complexity
 							}
-							rotation 1 0 0 1.57
+							appearance IS appearance
+						}
+					}
+					DEF	Billboard Transform {
+						children Billboard	{
+							axisOfRotation 0 1 0
+							children Transform {
+								children DEF BillboardTranslate Transform {
+									children Shape	{
+										appearance IS appearance
+										geometry DEF BillboardElevationGrid ElevationGrid {
+											xDimension 2
+											zDimension 2
+											height [0 0 0 0]
+											solid TRUE
+											xSpacing 2
+											zSpacing 1
+										}
+									}
+									translation	-1 0 -0.5
+								}
+								rotation 1 0 0 1.57
+							}
 						}
 					}
 				]
@@ -96,22 +101,29 @@ PROTO CylinderShape [
 		]
 	}
 	Script {
-		field SFNode elevGrid USE	BillboardElevationGrid
-		field SFNode transl USE	BillboardTranslate
+		field SFNode cylTrans USE Cylinder
+		field SFNode billTrans USE Billboard
 		field SFFloat radius IS	radius
 		field SFFloat height IS	height
+		eventIn	SFFloat	set_height IS set_height
+		eventIn	SFFloat	set_radius IS set_radius
 		directOutput TRUE
 		url	"javascript:
-			function generateTranslation(r, h) {
-				var x = -r;
-				var z = -h / 2;
-				var result = new SFVec3f(x, 0, z);
-				return result;
+			function refreshHeight() {
+				var scale = new SFVec3f(radius, height, radius);
+				cylTrans.scale = scale;
+				billTrans.scale = scale;
 			}
 			function initialize() {
-				elevGrid.xSpacing = radius * 2;
-				elevGrid.set_height = new MFFloat(0, 0, 0, 0); // Hack: without this line, the previous one doesn't work
-				transl.translation = generateTranslation(radius, height);
+				refreshHeight();
+			}
+			function set_height(value) {
+				height = value;
+				refreshHeight();
+			}
+			function set_radius(value) {
+				radius = value;
+				refreshHeight();
 			}
 		"
 	}
