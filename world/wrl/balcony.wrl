@@ -7,6 +7,7 @@ WorldInfo {
 
 EXTERNPROTO	LightroomProto [
 	exposedField SFInt32 lod
+	eventOut SFBool	winding_solved
 ]
 "lightroom.wrl#Lightroom"
 
@@ -27,6 +28,7 @@ PROTO Balcony [
 	# 1: LOD enabled
 	# 0: LOD disabled
 	exposedField SFInt32 lod 1
+	eventOut SFBool winding_solved
 
 ]{
 	Group {
@@ -56,6 +58,7 @@ PROTO Balcony [
 
 			LightroomProto {
 				lod	IS lod
+				winding_solved IS winding_solved
 			}
 
 			Collision {

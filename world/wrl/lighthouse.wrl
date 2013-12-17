@@ -16,6 +16,7 @@ EXTERNPROTO	Body [
 
 EXTERNPROTO	BalconyProto [
 	exposedField SFInt32 lod
+	eventOut SFBool	winding_solved
 ]
 "balcony.wrl#Balcony"
 
@@ -34,6 +35,7 @@ PROTO Lighthouse [
 	# 1: LOD enabled
 	# 0: LOD disabled
 	exposedField SFInt32 lod 1
+	eventOut SFBool winding_solved
 
 ]{
 	Group {
@@ -47,6 +49,7 @@ PROTO Lighthouse [
 				children [
 					BalconyProto {
 						lod	IS lod
+						winding_solved IS winding_solved
 					}
 					Transform {
 						children [   
