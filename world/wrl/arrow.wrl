@@ -5,9 +5,9 @@ WorldInfo {
 	info ["Eva Pešková"]
 }
 
-PROTO Arrow3D [
-	eventIn	SFBool showIt
-	exposedField SFColor dColor 0 0 0
+PROTO Arrow3D [			  
+	exposedField SFColor dColor 0 0 0 
+	exposedField SFInt32 visible 1
 ]{
 	Group {
 		children [
@@ -38,21 +38,77 @@ PROTO Arrow3D [
 							bottom FALSE
 							side TRUE
 						}
-					}
-				]
-			}
-			Transform {
-				children [
-					USE	ArrowShapeBody
-					Transform {
+					}		
+				    DEF	ArrowShape Transform {
 						children [
-							USE	ArrowShapeHead
+							USE	ArrowShapeBody
+							Transform {
+								children [
+									USE	ArrowShapeHead
+								]
+								translation	0 1.2 0
+							}
 						]
-						translation	0 1.2 0
+						rotation	0 0 1 3.1			
 					}
 				]
-				rotation	0 0 1 3.1			
 			}
-		]
+			Switch {
+				whichChoice	IS visible
+				choice [
+					Group {}
+					USE	ArrowShape					
+				]
+			}
+			
+		]		
 	}
+}		  
+
+PROTO Arrow3DBlinker [		 
+	eventIn	SFBool showIt
+]{
+	Group {
+		children [
+			Switch {
+				choice [
+					DEF BlinkSensor TimeSensor {
+						
+						#how much the interval should take
+						cycleInterval 1	
+
+						#for repeat forever
+						loop TRUE
+			
+					}			 
+
+					DEF	BlinkerScript Script {
+						eventIn	SFFloat blinker
+						eventOut SFInt32 visible
+						url	"javascript:
+							var time0 = true;
+							function blinker( fraction ){
+								if ( fraction > 0.5 ) {	 
+									visible = 1;
+								}
+								else
+								{
+									visible = 0;
+								}
+							}
+						"
+					}
+					DEF	xx Arrow3D {
+						visible	1
+					}
+				]
+			}
+			USE	xx
+		]
+		ROUTE BlinkSensor.fraction_changed TO BlinkerScript.blinker
+		ROUTE BlinkerScript.visible	TO	xx.visible
+	}
+}
+
+Arrow3DBlinker { 
 }
