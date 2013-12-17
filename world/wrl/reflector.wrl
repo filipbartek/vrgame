@@ -3,29 +3,56 @@
 # A reflector that is pointing in the positive direction of Z axis.
 
 WorldInfo {
-	title "Reflector"
+	title "Reflector with chimney and oil reservoir"
 	info ["Filip Bártek"]
 }
 
-EXTERNPROTO	BarRoundProto [
-	field SFVec3f scale
-	exposedField SFColor diffuseColor
-	exposedField SFNode texture
-	field SFBool bottom
+EXTERNPROTO	CylinderShape [
+	field SFNode appearance
+	exposedField SFInt32 lod
+	field MFFloat range
+	field SFFloat radius
+	field SFFloat height
 	field SFBool top
+	field SFBool bottom
 	field SFBool solid
+	field SFFloat creaseAngle
+	field SFInt32 complexity
 ]
-"barround.wrl#BarRound"
+"cylindershape.wrl#CylinderShape"
+
+Switch {
+	choice [
+		DEF	Metal Appearance {
+			material Material {
+				diffuseColor 0.8 0.8 0.8
+			}
+		}
+		DEF	Chimney CylinderShape {
+			appearance USE Metal
+			top	FALSE
+			bottom FALSE
+			solid FALSE
+			height 1
+			radius 0.0375
+		}
+		DEF	Reservoir CylinderShape	{
+			appearance Appearance {
+				material Material {
+					diffuseColor 0 0 0.1
+				}
+			}
+			height 1
+			radius 0.0375
+		}
+	]
+}
 
 # Reflector
 Transform {
 	children [
 		Shape {
-			appearance Appearance {
-				material Material {
-					diffuseColor 0.8 0.8 0.8
-				}
-			}
+			appearance USE Metal
 			geometry Cone {
 				# http://www.bellrock.org.uk/lighthouse/lighthouse_lightroom.htm
 				# parabolic shape of 25 inches in diameter
@@ -43,13 +70,7 @@ Transform {
 # Chimney
 Transform {
 	children Transform {
-		children BarRoundProto {
-			bottom FALSE
-			top	FALSE
-			solid FALSE
-			diffuseColor 0.8 0.8 0.8
-			scale 0.075 1 0.075
-		}
+		children USE Chimney
 		translation	0 0.5 0
 	}
 	scale 1 0.3175 1
@@ -59,12 +80,7 @@ Transform {
 # Oil reservoir
 Transform {
 	children Transform {
-		children BarRoundProto {
-			bottom TRUE
-			top	TRUE
-			diffuseColor 0 0 0.1
-			scale 0.075 1 0.075
-		}
+		children USE Reservoir
 		translation	0 0.5 0
 	}
 	scale 1 0.3175 1

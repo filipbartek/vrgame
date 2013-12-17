@@ -28,8 +28,8 @@ PROTO CylinderExtrusion [
 	# Cylinder:
 	field SFFloat radius 1 # as in Cylinder
 	field SFFloat height 2 # as in Cylinder
-	field SFBool bottom TRUE # as in Cylinder
 	field SFBool top TRUE # as in Cylinder
+	field SFBool bottom TRUE # as in Cylinder
 
 	# Extrusion:
 	field SFBool solid TRUE # as in Extrusion and Cylinder
