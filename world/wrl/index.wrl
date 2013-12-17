@@ -191,23 +191,23 @@ PROTO Index [
 	}
 
 	DEF	S Script {
-		eventIn	SFTime ukaz
+		eventIn	SFTime show
 		eventOut MFString hudTimeText
 		url	"javascript:
 			var time0 = Number.POSITIVE_INFINITY;
 			var timeNext = Number.NEGATIVE_INFINITY;
-			function ukaz(cas){
-				if (cas >= timeNext) {
-					if (cas < time0) {
-						time0 = cas;
+			function show(mTime){
+				if (mTime >= timeNext) {
+					if (mTime < time0) {
+						time0 = mTime;
 					}
-					var timeSeconds = cas - time0;
+					var timeSeconds = mTime - time0;
 					var timeSecondsMod = Math.floor(timeSeconds) % 60;
 					var timeMinutes = timeSeconds / 60;
 					var timeMinutesFloor = Math.floor(timeMinutes);
 					var text = timeMinutesFloor + ':' + timeSecondsMod;
 					hudTimeText = new MFString(text);
-					timeNext = cas + 1;
+					timeNext = mTime + 1;
 				}
 			}
 		"
@@ -217,7 +217,7 @@ PROTO Index [
 	ROUTE Proxim.position_changed TO Hud.translation
 	ROUTE Proxim.orientation_changed TO	Hud.rotation
 	ROUTE Proxim.isActive TO T.loop
-	ROUTE T.cycleTime TO S.ukaz
-	ROUTE T.time TO	S.ukaz
+	ROUTE T.cycleTime TO S.show
+	ROUTE T.time TO	S.show
 	ROUTE S.hudTimeText	TO HudTimeText.string
 }
