@@ -21,7 +21,9 @@ EXTERNPROTO	CylinderShape [
 	exposedField SFInt32 lod
 	field MFFloat range
 	field SFFloat radius
+	eventIn	SFFloat	set_radius
 	field SFFloat height
+	eventIn	SFFloat	set_height
 	field SFBool top
 	field SFBool bottom
 	field SFBool solid
@@ -44,7 +46,6 @@ Switch {
 				}
 			]
 			scale 0.2 0.2 0.2
-			rotation 0 0 1 1.57
 		}
 		DEF	Hinge Transform	{
 			children [
@@ -84,9 +85,24 @@ Switch {
 				}
 				DEF HingeCS CylinderSensor	{
 					enabled	FALSE
+					minAngle 0
+					maxAngle 25.13
 				}
 			]
 			rotation 0 0 1 -1.57
+		}
+		DEF	RopeAppearance Appearance {
+			material Material {
+				diffuseColor 0.8 0.8 0
+			}
+		}
+		DEF	RopeCoil Transform {
+			children DEF RopeCylinder CylinderShape {
+				appearance USE RopeAppearance
+				height 0.05
+				radius 0.21
+			}
+			#translation	0 0.1 0
 		}
 	]
 }
@@ -95,7 +111,16 @@ Transform {
 	children DEF	Winding Transform {
 		children Transform {
 			children [
-				USE	Drum
+				Transform {
+					children [
+						USE	Drum
+						Transform {
+							children USE	RopeCoil
+							#translation	0 -0.19 0
+						}
+					]
+					rotation 0 0 1 1.57
+				}
 				Transform {
 					children USE Hinge
 					translation	0.2 0 0
@@ -111,5 +136,24 @@ DEF PS ProximitySensor	{
 	size 3 3 3
 }
 
+DEF	RopeScript Script {
+	eventIn SFRotation rot
+	field SFNode coil USE RopeCylinder
+	field SFFloat heightMin 0.05
+	field SFFloat heightMax 0.35
+	field SFFloat angleMin 0
+	field SFFloat angleMax 25.13
+	url	"javascript:
+		function rot(value) {
+			var angle = value[3];
+			var angle01 = (angle - angleMin) / (angleMax - angleMin);
+			var height = heightMin + (heightMax - heightMin) * angle01;
+			coil.set_height = height;
+		}
+	"
+	directOutput TRUE
+}
+
 ROUTE PS.isActive TO HingeCS.enabled
 ROUTE HingeCS.rotation_changed TO Winding.rotation
+ROUTE HingeCS.rotation_changed TO RopeScript.rot
