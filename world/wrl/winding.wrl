@@ -97,11 +97,15 @@ Switch {
 			}
 		}
 		DEF	RopeCoil Transform {
-			children DEF RopeCylinder CylinderShape {
-				appearance USE RopeAppearance
-				height 0.05
-				radius 0.21
+			children Transform {
+				children DEF RopeCylinder CylinderShape {
+					appearance USE RopeAppearance
+					height 1
+					radius 0.21
+				}
+				translation	0 0.5 0
 			}
+			scale 1 0.05 1 # Set by script
 		}
 	]
 }
@@ -113,7 +117,10 @@ Transform {
 				Transform {
 					children [
 						USE	Drum
-						USE	RopeCoil
+						Transform {
+							children USE	RopeCoil
+							translation	0 -0.15 0
+						}
 					]
 					rotation 0 0 1 1.57
 				}
@@ -134,17 +141,25 @@ DEF PS ProximitySensor	{
 
 DEF	RopeScript Script {
 	eventIn SFRotation rot
-	field SFNode coil USE RopeCylinder
+	field SFNode coil USE RopeCoil
 	field SFFloat heightMin 0.05
-	field SFFloat heightMax 0.35
+	field SFFloat heightMax 0.3
 	field SFFloat angleMin 0
 	field SFFloat angleMax 25.13
 	url	"javascript:
+		function setCoilHeight(h) {
+			var scale = new SFVec3f(1, h, 1);
+			coil.scale = scale;
+		}
+		function initialize() {
+			setCoilHeight(heightMin);
+		}
 		function rot(value) {
 			var angle = value[3];
 			var angle01 = (angle - angleMin) / (angleMax - angleMin);
 			var height = heightMin + (heightMax - heightMin) * angle01;
-			coil.set_height = height;
+			setCoilHeight(height);
+			//coil.set_height = height;
 		}
 	"
 	directOutput TRUE
