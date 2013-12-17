@@ -32,6 +32,13 @@ EXTERNPROTO	CylinderShape [
 ]
 "cylindershape.wrl#CylinderShape"
 
+PROTO Winding [
+	exposedField SFInt32 lod 1
+	eventOut SFBool	winding_solved
+]{
+	Group {
+		children [
+
 Switch {
 	choice [
 		DEF	Drum Transform {
@@ -57,6 +64,7 @@ Switch {
 									children BarSquareProto {
 										diffuseColor 0.1 0.1 0.2
 										size 0.05 1 0.05
+										lod	IS lod
 									}
 									translation	0.025 0.5 0
 								}
@@ -71,6 +79,7 @@ Switch {
 											radius 0.025
 											height 1
 											bottom FALSE
+											lod	IS lod
 										}
 										translation	0 0.5 0
 									}
@@ -102,6 +111,7 @@ Switch {
 					appearance USE RopeAppearance
 					height 1
 					radius 0.21
+					lod	IS lod
 				}
 				translation	0 0.5 0
 			}
@@ -139,6 +149,9 @@ DEF PS ProximitySensor	{
 	size 3 3 3
 }
 
+		]
+	}
+
 DEF	RopeScript Script {
 	eventIn SFRotation rot
 	field SFNode coil USE RopeCoil
@@ -171,3 +184,5 @@ DEF	RopeScript Script {
 ROUTE PS.isActive TO HingeCS.enabled
 ROUTE HingeCS.rotation_changed TO Winding.rotation
 ROUTE HingeCS.rotation_changed TO RopeScript.rot
+
+}

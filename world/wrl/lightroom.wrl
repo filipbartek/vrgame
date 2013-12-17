@@ -12,6 +12,12 @@ EXTERNPROTO	CageProto [
 ]
 "lightroom-cage.wrl#Cage"
 
+EXTERNPROTO	Winding [
+	exposedField SFInt32 lod
+	eventOut SFBool	winding_solved
+]
+"winding.wrl#Winding"
+
 PROTO Lightroom [
 
 	# 1: LOD enabled
@@ -39,8 +45,8 @@ PROTO Lightroom [
 					DEF	Clock Inline {
 						url	["clock.wrl"]
 					}
-					DEF	Winding Inline {
-						url	["winding.wrl"]
+					DEF	Winding Winding	{
+						lod	IS lod
 					}
 				]
 			}
