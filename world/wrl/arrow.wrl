@@ -108,7 +108,4 @@ PROTO Arrow3DBlinker [
 		ROUTE BlinkSensor.fraction_changed TO BlinkerScript.blinker
 		ROUTE BlinkerScript.visible	TO	xx.visible
 	}
-}
-
-Arrow3DBlinker { 
-}
+} 
