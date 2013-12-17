@@ -5,16 +5,19 @@ WorldInfo {
 	info ["Filip Bártek"]
 }
 
-EXTERNPROTO CylinderExtrusion [
+EXTERNPROTO	CylinderShape [
+	field SFNode appearance
+	exposedField SFInt32 lod
+	field MFFloat range
 	field SFFloat radius
 	field SFFloat height
-	field SFBool bottom
 	field SFBool top
+	field SFBool bottom
 	field SFBool solid
 	field SFFloat creaseAngle
 	field SFInt32 complexity
 ]
-"cylinderextrusion.wrl#CylinderExtrusion"
+"cylindershape.wrl#CylinderShape"
 
 PROTO BarRound [
 
@@ -46,70 +49,32 @@ PROTO BarRound [
 	field SFInt32 complexity 24
 
 ]{
-	Group {
-		children [
-			Switch {
-				choice [
-					DEF	Cylinder Transform {
-						children Shape {
-							appearance Appearance {
-								texture	IS texture
-								material Material {
-									diffuseColor IS	diffuseColor
-								}
-							}
-							geometry CylinderExtrusion {
-								height 1
-								radius 0.5
-								bottom IS bottom
-								top	IS top
-								solid IS solid
-								complexity IS complexity
-							}
-						}
-						scale IS scale
-					}
-					DEF	Billboard Billboard	{
-						axisOfRotation 0 1 0
-						children Transform	{
-							children Transform {
-								children Transform {
-									children Shape	{
-										appearance Appearance {
-											material Material {
-												diffuseColor IS	diffuseColor
-											}
-										}
-										geometry ElevationGrid {
-											xDimension 2
-											zDimension 2
-											height [0 0, 0 0]
-											solid TRUE
-										}
-									}
-									translation	-0.5 0 -0.5
-								}
-								rotation 1 0 0 1.57
-							}
-							scale IS scale
-						}
-					}
-				]
+	DEF Cyl CylinderShape {
+		lod	IS lod
+		range IS range
+		appearance Appearance {
+			material Material {
+				diffuseColor IS	diffuseColor
 			}
-			Switch {
-				whichChoice	IS lod
-				choice [
-					USE	Cylinder
-					LOD	{
-						range IS range
-						level [
-							USE	Cylinder
-							USE	Billboard
-							Group {}
-						]
-					}
-				]
+			texture IS texture
+		}
+		bottom IS bottom
+		top	IS top
+		solid IS solid
+		complexity IS complexity
+		#radius from scale - set in script
+		#height from scale - set in script
+	}
+	Script {
+		directOutput TRUE
+		field SFNode cyl USE Cyl
+		field SFVec3f scale IS scale
+		url	"javascript:
+			function initialize() {
+				//console.assert(scale[0] == scale[2]);
+				cyl.radius = scale[0] / 2;
+				cyl.height = scale[1];
 			}
-		]
+		"
 	}
 }
