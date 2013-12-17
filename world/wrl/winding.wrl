@@ -160,12 +160,13 @@ DEF	RopeScript Script {
 	field SFFloat heightTarget 0.28
 	field SFFloat angleMin 0
 	field SFFloat angleMax 25.13
+	eventOut SFBool	winding_solved IS winding_solved
 	url	"javascript:
 		function setCoilHeight(h) {
 			var scale = new SFVec3f(1, h, 1);
 			coil.scale = scale;
 			if (h >= heightTarget) {
-				Browser.lighthouse.nuts.winding = true;
+				winding_solved = true;
 			}
 		}
 		function initialize() {
