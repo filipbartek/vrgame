@@ -102,7 +102,6 @@ Switch {
 				height 0.05
 				radius 0.21
 			}
-			#translation	0 0.1 0
 		}
 	]
 }
@@ -114,10 +113,7 @@ Transform {
 				Transform {
 					children [
 						USE	Drum
-						Transform {
-							children USE	RopeCoil
-							#translation	0 -0.19 0
-						}
+						USE	RopeCoil
 					]
 					rotation 0 0 1 1.57
 				}
