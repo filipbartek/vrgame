@@ -158,20 +158,39 @@ PROTO Index [
 					Transform {
 						children [
 							Transform {
-								children Shape {
-									appearance Appearance {
-										material Material {
-											ambientIntensity 0
-											diffuseColor 0 0 0
-											emissiveColor 1 1 1
-											shininess 0
-											specularColor 0 0 0
+								children [
+										Shape {
+											appearance Appearance {
+												material Material {
+													ambientIntensity 0
+													diffuseColor 0 0 0
+													emissiveColor 0 1 1
+													shininess 0
+													specularColor 0 0 0
+												}
+											}
+											geometry DEF HudTimeText Text {
+												maxExtent 20
+											}
 										}
-									}
-									geometry DEF HudTimeText Text {
-										maxExtent 20
-									}
-								}
+										Transform {
+											children Shape	{
+												appearance Appearance{
+													material Material {
+														ambientIntensity 0
+														diffuseColor 1 0 0
+														emissiveColor 1 1 1
+														shininess 0
+														specularColor 0 0 0
+													}
+												}
+												geometry DEF NutsCountText Text {
+													maxExtent 20
+												}
+											}
+											translation	0 1 0 				   
+										} 
+									]
 								scale 0.05 0.05 1
 								translation	0.25 -0.25 0
 							}
@@ -188,6 +207,19 @@ PROTO Index [
 
 	DEF	T TimeSensor {
 		cycleInterval 1000
+	}
+
+	DEF	NutsNumber Script	{
+		eventIn	SFBool nutDone
+		eventOut MFString nutsOutput
+		url	"javascript:
+			var nutCount = 0;
+			var nutsTotal = 10;
+			function nutDone() {
+				nutCount ++;
+				nutsOutput = new MFString(nutCount); 
+			}
+			"
 	}
 
 	DEF	S Script {
@@ -212,12 +244,14 @@ PROTO Index [
 			}
 		"
 	}
-
+		  
 	ROUTE Proxim.position_changed TO Proxim.center
 	ROUTE Proxim.position_changed TO Hud.translation
 	ROUTE Proxim.orientation_changed TO	Hud.rotation
 	ROUTE Proxim.isActive TO T.loop
 	ROUTE T.cycleTime TO S.show
 	ROUTE T.time TO	S.show
+	ROUTE T.isActive TO NutsNumber.nutDone
+	ROUTE NutsNumber.nutsOutput	TO NutsCountText.string
 	ROUTE S.hudTimeText	TO HudTimeText.string
 }
