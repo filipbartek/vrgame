@@ -16,28 +16,31 @@ EXTERNPROTO	BarSquareProto [
 ]
 "barsquare.wrl#BarSquare"
 
-EXTERNPROTO	BarRoundProto [
+EXTERNPROTO	CylinderShape [
+	field SFNode appearance
 	exposedField SFInt32 lod
 	field MFFloat range
-	field SFVec3f scale
-	exposedField SFColor diffuseColor
-	exposedField SFNode texture
-	field SFBool bottom
+	field SFFloat radius
+	field SFFloat height
 	field SFBool top
+	field SFBool bottom
+	field SFBool solid
+	field SFFloat creaseAngle
+	field SFInt32 complexity
 ]
-"barround.wrl#BarRound"
+"cylindershape.wrl#CylinderShape"
 
 Switch {
 	choice [
 		DEF	Drum Transform {
 			children [
-				Shape {
+				CylinderShape {
 					appearance Appearance {
 						material Material {
 							diffuseColor 0.4 0.2 0.1
 						}
 					}
-					geometry Cylinder {}
+					range [200 400]
 				}
 			]
 			scale 0.2 0.2 0.2
@@ -58,9 +61,14 @@ Switch {
 								}
 								Transform {
 									children Transform {
-										children BarRoundProto {
-											diffuseColor 0.1 0.1 0.2
-											scale 0.05 1 0.05
+										children CylinderShape {
+											appearance Appearance {
+												material Material {
+													diffuseColor 0.1 0.1 0.2
+												}
+											}
+											radius 0.025
+											height 1
 											bottom FALSE
 										}
 										translation	0 0.5 0
