@@ -144,12 +144,16 @@ DEF	RopeScript Script {
 	field SFNode coil USE RopeCoil
 	field SFFloat heightMin 0.05
 	field SFFloat heightMax 0.3
+	field SFFloat heightTarget 0.28
 	field SFFloat angleMin 0
 	field SFFloat angleMax 25.13
 	url	"javascript:
 		function setCoilHeight(h) {
 			var scale = new SFVec3f(1, h, 1);
 			coil.scale = scale;
+			if (h >= heightTarget) {
+				Browser.lighthouse.nuts.winding = true;
+			}
 		}
 		function initialize() {
 			setCoilHeight(heightMin);
@@ -159,7 +163,6 @@ DEF	RopeScript Script {
 			var angle01 = (angle - angleMin) / (angleMax - angleMin);
 			var height = heightMin + (heightMax - heightMin) * angle01;
 			setCoilHeight(height);
-			//coil.set_height = height;
 		}
 	"
 	directOutput TRUE
