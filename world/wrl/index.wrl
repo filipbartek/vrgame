@@ -7,6 +7,7 @@ WorldInfo {
 
 EXTERNPROTO	LighthouseProto [
 	exposedField SFInt32 lod
+	eventOut SFBool	winding_solved
 ]
 "lighthouse.wrl#Lighthouse"
 
@@ -66,7 +67,7 @@ PROTO Index [
 
 			Transform {
 				children [
-					LighthouseProto	{
+					DEF Lighthouse LighthouseProto	{
 						# Central entry point where scene parameters are set
 						lod	IS lod
 					}
@@ -212,12 +213,22 @@ PROTO Index [
 	DEF	NutsNumber Script	{
 		eventIn	SFBool nutDone
 		eventOut MFString nutsOutput
+		eventIn	SFBool set_winding_solved
+		field SFBool winding_solved FALSE
 		url	"javascript:
 			var nutCount = 0;
 			var nutsTotal = 10;
+			function generateText() {
+				nutsOutput = new MFString(nutCount);
+			}
 			function nutDone() {
 				nutCount ++;
-				nutsOutput = new MFString(nutCount); 
+				generateText();
+			}
+			function set_winding_solved(value) {
+				nutCount += value - winding_solved;
+				winding_solved = value;
+				generateText();
 			}
 			"
 	}
@@ -254,4 +265,5 @@ PROTO Index [
 	ROUTE T.isActive TO NutsNumber.nutDone
 	ROUTE NutsNumber.nutsOutput	TO NutsCountText.string
 	ROUTE S.hudTimeText	TO HudTimeText.string
+	ROUTE Lighthouse.winding_solved	TO NutsNumber.set_winding_solved
 }
