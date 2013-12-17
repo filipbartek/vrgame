@@ -1,0 +1,118 @@
+#VRML V2.0 utf8
+
+WorldInfo {
+	title "Cylinder shape with LOD"
+	info ["Filip Bártek"]
+}
+
+EXTERNPROTO CylinderExtrusion [
+	field SFFloat radius
+	field SFFloat height
+	field SFBool top
+	field SFBool bottom
+	field SFBool solid
+	field SFFloat creaseAngle
+	field SFInt32 complexity
+]
+"cylinderextrusion.wrl#CylinderExtrusion"
+
+PROTO CylinderShape [
+
+	field SFNode appearance NULL # Mandatory!
+
+	# 1: LOD enabled
+	# 0: LOD disabled
+	exposedField SFInt32 lod 1
+
+	# LOD ranges
+	field MFFloat range [50 200]
+
+	# Cylinder:
+	field SFFloat radius 1
+	field SFFloat height 2
+	field SFBool top TRUE
+	field SFBool bottom TRUE
+
+	# Extrusion:
+	field SFBool solid TRUE
+	field SFFloat creaseAngle 1.57
+
+	field SFInt32 complexity 24
+
+]{
+	Group {
+		children [
+			Switch {
+				choice [
+					DEF	Cylinder Shape {
+						geometry CylinderExtrusion {
+							radius IS radius
+							height IS height
+							top	IS top
+							bottom IS bottom
+							solid IS solid
+							creaseAngle	IS creaseAngle
+							complexity IS complexity
+						}
+						appearance IS appearance
+					}
+					DEF	Billboard Billboard	{
+						axisOfRotation 0 1 0
+						children Transform {
+							children DEF BillboardTranslate Transform {
+								children Shape	{
+									appearance IS appearance
+									geometry DEF BillboardElevationGrid ElevationGrid {
+										xDimension 2
+										zDimension 2
+										height [0 0, 0 0] # Overwritten from script
+										solid TRUE
+										#xSpacing IS	radius # * 2: Set from script
+										zSpacing IS	height
+									}
+								}
+								translation	-1 0 -1
+								# translation set from script
+							}
+							rotation 1 0 0 1.57
+						}
+					}
+				]
+			}
+			Switch {
+				whichChoice	IS lod
+				choice [
+					USE	Cylinder
+					LOD	{
+						range IS range
+						level [
+							USE	Cylinder
+							USE	Billboard
+							Group {}
+						]
+					}
+				]
+			}
+		]
+	}
+	Script {
+		field SFNode elevGrid USE	BillboardElevationGrid
+		field SFNode transl USE	BillboardTranslate
+		field SFFloat radius IS	radius
+		field SFFloat height IS	height
+		directOutput TRUE
+		url	"javascript:
+			function generateTranslation(r, h) {
+				var x = -r;
+				var z = -h / 2;
+				var result = new SFVec3f(x, 0, z);
+				return result;
+			}
+			function initialize() {
+				elevGrid.xSpacing = radius * 2;
+				elevGrid.set_height = new MFFloat(0, 0, 0, 0); // Hack: without this line, the previous one doesn't work
+				transl.translation = generateTranslation(radius, height);
+			}
+		"
+	}
+}
