@@ -49,38 +49,38 @@ PROTO BarrelProto [
 								key	[0,1]
 								keyValue [ 1 1 1, 0.3 1 1 ]
 							}
-						DEF BarrelLidPosition PositionInterpolator	{	## for the lid
-							key [0, 1]
-							keyValue [ 0 0 0, 0 0.3 -0.13 ]
-						}
+							DEF BarrelLidPosition PositionInterpolator	{	## for the lid
+								key [0, 1]
+								keyValue [ 0 0 0, 0 0.3 -0.13 ]
+							}
 
-						DEF BarrelLidOrientation OrientationInterpolator	{
-							key [0, 1]
-							keyValue [0 0 0 0, 0 0 1 1]
-						}
+							DEF BarrelLidOrientation OrientationInterpolator	{
+								key [0, 1]
+								keyValue [0 0 0 0, 0 0 1 1]
+							}
 
-						DEF BarrelSensor TimeSensor {
+							DEF BarrelSensor TimeSensor {
 						
-									#how much the interval should take
-									cycleInterval 0.5	
+										#how much the interval should take
+										cycleInterval 0.5	
 
-									#for barrel, repeat just once
-									loop FALSE
+										#for barrel, repeat just once
+										loop FALSE
 									
-								}							
-						]				   
-					}								
+									}							
+							]				   
+						}								
 					
 
-					DEF	Barrel Transform {
-						children [
-								Inline	{
-									url	["../blend/barrel.wrl"]
-							}					
-							# Add top cylinder that can be moved
-							USE	TopCylinder
-						]
-					}
+						DEF	Barrel Transform {
+							children [
+									Inline	{
+										url	["../blend/barrel.wrl"]
+								}					
+								# Add top cylinder that can be moved
+								USE	TopCylinder
+							]
+						}
 				]
 			}
 			USE	Barrel
