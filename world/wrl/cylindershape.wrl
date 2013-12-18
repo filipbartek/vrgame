@@ -5,16 +5,20 @@ WorldInfo {
 	info ["Filip Bártek"]
 }
 
-EXTERNPROTO CylinderExtrusion [
-	field SFFloat radius
+EXTERNPROTO TruncatedConeShape [
+	field SFNode appearance
+	exposedField SFInt32 lod
+	field MFFloat range
 	field SFFloat height
-	field SFBool top
+	field SFFloat bottomRadius
+	field SFFloat topRadius
 	field SFBool bottom
+	field SFBool top
 	field SFBool solid
 	field SFFloat creaseAngle
 	field SFInt32 complexity
 ]
-"cylinderextrusion.wrl#CylinderExtrusion"
+"truncatedconeshape.wrl#TruncatedConeShape"
 
 PROTO CylinderShape [
 
@@ -29,9 +33,7 @@ PROTO CylinderShape [
 
 	# Cylinder:
 	field SFFloat radius 1
-	eventIn	SFFloat	set_radius
 	field SFFloat height 2
-	eventIn	SFFloat	set_height
 	field SFBool top TRUE
 	field SFBool bottom TRUE
 
@@ -42,89 +44,17 @@ PROTO CylinderShape [
 	field SFInt32 complexity 24
 
 ]{
-	Group {
-		children [
-			Switch {
-				choice [
-					DEF	Cylinder Transform {
-						children Shape {
-							geometry CylinderExtrusion {
-								radius 1
-								height 1
-								top	IS top
-								bottom IS bottom
-								solid IS solid
-								creaseAngle	IS creaseAngle
-								complexity IS complexity
-							}
-							appearance IS appearance
-						}
-					}
-					DEF	Billboard Transform {
-						children Billboard	{
-							axisOfRotation 0 1 0
-							children Transform {
-								children DEF BillboardTranslate Transform {
-									children Shape	{
-										appearance IS appearance
-										geometry DEF BillboardElevationGrid ElevationGrid {
-											xDimension 2
-											zDimension 2
-											height [0 0 0 0]
-											solid TRUE
-											xSpacing 2
-											zSpacing 1
-										}
-									}
-									translation	-1 0 -0.5
-								}
-								rotation 1 0 0 1.57
-							}
-						}
-					}
-				]
-			}
-			Switch {
-				whichChoice	IS lod
-				choice [
-					USE	Cylinder
-					LOD	{
-						range IS range
-						level [
-							USE	Cylinder
-							USE	Billboard
-							Group {}
-						]
-					}
-				]
-			}
-		]
-	}
-	Script {
-		field SFNode cylTrans USE Cylinder
-		field SFNode billTrans USE Billboard
-		field SFFloat radius IS	radius
-		field SFFloat height IS	height
-		eventIn	SFFloat	set_height IS set_height
-		eventIn	SFFloat	set_radius IS set_radius
-		directOutput TRUE
-		url	"javascript:
-			function refreshHeight() {
-				var scale = new SFVec3f(radius, height, radius);
-				cylTrans.scale = scale;
-				billTrans.scale = scale;
-			}
-			function initialize() {
-				refreshHeight();
-			}
-			function set_height(value) {
-				height = value;
-				refreshHeight();
-			}
-			function set_radius(value) {
-				radius = value;
-				refreshHeight();
-			}
-		"
+	TruncatedConeShape {
+		appearance IS appearance
+		lod	IS lod
+		range IS range
+		height IS height
+		bottomRadius IS	radius
+		topRadius	IS radius
+		bottom IS bottom
+		top	IS top
+		solid IS solid
+		creaseAngle	IS creaseAngle
+		complexity IS complexity
 	}
 }
