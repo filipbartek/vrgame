@@ -13,12 +13,13 @@ PROTO Arrow3D [
 		children [
 			Switch {
 				choice [
-					DEF	ArrowShapeHead Shape {
-						 appearance	Appearance {
-							 material Material {
+					DEF	ArrowApp Appearance {
+						 material Material {
 								 diffuseColor  0.2 0.4 0.8 
 							 }
-						 }
+					}
+					DEF	ArrowShapeHead Shape {
+						 appearance	USE	ArrowApp
 						 geometry Cone {
 							 height	1
 							 bottomRadius 0.5
@@ -27,11 +28,7 @@ PROTO Arrow3D [
 						 }
 					}
 					DEF	ArrowShapeBody Shape {
-						appearance Appearance {
-							material Material {
-								diffuseColor IS	dColor
-							}
-						}
+						appearance USE ArrowApp	  
 						geometry Cylinder {
 							height 2
 							radius 0.2
