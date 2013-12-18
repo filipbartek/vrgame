@@ -1,8 +1,8 @@
 #VRML V2.0 utf8
 
 WorldInfo {
-	title "Cylinder shape with LOD"
-	info ["Filip Bártek"]
+	title "Cone shape with LOD"
+	info ["Author: Filip Bártek"]
 }
 
 EXTERNPROTO TruncatedConeShape [
@@ -20,7 +20,7 @@ EXTERNPROTO TruncatedConeShape [
 ]
 "truncatedconeshape.wrl#TruncatedConeShape"
 
-PROTO CylinderShape [
+PROTO ConeShape [
 
 	field SFNode appearance NULL # Mandatory!
 
@@ -31,10 +31,10 @@ PROTO CylinderShape [
 	# LOD ranges
 	field MFFloat range [50 200]
 
-	# Cylinder:
-	field SFFloat radius 1
+	# Cone:
+	field SFFloat radius 1 # As in Cylinder
 	field SFFloat height 2
-	field SFBool top TRUE
+	# No `side` param
 	field SFBool bottom TRUE
 
 	# Extrusion:
@@ -50,9 +50,9 @@ PROTO CylinderShape [
 		range IS range
 		height IS height
 		bottomRadius IS	radius
-		topRadius	IS radius
+		topRadius 0
 		bottom IS bottom
-		top	IS top
+		top	FALSE
 		solid IS solid
 		creaseAngle	IS creaseAngle
 		complexity IS complexity
