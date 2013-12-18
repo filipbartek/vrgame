@@ -23,6 +23,7 @@ EXTERNPROTO	BalconyProto [
 EXTERNPROTO	BedRoomProto [
 	exposedField SFInt32 lod
 	eventIn	SFBool arrow_visible
+	eventOut SFBool ladyBugRemoved
 ]
 "bedroom.wrl#BedRoom"
 
@@ -37,6 +38,7 @@ PROTO Lighthouse [
 	# 0: LOD disabled
 	exposedField SFInt32 lod 1
 	eventOut SFBool winding_solved
+	eventOut SFBool	ladyBugRemoved
 	eventIn	SFBool arrow_visible
 ]{
 	Group {
@@ -62,6 +64,7 @@ PROTO Lighthouse [
 									BedRoomProto {
 										lod	IS  lod
 										arrow_visible IS arrow_visible
+										ladyBugRemoved IS ladyBugRemoved
 									}
 									
 								]
