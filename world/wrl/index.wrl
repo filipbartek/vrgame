@@ -8,7 +8,7 @@ WorldInfo {
 EXTERNPROTO	LighthouseProto [
 	exposedField SFInt32 lod
 	eventOut SFBool	winding_solved
-	eventIn	SFBool arrow_visible
+	#eventIn	SFBool arrow_visible
 ]
 "lighthouse.wrl#Lighthouse"
 
@@ -290,7 +290,7 @@ PROTO Index [
 	}
 		  
 	ROUTE HudButtonSensor.touchTime TO HudButtonScript.switchShow
-	ROUTE HudButtonScript.arrowVisible TO Lighthouse.arrow_visible
+	#ROUTE HudButtonScript.arrowVisible TO Lighthouse.arrow_visible
 	ROUTE Proxim.position_changed TO Proxim.center
 	ROUTE Proxim.position_changed TO Hud.translation
 	ROUTE Proxim.orientation_changed TO	Hud.rotation
