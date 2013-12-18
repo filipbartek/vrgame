@@ -6,8 +6,7 @@ WorldInfo {
 }
 
 EXTERNPROTO	LadyBugProto [
-	exposedField SFInt32 lod
-	exposedField SFInt32 disabled
+	exposedField SFInt32 lod	 
 ]
 "ladyBugLods.wrl#LadyBug"
 
@@ -119,20 +118,41 @@ PROTO BedRoom [
 							Transform {
 								children [
 									USE	Bed	 
-									Transform {
+									DEF TestContent Transform {
 										children [
 											USE	Bed	
-											Transform {
+											DEF ToRemoveWithLadyBug Transform {
 												children [
 													Transform {
-														children USE LadyBugOnBed 
+														children [
+															USE LadyBugOnBed
+															DEF LadyBugRemoval Script {
+															eventOut MFNode	child
+															eventIn	SFTime touched
+															field MFNode node USE ToRemoveWithLadyBug
+															url "javascript:
+																	function touched(time)
+																	{
+																		child = node;
+																	}
+																"
+															}
+														] 
+														scale 30 30 30
 													}							  
 													Transform {
 														children Arrow3DBlinker	{
 														}			  
 													}
 												]
-											}	
+											}
+										    DEF	TouchLadyBugOnBed TouchSensor {
+												enabled TRUE
+											}
+											DEF	LadyBugOnBedProximity ProximitySensor	{
+												size 3 3 3
+											}
+											
 										]
 									translation	0 0 -0.3
 								}
@@ -204,4 +224,7 @@ PROTO BedRoom [
 			}
 		]
 	}
+	ROUTE TouchLadyBugOnBed.touchTime TO LadyBugRemoval.touched
+	
+	ROUTE LadyBugRemoval.child TO TestContent.removeChildren
 }
