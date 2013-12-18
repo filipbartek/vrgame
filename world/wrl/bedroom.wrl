@@ -7,6 +7,7 @@ WorldInfo {
 
 EXTERNPROTO	LadyBugProto [
 	exposedField SFInt32 lod
+	exposedField SFInt32 disabled
 ]
 "ladyBugLods.wrl#LadyBug"
 
@@ -63,6 +64,10 @@ PROTO BedRoom [
 						lod	IS lod		
 					}							
 		   
+					DEF	LadyBugOnBed LadyBugProto {
+						lod	IS lod 
+					}
+
 					DEF	LadyBugInstance Transform {
 						children [	
 							LadyBugProto {
@@ -118,45 +123,29 @@ PROTO BedRoom [
 										children [
 											USE	Bed
 										]
-										
-								translation	0 0 -0.3
-							}
-							
+									translation	0 0 -0.3
+								}
+								Transform {
+									children [
+										USE LadyBugOnBed
+										Transform {
+											children Arrow3DBlinker	{
+											}
+											translation	0 0 0
+											scale 0.3 1 0.3
+										}
+									]
+								}				
 							]
 							scale 3 1 3
 							translation	-2.5 0 0.3
 							rotation 0 1 0 1.8
-							}
-
-						Transform {
-							children [								 
-								Transform {
-									children [
-										Arrow3DBlinker {
-										}
-									]
-								}  
-								USE LadyBugInstance
-							]
-							translation	-2 0.58 0
-						}
-					]
+							} 
+						]
 					}
 					Transform {
 						children [
-							USE Shelf
-							Transform {
-								children [
-									Transform {
-										children [
-											Arrow3DBlinker {
-											}
-										]
-									}  
-									USE	LadyBugInstance
-								]
-								translation 1.0 0.5 -1.0
-							}	
+							USE Shelf 
 							Transform {
 								children [ 
 									USE Shelf
