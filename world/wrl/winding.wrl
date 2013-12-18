@@ -115,7 +115,7 @@ Switch {
 				children DEF RopeCylinder CylinderShape {
 					appearance USE RopeAppearance
 					height 1
-					radius 0.21
+					radius 0.25
 					lod	IS lod
 				}
 				translation	0 0.5 0
