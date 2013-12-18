@@ -51,7 +51,8 @@ PROTO Arrow3D [
 								]
 								translation	0 1.2 0
 							}
-						]					 		
+						]	
+						translation	0 0.8 0			 		
 					}
 				]
 			}
