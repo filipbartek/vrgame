@@ -34,66 +34,72 @@ EXTERNPROTO ConeShape [
 ]
 "coneshape.wrl#ConeShape"
 
-Switch {
-	choice [
-		DEF	Metal Appearance {
-			material Material {
-				diffuseColor 0.8 0.8 0.8
+PROTO Reflector [
+]{
+	Group {
+		children [
+
+			# Reflector
+			Transform {
+				children [
+					ConeShape {
+						appearance DEF	Metal Appearance {
+							material Material {
+								diffuseColor 0.8 0.8 0.8
+							}
+						}
+						# http://www.bellrock.org.uk/lighthouse/lighthouse_lightroom.htm
+						# parabolic shape of 25 inches in diameter
+						# http://www.bellrock.org.uk/lighthouse/lighthouse_stats.htm
+						# 25-inch (63.5cm)
+						radius 0.3175
+						height 0.3175
+						bottom FALSE
+						solid FALSE
+					}
+				]
+				rotation 1 0 0 4.71
+				translation	0 0 0.15875
 			}
-		}
-		DEF	Chimney CylinderShape {
-			appearance USE Metal
-			top	FALSE
-			bottom FALSE
-			solid FALSE
-			height 1
-			radius 0.0375
-		}
-		DEF	Reservoir CylinderShape	{
-			appearance Appearance {
-				material Material {
-					diffuseColor 0 0 0.1
+
+			# Chimney
+			Transform {
+				children Transform {
+					children CylinderShape {
+						appearance USE Metal
+						top	FALSE
+						bottom FALSE
+						solid FALSE
+						height 1
+						radius 0.0375
+					}
+					translation	0 0.5 0
 				}
+				scale 1 0.25 1
+				translation	0 0.1 0.15
 			}
-			height 1
-			radius 0.0375
-		}
-	]
-}
 
-# Reflector
-Transform {
-	children [
-		ConeShape {
-			appearance USE Metal
-			# http://www.bellrock.org.uk/lighthouse/lighthouse_lightroom.htm
-			# parabolic shape of 25 inches in diameter
-			# http://www.bellrock.org.uk/lighthouse/lighthouse_stats.htm
-			# 25-inch (63.5cm)
-			radius 0.3175
-			height 0.3175
-		}
-	]
-	rotation 1 0 0 4.71
-	translation	0 0 0.15875
-}
+			# Oil reservoir
+			Transform {
+				children Transform {
+					children CylinderShape	{
+						appearance Appearance {
+							material Material {
+								diffuseColor 0 0 0.1
+							}
+						}
+						height 1
+						radius 0.0375
+					}
+					translation	0 0.5 0
+				}
+				scale 1 0.3175 1
+				translation	0 0 -0.0375
+			}
 
-# Chimney
-Transform {
-	children Transform {
-		children USE Chimney
-		translation	0 0.5 0
+		]
 	}
-	scale 1 0.3175 1
-	translation	0 0.1 0.2
 }
 
-# Oil reservoir
-Transform {
-	children Transform {
-		children USE Reservoir
-		translation	0 0.5 0
-	}
-	scale 1 0.3175 1
-	translation	0 0 -0.0375
+Reflector {
 }
