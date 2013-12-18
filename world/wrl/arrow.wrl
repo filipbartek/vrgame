@@ -98,14 +98,14 @@ PROTO Arrow3DBlinker [
 							}
 						"
 					}
-					DEF	xx Arrow3D {
+					DEF	BlinkingArrow Arrow3D {
 						visible	1
 					}
 				]
 			}
-			USE	xx
+			USE	BlinkingArrow
 		]
 		ROUTE BlinkSensor.fraction_changed TO BlinkerScript.blinker
-		ROUTE BlinkerScript.visible	TO	xx.visible
+		ROUTE BlinkerScript.visible	TO	BlinkingArrow.visible
 	}
 } 
