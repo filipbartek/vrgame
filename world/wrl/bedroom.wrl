@@ -36,6 +36,7 @@ EXTERNPROTO Arrow3DBlinker [
 PROTO BedRoom [
 	exposedField SFInt32 lod 1
 	eventIn	SFBool arrow_visible
+	eventOut SFBool	ladyBugRemoved
 ]{
 	Group {
 		children [
@@ -128,12 +129,14 @@ PROTO BedRoom [
 															USE LadyBugOnBed
 															DEF LadyBugRemoval Script {
 															eventOut MFNode	child
+															eventOut SFBool	ladyBugRemoved IS ladyBugRemoved
 															eventIn	SFTime touched
 															field MFNode node USE ToRemoveWithLadyBug
 															url "javascript:
 																	function touched(time)
 																	{
 																		child = node;
+																		ladyBugRemoved = true;
 																	}
 																"
 															}

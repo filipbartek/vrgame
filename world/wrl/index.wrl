@@ -8,6 +8,7 @@ WorldInfo {
 EXTERNPROTO	LighthouseProto [
 	exposedField SFInt32 lod
 	eventOut SFBool	winding_solved
+	eventOut SFBool	ladyBugRemoved
 	eventIn	SFBool arrow_visible
 ]
 "lighthouse.wrl#Lighthouse"
@@ -234,10 +235,12 @@ PROTO Index [
 		eventIn	SFBool nutDone
 		eventOut MFString nutsOutput
 		eventIn	SFBool set_winding_solved
+		eventIn	SFBool set_ladybug_solved
 		field SFBool winding_solved FALSE
 		url	"javascript:
 			var nutCount = 0;
 			var nutsTotal = 10;
+			
 			function generateText() {
 				nutsOutput = new MFString(nutCount);
 			}
@@ -245,6 +248,12 @@ PROTO Index [
 				nutCount ++;
 				generateText();
 			}
+			
+			function set_ladybug_solved(value)
+			{				   
+				nutDone();
+			}
+
 			function set_winding_solved(value) {
 				nutCount += value - winding_solved;
 				winding_solved = value;
@@ -301,4 +310,5 @@ PROTO Index [
 	ROUTE NutsNumber.nutsOutput	TO NutsCountText.string
 	ROUTE S.hudTimeText	TO HudTimeText.string
 	ROUTE Lighthouse.winding_solved	TO NutsNumber.set_winding_solved
+	ROUTE Lighthouse.ladyBugRemoved	TO NutsNumber.set_ladybug_solved
 }
