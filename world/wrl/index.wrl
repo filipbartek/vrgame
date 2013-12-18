@@ -8,6 +8,7 @@ WorldInfo {
 EXTERNPROTO	LighthouseProto [
 	exposedField SFInt32 lod
 	eventOut SFBool	winding_solved
+	eventIn	SFBool arrow_visible
 ]
 "lighthouse.wrl#Lighthouse"
 
@@ -151,7 +152,7 @@ PROTO Index [
 
 			DEF	Proxim ProximitySensor {
 				size 100 100 100
-			}
+			}				
 
 			# Inspired by: http://dcgi.felk.cvut.cz/cgg/LaskavyPruvodce/kap5/p-5-14.wrl
 			DEF	Hud Transform {
@@ -204,6 +205,9 @@ PROTO Index [
 													}
 													translation 2 -3 0			   
 												}
+												DEF	HudButtonSensor TouchSensor	{
+													enabled	TRUE
+												}
 											]											
 											translation	0 1 0 				   
 										} 
@@ -224,7 +228,7 @@ PROTO Index [
 
 	DEF	T TimeSensor {
 		cycleInterval 1000
-	}
+	}	  
 
 	DEF	NutsNumber Script	{
 		eventIn	SFBool nutDone
@@ -246,6 +250,19 @@ PROTO Index [
 				winding_solved = value;
 				generateText();
 			}
+			"
+	}
+
+	DEF	HudButtonScript Script {
+		eventIn	SFTime switchShow
+		eventOut SFBool	arrowVisible
+		url	"javascript:
+			var visible = false;			
+			function switchShow(time) {
+				visible = !visible;
+				arrowVisible = visible;
+			}	  
+
 			"
 	}
 
@@ -272,6 +289,8 @@ PROTO Index [
 		"
 	}
 		  
+	ROUTE HudButtonSensor.touchTime TO HudButtonScript.switchShow
+	ROUTE HudButtonScript.arrowVisible TO Lighthouse.arrow_visible
 	ROUTE Proxim.position_changed TO Proxim.center
 	ROUTE Proxim.position_changed TO Hud.translation
 	ROUTE Proxim.orientation_changed TO	Hud.rotation
