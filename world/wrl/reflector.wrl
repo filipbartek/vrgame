@@ -21,6 +21,19 @@ EXTERNPROTO	CylinderShape [
 ]
 "cylindershape.wrl#CylinderShape"
 
+EXTERNPROTO ConeShape [
+	field SFNode appearance
+	exposedField SFInt32 lod
+	field MFFloat range
+	field SFFloat radius
+	field SFFloat height
+	field SFBool bottom
+	field SFBool solid
+	field SFFloat creaseAngle
+	field SFInt32 complexity
+]
+"coneshape.wrl#ConeShape"
+
 Switch {
 	choice [
 		DEF	Metal Appearance {
@@ -51,16 +64,14 @@ Switch {
 # Reflector
 Transform {
 	children [
-		Shape {
+		ConeShape {
 			appearance USE Metal
-			geometry Cone {
-				# http://www.bellrock.org.uk/lighthouse/lighthouse_lightroom.htm
-				# parabolic shape of 25 inches in diameter
-				# http://www.bellrock.org.uk/lighthouse/lighthouse_stats.htm
-				# 25-inch (63.5cm)
-				bottomRadius 0.3175
-				height 0.3175
-			}
+			# http://www.bellrock.org.uk/lighthouse/lighthouse_lightroom.htm
+			# parabolic shape of 25 inches in diameter
+			# http://www.bellrock.org.uk/lighthouse/lighthouse_stats.htm
+			# 25-inch (63.5cm)
+			radius 0.3175
+			height 0.3175
 		}
 	]
 	rotation 1 0 0 4.71
