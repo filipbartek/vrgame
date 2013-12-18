@@ -28,8 +28,14 @@ EXTERNPROTO ApartmentProto [
 ]
 "apartment.wrl#Apartment"
 
+EXTERNPROTO Arrow3DBlinker [	
+	eventIn SFBool arrowVisible
+]
+"arrow.wrl#Arrow3DBlinker"
+
 PROTO BedRoom [
 	exposedField SFInt32 lod 1
+	eventIn	SFBool arrow_visible
 ]{
 	Group {
 		children [
@@ -48,6 +54,14 @@ PROTO BedRoom [
 						children [
 							Inline {
 								url	["../blend/bed.wrl"]
+							}
+							Transform {
+								children [
+									Arrow3DBlinker { 
+										arrowVisible IS	arrow_visible
+									}
+								]
+								translation	0 2 0
 							}
 						]
 						scale 0.5 1 1

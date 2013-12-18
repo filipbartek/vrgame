@@ -45,6 +45,10 @@ PROTO BarrelProto [
 							DEF BarrelTouch ProximitySensor { size 3 3 3 }
 							DEF	BarrelLidSensor TouchSensor { enabled FALSE }	   
 
+							DEF	BarrelScale PositionInterpolator {
+								key	[0,1]
+								keyValue [ 1 1 1, 0.3 1 1 ]
+							}
 						DEF BarrelLidPosition PositionInterpolator	{	## for the lid
 							key [0, 1]
 							keyValue [ 0 0 0, 0 0.3 -0.13 ]
@@ -52,7 +56,7 @@ PROTO BarrelProto [
 
 						DEF BarrelLidOrientation OrientationInterpolator	{
 							key [0, 1]
-							keyValue [0 0 0 0, 1 1 0 1.2]
+							keyValue [0 0 0 0, 0 0 1 1]
 						}
 
 						DEF BarrelSensor TimeSensor {
@@ -87,8 +91,10 @@ PROTO BarrelProto [
 	ROUTE BarrelLidSensor.touchTime	TO BarrelSensor.startTime
 	ROUTE BarrelSensor.fraction_changed	TO BarrelLidOrientation.set_fraction
 	ROUTE BarrelSensor.fraction_changed	TO BarrelLidPosition.set_fraction
+	ROUTE BarrelSensor.fraction_changed	TO BarrelScale.set_fraction
 	ROUTE BarrelLidOrientation.value_changed TO	TopCylinder.rotation
 	ROUTE BarrelLidPosition.value_changed TO TopCylinder.translation 
+	ROUTE BarrelScale.value_changed	TO TopCylinder.scale
 }	
 
 PROTO BarrelLiquid [

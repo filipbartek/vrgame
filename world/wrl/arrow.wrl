@@ -7,7 +7,8 @@ WorldInfo {
 
 PROTO Arrow3D [			  
 	exposedField SFColor dColor 0.2 0.4 0.8 
-	exposedField SFInt32 visible 1
+	exposedField SFInt32 visible 1	 
+	exposedField SFInt32 hidden 0
 ]{
 	Group {
 		children [
@@ -54,10 +55,25 @@ PROTO Arrow3D [
 				]
 			}
 			Switch {
-				whichChoice	IS visible
-				choice [
-					Group {}
-					USE	ArrowShape					
+				whichChoice	IS hidden
+				choice [   
+					Group {
+						children [
+							Switch
+							{
+								whichChoice	IS visible
+								choice [
+									Group {
+
+									}								 
+									USE	ArrowShape
+								]
+								
+							}
+						]
+					}
+
+					Group {}			   					
 				]
 			}
 			
@@ -65,8 +81,8 @@ PROTO Arrow3D [
 	}
 }		  
 
-PROTO Arrow3DBlinker [		 
-	eventIn	SFBool showIt
+PROTO Arrow3DBlinker [	
+	eventIn SFBool arrowVisible
 ]{
 	Group {
 		children [
@@ -92,10 +108,14 @@ PROTO Arrow3DBlinker [
 					}		 
 
 					DEF	BlinkerScript Script {
+						eventIn	SFBool arrowVisible IS arrowVisible
 						eventIn	SFFloat blinker
 						eventOut SFInt32 visible
+						eventOut SFBool	enabled	
+						eventOut SFInt32 hide	 
 						url	"javascript:
 							var time0 = true;
+							var mEnabled = true;
 							function blinker( fraction ){
 								if ( fraction > 0.5 ) {	 
 									visible = 1;
@@ -105,18 +125,32 @@ PROTO Arrow3DBlinker [
 									visible = 0;
 								}
 							}
+							function arrowVisible()
+							{
+								mEnabled = !mEnabled;
+								enabled = mEnabled;
+								if ( enabled )
+									hide = 0;
+								else
+									hide = 1;				
+							}
 						"
 					}
 					DEF	BlinkingArrowPos Transform
 					   {
 						   children	DEF BlinkingArrow Arrow3D {
-								visible	1
+								visible	1	
+						        hidden 0	  
 							}				  
 					   } 
 				]
-			}
+			} 
 			USE	BlinkingArrowPos
 		]
+
+		ROUTE BlinkerScript.enabled	TO MoveSensor.enabled
+		ROUTE BlinkerScript.enabled	TO BlinkSensor.enabled 
+		ROUTE BlinkerScript.hide  TO BlinkingArrow.hidden
 
 		ROUTE MoveSensor.fraction_changed TO PositionMover.set_fraction
 		ROUTE PositionMover.value_changed TO BlinkingArrowPos.translation
