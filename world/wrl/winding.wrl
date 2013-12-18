@@ -32,9 +32,16 @@ EXTERNPROTO	CylinderShape [
 ]
 "cylindershape.wrl#CylinderShape"
 
+EXTERNPROTO	Arrow [
+	exposedField SFColor dColor
+	exposedField SFInt32 visible
+]
+"arrow.wrl#Arrow3D"
+
 PROTO Winding [
 	exposedField SFInt32 lod 1
 	eventOut SFBool	winding_solved
+	eventIn	SFBool arrow_visible
 ]{
 	Group {
 		children [
@@ -120,29 +127,37 @@ Switch {
 	]
 }
 
-Transform {
-	children DEF	Winding Transform {
-		children Transform {
-			children [
-				Transform {
+Group {
+	children [
+		Transform {
+			children DEF	Winding Transform {
+				children Transform {
 					children [
-						USE	Drum
 						Transform {
-							children USE	RopeCoil
-							translation	0 -0.15 0
+							children [
+								USE	Drum
+								Transform {
+									children USE	RopeCoil
+									translation	0 -0.15 0
+								}
+							]
+							rotation 0 0 1 1.57
+						}
+						Transform {
+							children USE Hinge
+							translation	0.2 0 0
 						}
 					]
 					rotation 0 0 1 1.57
 				}
-				Transform {
-					children USE Hinge
-					translation	0.2 0 0
-				}
-			]
-			rotation 0 0 1 1.57
+			}
+			rotation 0 0 1 -1.57
 		}
-	}
-	rotation 0 0 1 -1.57
+		Transform {
+			children DEF Arrow Arrow {}
+			translation	0 2 0
+		}
+	]
 }
 
 DEF PS ProximitySensor	{
