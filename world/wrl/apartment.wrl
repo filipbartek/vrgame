@@ -51,6 +51,13 @@ PROTO Apartment [
 			#forward declaration so it won't show
 			Switch {
 				choice [
+					DEF	ApartmentLight PointLight {
+						color 1 0.5 0.7 
+						on TRUE
+						radius 100
+						attenuation	0 0 1
+					}
+
                     DEF	ApartmentWallsInstance ApartmentWalls	{
 						lod	IS lod								
 					}			
@@ -69,7 +76,11 @@ PROTO Apartment [
 					
 					Transform { 
 						children [
-						   USE	CeilingInstance 
+						   USE	CeilingInstance
+							  Transform {
+								  children USE ApartmentLight
+								  translation 0 0 0
+							  }
 					   ]											
 					translation	0 2.9 0
 					}

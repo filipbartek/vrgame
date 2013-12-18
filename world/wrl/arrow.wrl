@@ -5,8 +5,7 @@ WorldInfo {
 	info ["Eva Pešková"]
 }
 
-PROTO Arrow3D [			  
-	exposedField SFColor dColor 0.2 0.4 0.8 
+PROTO Arrow3D [				   
 	exposedField SFInt32 visible 1	 
 	exposedField SFInt32 hidden 0
 ]{
@@ -14,25 +13,28 @@ PROTO Arrow3D [
 		children [
 			Switch {
 				choice [
-					DEF	ArrowShapeHead Shape {
-						 appearance	Appearance {
-							 material Material {
-								 diffuseColor IS dColor
+					DEF	ArrowApp Appearance {
+						 material Material {
+								 diffuseColor  0.2 0.4 0.8 
 							 }
-						 }
-						 geometry Cone {
-							 height	1
-							 bottomRadius 0.5
-							 bottom	FALSE
-							 side TRUE
-						 }
+					}
+					DEF	ArrowShapeHead Transform 
+					{
+						children[ 
+							Shape {
+							 appearance	USE	ArrowApp
+							 geometry Cone {
+								 height	1
+								 bottomRadius 0.5
+								 bottom	FALSE
+								 side TRUE
+							 }
+							}
+						]
+						rotation 0 0 1 3.1
 					}
 					DEF	ArrowShapeBody Shape {
-						appearance Appearance {
-							material Material {
-								diffuseColor IS	dColor
-							}
-						}
+						appearance USE ArrowApp	  
 						geometry Cylinder {
 							height 2
 							radius 0.2
@@ -42,15 +44,14 @@ PROTO Arrow3D [
 					}		
 				    DEF	ArrowShape Transform {
 						children [
-							USE	ArrowShapeBody
+							USE	ArrowShapeHead
 							Transform {
 								children [
-									USE	ArrowShapeHead
+									USE	ArrowShapeBody
 								]
 								translation	0 1.2 0
 							}
-						]
-						rotation	0 0 1 3.1			
+						]					 		
 					}
 				]
 			}

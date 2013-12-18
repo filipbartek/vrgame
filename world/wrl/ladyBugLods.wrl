@@ -9,6 +9,7 @@ PROTO LadyBug [
     # 1: LOD enabled
 	# 0: LOD disabled
 	exposedField SFInt32 lod 1
+	exposedField SFInt32 disabled 0
 ]{
 	Group {
 		children [
@@ -29,24 +30,31 @@ PROTO LadyBug [
 								}
 							]
 							scale 0.01 0.01 0.01 
-						} 
+						}
 				]
 			}
 			Switch {
-				whichChoice	IS lod
+				whichChoice	IS disabled
 				choice [
-					USE	LadyBug1
-					LOD	{
-						range [1 2]
-						level [
+					Switch {
+						whichChoice	IS lod
+						choice [
 							USE	LadyBug1
-							USE	LadyBug2
-							Group {}
+							LOD	{
+								range [1 2]
+								level [
+									USE	LadyBug1
+									USE	LadyBug2
+									Group {}
+								]
+							}
 						]
 					}
-				]
-			}
+					Group {
 
+					}
+				]
+			}	   
 		]
 	}
 }

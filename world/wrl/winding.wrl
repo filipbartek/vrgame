@@ -30,8 +30,7 @@ EXTERNPROTO	CylinderShape [
 ]
 "cylindershape.wrl#CylinderShape"
 
-EXTERNPROTO	Arrow [
-	exposedField SFColor dColor
+EXTERNPROTO	Arrow [				 
 	exposedField SFInt32 visible
 ]
 "arrow.wrl#Arrow3D"
