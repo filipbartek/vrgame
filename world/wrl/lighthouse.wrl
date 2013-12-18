@@ -36,6 +36,7 @@ PROTO Lighthouse [
 	# 0: LOD disabled
 	exposedField SFInt32 lod 1
 	eventOut SFBool winding_solved
+	eventIn	SFBool arrow_visible
 
 ]{
 	Group {
