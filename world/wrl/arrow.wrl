@@ -6,7 +6,7 @@ WorldInfo {
 }
 
 PROTO Arrow3D [			  
-	exposedField SFColor dColor 0 0 0 
+	exposedField SFColor dColor 0.2 0.4 0.8 
 	exposedField SFInt32 visible 1
 ]{
 	Group {
@@ -72,15 +72,24 @@ PROTO Arrow3DBlinker [
 		children [
 			Switch {
 				choice [
+					DEF	MoveSensor TimeSensor {
+						cycleInterval 1
+						loop TRUE
+						enabled	TRUE
+					}
 					DEF BlinkSensor TimeSensor {
 						
 						#how much the interval should take
-						cycleInterval 1	
+						cycleInterval 3	
 
 						#for repeat forever
 						loop TRUE
 			
-					}			 
+					}
+					DEF PositionMover PositionInterpolator	{
+						key	[0, 0.5, 1]
+						keyValue [ 0 0 0, 0 -0.2 0, 0 0 0]
+					}		 
 
 					DEF	BlinkerScript Script {
 						eventIn	SFFloat blinker
@@ -98,13 +107,19 @@ PROTO Arrow3DBlinker [
 							}
 						"
 					}
-					DEF	BlinkingArrow Arrow3D {
-						visible	1
-					}
+					DEF	BlinkingArrowPos Transform
+					   {
+						   children	DEF BlinkingArrow Arrow3D {
+								visible	1
+							}				  
+					   } 
 				]
 			}
-			USE	BlinkingArrow
+			USE	BlinkingArrowPos
 		]
+
+		ROUTE MoveSensor.fraction_changed TO PositionMover.set_fraction
+		ROUTE PositionMover.value_changed TO BlinkingArrowPos.translation
 		ROUTE BlinkSensor.fraction_changed TO BlinkerScript.blinker
 		ROUTE BlinkerScript.visible	TO	BlinkingArrow.visible
 	}
