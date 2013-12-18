@@ -18,14 +18,20 @@ PROTO Arrow3D [
 								 diffuseColor  0.2 0.4 0.8 
 							 }
 					}
-					DEF	ArrowShapeHead Shape {
-						 appearance	USE	ArrowApp
-						 geometry Cone {
-							 height	1
-							 bottomRadius 0.5
-							 bottom	FALSE
-							 side TRUE
-						 }
+					DEF	ArrowShapeHead Transform 
+					{
+						children[ 
+							Shape {
+							 appearance	USE	ArrowApp
+							 geometry Cone {
+								 height	1
+								 bottomRadius 0.5
+								 bottom	FALSE
+								 side TRUE
+							 }
+							}
+						]
+						rotation 0 0 1 3.1
 					}
 					DEF	ArrowShapeBody Shape {
 						appearance USE ArrowApp	  
@@ -38,15 +44,14 @@ PROTO Arrow3D [
 					}		
 				    DEF	ArrowShape Transform {
 						children [
-							USE	ArrowShapeBody
+							USE	ArrowShapeHead
 							Transform {
 								children [
-									USE	ArrowShapeHead
+									USE	ArrowShapeBody
 								]
 								translation	0 1.2 0
 							}
-						]
-						rotation	0 0 1 3.1			
+						]					 		
 					}
 				]
 			}
