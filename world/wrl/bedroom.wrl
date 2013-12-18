@@ -55,14 +55,6 @@ PROTO BedRoom [
 							Inline {
 								url	["../blend/bed.wrl"]
 							}
-							Transform {
-								children [
-									Arrow3DBlinker { 
-										arrowVisible IS	arrow_visible
-									}
-								]
-								translation	0 2 0
-							}
 						]
 						scale 0.5 1 1
 						translation	-0.7 0 0
@@ -72,8 +64,7 @@ PROTO BedRoom [
 					}							
 		   
 					DEF	LadyBugInstance Transform {
-						children [
-
+						children [	
 							LadyBugProto {
 								lod	IS lod
 							}
@@ -138,7 +129,13 @@ PROTO BedRoom [
 							}
 
 						Transform {
-							children [
+							children [								 
+								Transform {
+									children [
+										Arrow3DBlinker {
+										}
+									]
+								}  
 								USE LadyBugInstance
 							]
 							translation	-2 0.58 0
@@ -149,7 +146,15 @@ PROTO BedRoom [
 						children [
 							USE Shelf
 							Transform {
-								children	USE	LadyBugInstance
+								children [
+									Transform {
+										children [
+											Arrow3DBlinker {
+											}
+										]
+									}  
+									USE	LadyBugInstance
+								]
 								translation 1.0 0.5 -1.0
 							}	
 							Transform {
