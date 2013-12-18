@@ -40,7 +40,7 @@ PROTO BedRoom [
 	Group {
 		children [
 			Switch {
-				choice [
+				choice [		 
 					DEF ApartmentInstance 
 					Transform {
 						children 
@@ -73,6 +73,7 @@ PROTO BedRoom [
 		   
 					DEF	LadyBugInstance Transform {
 						children [
+
 							LadyBugProto {
 								lod	IS lod
 							}

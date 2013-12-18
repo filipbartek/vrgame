@@ -5,8 +5,7 @@ WorldInfo {
 	info ["Eva Pešková"]
 }
 
-PROTO Arrow3D [			  
-	exposedField SFColor dColor 0.2 0.4 0.8 
+PROTO Arrow3D [				   
 	exposedField SFInt32 visible 1	 
 	exposedField SFInt32 hidden 0
 ]{
@@ -17,7 +16,7 @@ PROTO Arrow3D [
 					DEF	ArrowShapeHead Shape {
 						 appearance	Appearance {
 							 material Material {
-								 diffuseColor IS dColor
+								 diffuseColor  0.2 0.4 0.8 
 							 }
 						 }
 						 geometry Cone {
