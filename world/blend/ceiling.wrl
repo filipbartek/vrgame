@@ -8,7 +8,9 @@ WorldInfo {
 
 PROTO	Ceiling [
 	exposedField SFInt32 lod 1  
-	exposedField SFNode	texture NULL
+	exposedField SFNode	texture ImageTexture {
+		url	["..\textures\ceiling.jpeg"]
+	}
 ]
 {
 	Group {
