@@ -21,9 +21,7 @@ EXTERNPROTO	CylinderShape [
 	exposedField SFInt32 lod
 	field MFFloat range
 	field SFFloat radius
-	eventIn	SFFloat	set_radius
 	field SFFloat height
-	eventIn	SFFloat	set_height
 	field SFBool top
 	field SFBool bottom
 	field SFBool solid
