@@ -11,6 +11,7 @@ EXTERNPROTO	LighthouseProto [
 	eventOut SFBool	ladyBugRemoved
 	eventOut SFBool	fog_solved
 	eventIn	SFBool arrow_visible
+	eventOut SFBool	chandelier_lit
 ]
 "lighthouse.wrl#Lighthouse"
 
@@ -269,7 +270,9 @@ PROTO Index [
 		eventOut MFString nutsOutput
 		eventIn	SFBool set_winding_solved
 		eventIn	SFBool set_ladybug_solved
+		eventIn	SFBool set_chandelier_solved
 		field SFBool winding_solved FALSE
+		field SFBool chandelier_solved FALSE
 		eventOut SFBool	bind_vpfar
 		eventOut SFTime	outro_time
 		eventIn SFTime cur_time
@@ -277,12 +280,18 @@ PROTO Index [
 		eventOut SFBool enableSound
 		eventIn SFBool fog_solved  
 		eventOut SFFloat visibility
+		eventIn SFBool cheat_launch_outro
 		url	"javascript:
 			var nutCount = 0;
 			var nutsTotal = 2;
 			function launchOutro() {
 				bind_vpfar = true;
 				outro_time = cur_time;
+			}
+			function cheat_launch_outro(value) {
+				if (value) {
+					launchOutro();
+				}
 			}
 			function generateText() {
 				nutsOutput = new MFString(nutCount);
@@ -311,9 +320,16 @@ PROTO Index [
 			}
 
 			function set_winding_solved(value) {
-				nutCount += value - winding_solved;
-				winding_solved = value;
-				generateText();
+				if (value && !winding_solved) {
+					winding_solved = true;
+					nutDone();
+				}
+			}
+			function set_chandelier_solved(value) {
+				if (value && !chandelier_solved) {
+					chandelier_solved = true;
+					nutDone();
+				}
 			}
 			"
 	}
@@ -392,6 +408,7 @@ PROTO Index [
 	ROUTE S.hudTimeText	TO HudTimeText.string
 	ROUTE Lighthouse.winding_solved	TO NutsNumber.set_winding_solved
 	ROUTE Lighthouse.ladyBugRemoved	TO NutsNumber.set_ladybug_solved
+	ROUTE Lighthouse.chandelier_lit	TO NutsNumber.set_chandelier_solved
 
 	ROUTE T.time TO NutsNumber.cur_time
 	ROUTE NutsNumber.bind_vpfar	TO VPFar.set_bind
@@ -401,6 +418,8 @@ PROTO Index [
 	ROUTE OutroScript.animStartTime	TO OutroTS.startTime
 	ROUTE OutroTS.fraction_changed TO OutroPI.set_fraction
 	ROUTE OutroPI.value_changed	TO VPFarTrans.translation
+
+	#ROUTE T.isActive TO NutsNumber.cheat_launch_outro # debug
 }
 
 Index {}
