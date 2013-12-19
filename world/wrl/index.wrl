@@ -230,24 +230,29 @@ PROTO Index [
 	DEF	T TimeSensor {
 		cycleInterval 1000
 	}	  
+	
 
 	DEF	OutroAnimation Transform {
+			children [
+				Sound {
+					source DEF FinishAudioClip AudioClip {
+						url	["../wav/applause.wav"]
+						description	"Final sound"
 
-	}
-
-	DEF	OutroAnchor Anchor {
-		description	"Begin outro animation"
-		url	["index.wrl#Far"]
-		
-	}								 
+					}
+					maxBack	1000
+					maxFront 1000
+				}
+			]		 
+	}															 
 		
 	DEF	NutsNumber Script	{
 		eventIn	SFBool nutDone
 		eventOut MFString nutsOutput
 		eventIn	SFBool set_winding_solved
 		eventIn	SFBool set_ladybug_solved
-		field SFBool winding_solved FALSE
-		field SFNode anchor USE OutroAnchor
+		field SFBool winding_solved FALSE  
+		eventOut SFBool enableSound
 		url	"javascript:
 			var nutCount = 0;
 			var nutsTotal = 2;
@@ -259,11 +264,9 @@ PROTO Index [
 				nutCount ++;
 				generateText();
 				if ( nutCount == nutsTotal )
-				{
-					nutCount =100;
-					generateText();
-					// go to outro
-					anchor.activate = true;
+				{						
+					//start sound
+					enableSound=true;
 				}
 			}
 			
@@ -316,6 +319,7 @@ PROTO Index [
 		"
 	}
 		  
+	ROUTE NutsNumber.enableSound TO	FinishAudioClip.loop
 	ROUTE HudButtonSensor.touchTime TO HudButtonScript.switchShow
 	ROUTE HudButtonScript.arrowVisible TO Lighthouse.arrow_visible
 	ROUTE Proxim.position_changed TO Proxim.center
