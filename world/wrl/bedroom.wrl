@@ -233,3 +233,5 @@ PROTO BedRoom [
 	
 	ROUTE LadyBugRemoval.child TO TestContent.removeChildren
 }
+
+BedRoom	{}

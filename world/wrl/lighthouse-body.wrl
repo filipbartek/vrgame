@@ -5,16 +5,20 @@ WorldInfo {
 	info ["Filip Bártek"]
 }
 
-EXTERNPROTO	BarRoundProto [
+EXTERNPROTO TruncatedConeShape [
+	field SFNode appearance
 	exposedField SFInt32 lod
 	field MFFloat range
-	field SFVec3f scale
-	exposedField SFColor diffuseColor
-	exposedField SFNode texture
+	field SFFloat height
+	field SFFloat bottomRadius
+	field SFFloat topRadius
 	field SFBool bottom
 	field SFBool top
+	field SFBool solid
+	field SFFloat creaseAngle
+	field SFInt32 complexity
 ]
-"barround.wrl#BarRound"
+"truncatedconeshape.wrl#TruncatedConeShape"
 
 PROTO LighthouseBody [
 
@@ -84,24 +88,31 @@ PROTO LighthouseBody [
 						}
 					}
 
-					DEF	BarRound BarRoundProto {
-						bottom FALSE
-						top	FALSE
-						diffuseColor IS	diffuseColor
-						lod	IS lod
-					}
-
 					DEF	BodyCylinder Transform {
 						children [
 							Transform {
 								children [
-									USE	BarRound
+									TruncatedConeShape {
+										appearance Appearance {
+											material Material {
+												diffuseColor IS	diffuseColor
+											}
+										}
+										lod	IS lod
+										bottom FALSE
+										top	FALSE
+										bottomRadius 6.4008
+										topRadius 2.9972
+										height 1
+										creaseAngle	0.79
+										complexity 16
+										range [1000 2000]
+									}
 								]
-								scale 2 1 2
 								translation	0 0.5 0
 							}
 						]
-						scale 2.9972 29.7942 2.9972
+						scale 1 29.7942 1
 					}
 
 				]

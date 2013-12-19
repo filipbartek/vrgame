@@ -119,7 +119,7 @@ PROTO LightCone [
 													}
 												}
 												geometry Cone {
-													bottom FALSE
+													bottom TRUE
 												}
 											}
 										]
