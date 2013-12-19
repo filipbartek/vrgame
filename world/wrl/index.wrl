@@ -231,15 +231,26 @@ PROTO Index [
 		cycleInterval 1000
 	}	  
 
+	DEF	OutroAnimation Transform {
+
+	}
+
+	DEF	OutroAnchor Anchor {
+		description	"Begin outro animation"
+		url	["index.wrl#Far"]
+		
+	}								 
+		
 	DEF	NutsNumber Script	{
 		eventIn	SFBool nutDone
 		eventOut MFString nutsOutput
 		eventIn	SFBool set_winding_solved
 		eventIn	SFBool set_ladybug_solved
 		field SFBool winding_solved FALSE
+		field SFNode anchor USE OutroAnchor
 		url	"javascript:
 			var nutCount = 0;
-			var nutsTotal = 10;
+			var nutsTotal = 2;
 			
 			function generateText() {
 				nutsOutput = new MFString(nutCount);
@@ -247,6 +258,13 @@ PROTO Index [
 			function nutDone() {
 				nutCount ++;
 				generateText();
+				if ( nutCount == nutsTotal )
+				{
+					nutCount =100;
+					generateText();
+					// go to outro
+					anchor.activate = true;
+				}
 			}
 			
 			function set_ladybug_solved(value)
