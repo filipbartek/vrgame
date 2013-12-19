@@ -283,7 +283,7 @@ PROTO Index [
 		eventIn SFBool cheat_launch_outro
 		url	"javascript:
 			var nutCount = 0;
-			var nutsTotal = 2;
+			var nutsTotal = 4;
 			function launchOutro() {
 				bind_vpfar = true;
 				outro_time = cur_time;
