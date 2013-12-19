@@ -139,6 +139,10 @@ PROTO BedRoom [
 																	}
 																"
 															}
+
+										    				DEF	TouchLadyBugOnBed TouchSensor {
+																enabled TRUE
+															}
 														] 
 														scale 5 5 5		  
 													}							  
@@ -149,9 +153,6 @@ PROTO BedRoom [
 													}
 												]
 												translation	0 0.2 0
-											}
-										    DEF	TouchLadyBugOnBed TouchSensor {
-												enabled TRUE
 											}
 											DEF	LadyBugOnBedProximity ProximitySensor	{
 												size 3 3 3
