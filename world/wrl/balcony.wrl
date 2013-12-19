@@ -28,6 +28,11 @@ EXTERNPROTO CylinderExtrusion [
 ]
 "cylinderextrusion.wrl#CylinderExtrusion"
 
+EXTERNPROTO Arrow3DBlinker [	
+	eventIn SFBool arrowVisible
+]
+"arrow.wrl#Arrow3DBlinker"
+
 PROTO Balcony [
 
 	# 1: LOD enabled
@@ -109,7 +114,16 @@ PROTO Balcony [
 			# Southern bell
 			Transform {
 				children [
-					BellProto { fog_solved  IS fog_solved }
+					Transform {
+						children Arrow3DBlinker	{
+							arrowVisible IS	arrow_visible
+						}			  
+						translation	0 1 0
+					}
+					BellProto { 
+						fog_solved  IS fog_solved 
+
+					}
 				]
 				translation	0 0 2.5273
 			}

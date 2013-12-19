@@ -117,8 +117,7 @@ PROTO BedRoom [
 					Transform {
 						children [
 							Transform {
-								children [
-									USE	Bed	 
+								children [	 
 									DEF TestContent Transform {
 										children [
 											USE	Bed	
