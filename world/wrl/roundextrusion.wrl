@@ -36,8 +36,11 @@ PROTO RoundExtrusion [
 		convex TRUE
 	}
 	Script {
+		# On initialization, generates a round cross section of `complexity` vertices
+		# and radius `radius` and assigns this cross section to Extrusion `ext`.
+
 		field SFNode ext USE Ext
-		field SFInt32 complexity IS complexity
+		field SFInt32 complexity IS complexity # number of vertices
 		field SFFloat radius IS radius
 		directOutput TRUE
 		url "javascript:
