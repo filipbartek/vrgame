@@ -18,6 +18,7 @@ EXTERNPROTO	BalconyProto [
 	exposedField SFInt32 lod
 	eventOut SFBool	fog_solved
 	eventOut SFBool	winding_solved
+	eventOut SFBool	chandelier_lit
 ]
 "balcony.wrl#Balcony"
 
@@ -42,6 +43,7 @@ PROTO Lighthouse [
 	eventOut SFBool	ladyBugRemoved
 	eventIn	SFBool arrow_visible
 	eventOut SFBool fog_solved
+	eventOut SFBool	chandelier_lit
 ]{
 	Group {
 		children [
@@ -56,6 +58,7 @@ PROTO Lighthouse [
 						lod	IS lod
 						fog_solved IS fog_solved
 						winding_solved IS winding_solved
+						chandelier_lit IS chandelier_lit
 					}
 					Transform {
 						children [   
