@@ -15,6 +15,7 @@ EXTERNPROTO	CageProto [
 EXTERNPROTO	Winding [
 	exposedField SFInt32 lod
 	eventOut SFBool	winding_solved
+	eventIn	SFBool arrow_visible
 ]
 "winding.wrl#Winding"
 
@@ -30,6 +31,7 @@ PROTO Lightroom [
 	exposedField SFInt32 lod 1
 	eventOut SFBool	winding_solved
 	eventOut SFBool	chandelier_lit
+	eventIn	SFBool arrow_visible
 
 ]{
 	Group {
@@ -55,6 +57,7 @@ PROTO Lightroom [
 					DEF	Winding Winding	{
 						lod	IS lod
 						winding_solved IS winding_solved
+						arrow_visible IS arrow_visible
 					}
 				]
 			}

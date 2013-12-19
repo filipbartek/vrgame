@@ -19,6 +19,7 @@ EXTERNPROTO	BalconyProto [
 	eventOut SFBool	fog_solved
 	eventOut SFBool	winding_solved
 	eventOut SFBool	chandelier_lit
+	eventIn	SFBool arrow_visible
 ]
 "balcony.wrl#Balcony"
 
@@ -59,6 +60,7 @@ PROTO Lighthouse [
 						fog_solved IS fog_solved
 						winding_solved IS winding_solved
 						chandelier_lit IS chandelier_lit
+						arrow_visible IS arrow_visible
 					}
 					Transform {
 						children [   
