@@ -9,6 +9,7 @@ EXTERNPROTO	LighthouseProto [
 	exposedField SFInt32 lod
 	eventOut SFBool	winding_solved
 	eventOut SFBool	ladyBugRemoved
+	eventOut SFBool	fog_solved
 	eventIn	SFBool arrow_visible
 ]
 "lighthouse.wrl#Lighthouse"
@@ -260,12 +261,19 @@ PROTO Index [
 		eventIn	SFBool set_ladybug_solved
 		field SFBool winding_solved FALSE  
 		eventOut SFBool enableSound
+		eventIn SFBool fog_solved
+		eventOut SFColor atmColor
 		url	"javascript:
 			var nutCount = 0;
 			var nutsTotal = 2;
 			
 			function generateText() {
 				nutsOutput = new MFString(nutCount);
+			}
+			function fog_solved()
+			{					
+				atmColor = new SFColor(0,0,0);
+				nutDone();
 			}
 			function nutDone() {
 				nutCount ++;
@@ -335,6 +343,8 @@ PROTO Index [
 		"
 	}
 		  
+	ROUTE Lighthouse.fog_solved	TO NutsNumber.fog_solved
+	ROUTE NutsNumber.atmColor TO Atmosphere.color
 	ROUTE S.atmColor TO	Atmosphere.color
 	ROUTE HudButtonSensor.touchTime TO HudButtonScript.switchShow
 	ROUTE HudButtonScript.arrowVisible TO Lighthouse.arrow_visible

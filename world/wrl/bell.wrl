@@ -6,6 +6,7 @@ WorldInfo {
 }
 
 PROTO Bell [
+	eventOut SFBool	fog_solved
 ]{
 	Group {
 		children [
@@ -110,7 +111,18 @@ PROTO Bell [
 		loop TRUE
 		stopTime 1
 	}
+	DEF	 BellScript Script {
+		eventOut SFBool	fog_solved IS fog_solved
+		eventIn	SFBool fog_solving
+		url "javascript:
+		function fog_solving(time)
+			{						   
+				fog_solved = true;
+			}
+		"
+	}
 
+	ROUTE PS.isActive TO BellScript.fog_solving
 	ROUTE PS.isActive TO BellTS.enabled
 	ROUTE BellTS.touchTime TO BellAudioClip.startTime
 	ROUTE BellTS.touchTime TO TimeSLong.startTime
