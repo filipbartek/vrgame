@@ -18,12 +18,18 @@ EXTERNPROTO	Winding [
 ]
 "winding.wrl#Winding"
 
+EXTERNPROTO	Chandelier [
+	eventOut SFBool	lit
+]
+"chandelier.wrl#Chandelier"
+
 PROTO Lightroom [
 
 	# 1: LOD enabled
 	# 0: LOD disabled
 	exposedField SFInt32 lod 1
 	eventOut SFBool	winding_solved
+	eventOut SFBool	chandelier_lit
 
 ]{
 	Group {
@@ -31,8 +37,8 @@ PROTO Lightroom [
 
 			Switch {
 				choice [
-					DEF	Chandelier Inline {
-						url	["chandelier.wrl"]
+					DEF	Chandelier Chandelier {
+						lit	IS chandelier_lit
 					}
 					DEF	Cage CageProto {
 						lod	IS lod

@@ -125,3 +125,5 @@ PROTO LighthouseBody [
 		]
 	}
 }
+
+LighthouseBody {}
