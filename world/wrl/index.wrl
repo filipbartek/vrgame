@@ -291,7 +291,7 @@ PROTO Index [
 			function fog_solved()
 			{					
 				atmColor = new SFColor(0,0,0);
-				nutDone();
+				//nutDone();
 			}
 			function nutDone() {
 				nutCount ++;

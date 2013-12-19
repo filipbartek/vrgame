@@ -113,7 +113,7 @@ PROTO Bell [
 	}
 	DEF	 BellScript Script {
 		eventOut SFBool	fog_solved IS fog_solved
-		eventIn	SFBool fog_solving
+		eventIn	SFTime fog_solving
 		url "javascript:
 		function fog_solving(time)
 			{						   
@@ -122,7 +122,7 @@ PROTO Bell [
 		"
 	}
 
-	ROUTE PS.isActive TO BellScript.fog_solving
+	ROUTE BellTS.touchTime TO BellScript.fog_solving
 	ROUTE PS.isActive TO BellTS.enabled
 	ROUTE BellTS.touchTime TO BellAudioClip.startTime
 	ROUTE BellTS.touchTime TO TimeSLong.startTime
