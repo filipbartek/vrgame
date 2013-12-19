@@ -30,10 +30,10 @@ EXTERNPROTO	CylinderShape [
 ]
 "cylindershape.wrl#CylinderShape"
 
-EXTERNPROTO	Arrow [				 
-	exposedField SFInt32 visible
+EXTERNPROTO Arrow3DBlinker [	
+	eventIn SFBool arrowVisible
 ]
-"arrow.wrl#Arrow3D"
+"arrow.wrl#Arrow3DBlinker"
 
 PROTO Winding [
 	exposedField SFInt32 lod 1
@@ -151,8 +151,10 @@ Group {
 			rotation 0 0 1 -1.57
 		}
 		Transform {
-			children DEF Arrow Arrow {}
-			translation	0 2 0
+			children DEF Arrow Arrow3DBlinker {
+				arrowVisible IS	arrow_visible
+			}
+			translation	0 0.2 0
 		}
 	]
 }
