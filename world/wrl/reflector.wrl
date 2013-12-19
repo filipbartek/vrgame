@@ -49,7 +49,7 @@ EXTERNPROTO RoundExtrusion [
 
 PROTO Reflector [
 	eventOut SFBool	lit
-	exposedField SFVec3f proximitySize 3 3 3
+	exposedField SFVec3f proximitySize 10 10 10
 ]{
 	Group {
 		children [

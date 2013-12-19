@@ -22,6 +22,72 @@ EXTERNPROTO	CylinderShape [
 ]
 "cylindershape.wrl#CylinderShape"
 
+EXTERNPROTO	Reflector [
+	eventOut SFBool	lit
+	exposedField SFVec3f proximitySize
+]
+"reflector.wrl#Reflector"
+
+PROTO Reflector1 [
+	eventOut SFBool	lit0
+]{
+	Reflector {
+		lit	IS lit0
+		proximitySize 10 10 10
+	}
+}
+
+PROTO Reflector2 [
+	eventOut SFBool	lit0
+	eventOut SFBool	lit1
+]{
+	Group {
+		children [
+			Transform {
+				children Reflector1	{
+					lit0	IS lit0
+				}
+				translation -0.3175 0 0
+			}
+			Transform {
+				children Reflector1	{
+					lit0	IS lit1
+				}
+				translation 0.3175 0 0
+			}
+		]
+	}
+}
+
+PROTO Reflector3 [
+	eventOut SFBool	lit0
+	eventOut SFBool	lit1
+	eventOut SFBool	lit2
+]{
+	Group {
+		children [
+			Transform {
+				children Reflector1	{
+					lit0	IS lit0
+				}
+				translation -0.6350 0 0
+			}
+			Transform {
+				children Reflector1	{
+					lit0	IS lit1
+				}
+				translation 0 0 0
+			}
+			Transform {
+				children Reflector1	{
+					lit0	IS lit2
+				}
+				translation 0.6350 0 0
+			}
+		]
+	}
+}
+
 PROTO LightCone [
 	exposedField SFColor color 1 1 0
 	exposedField SFFloat coneTransparency 0.7
@@ -29,6 +95,7 @@ PROTO LightCone [
 	exposedField SFBool pointLightOn TRUE
 	# Z+: forward
 	exposedField SFVec3f pointLightLocation 0 0 0.5
+	exposedField SFFloat pointLightIntensity 1
 ]{
 	Group {
 		children [
@@ -75,277 +142,433 @@ PROTO LightCone [
 				radius 10
 				attenuation	0 0 1
 				on IS pointLightOn
+				intensity IS pointLightIntensity
 			}
 		]
 	}
 }
 
-Switch {
-	choice [
-
-		DEF	Reflector Inline {
-			url	["reflector.wrl"]
-		}
-		
-		DEF	Rod CylinderShape {
-			appearance Appearance {
-				material Material {
-					diffuseColor 0 0.1 0.2
-				}
+PROTO Side5 [
+	eventOut SFBool	lit
+]{
+	Group {
+		children [
+			Transform {
+				children DEF Refs0 Reflector2	{}
+				translation 0 0.64 0
 			}
-			height 1
-			radius 0.01
-		}
-
-		DEF	RodHorizontal Transform	{
-			children [
-				USE	Rod
-			]
-			rotation 0 0 1 1.57
-		}
-
-		DEF	RodHorizontalSide5 Transform {
-			children USE RodHorizontal
-			scale 0.6350 1 1
-		}
-
-		DEF	RodHorizontalSide7 Transform {
-			children USE RodHorizontal
-			scale 1.2700 1 1
-		}
-
-		DEF	VerticalRod Group {
-			children USE Rod
-		}
-
-		DEF	VerticalRodFull Transform {
-			children USE VerticalRod
-			scale 1 1.28 1
-		}
-
-		DEF	VerticalRodHalf Transform {
-			children USE VerticalRodFull
-			scale 1 0.5 1
-		}
-
-		DEF	ReflectorWithVerticalRod Group {
-			children [
-				USE	Reflector
-				Transform {
-					children USE VerticalRodHalf
-					translation	0 0.32 0
-				}
-			]
-		}
-
-		DEF	Line1 Group	{
-			children [
-				USE	ReflectorWithVerticalRod
-				USE	RodHorizontalSide5
-			]
-		}
-
-		DEF	Line2 Group {
-			children [
-				Transform {
-					children [
-						USE	Reflector
-					]
-					translation	-0.3175 0 0
-				}
-				Transform {
-					children [
-						USE	Reflector
-					]
-					translation	0.3175 0 0
-				}
-			]
-		}
-
-		DEF	Line2Side5 Group {
-			children [
-				USE	Line2
-				USE	RodHorizontalSide5
-			]
-		}
-
-		DEF	Line2Side7 Group {
-			children [
-				USE	Line2
-				USE	RodHorizontalSide7
-			]
-		}
-
-		DEF	Line3 Group {
-			children [
-				Transform {
-					children [
-						USE	Reflector
-					]
-					translation	-0.6350 0 0
-				}
-				USE	ReflectorWithVerticalRod
-				Transform {
-					children [
-						USE	Reflector
-					]
-					translation	0.6350 0 0
-				}
-				USE	RodHorizontalSide7
-			]
-		}
-
-		DEF	InclinedRod Transform {
-			children Transform {
-				children USE Rod
-				translation	0 0.5 0
+			Transform {
+				children DEF Refs1 Reflector1	{}
+				translation 0 0 0
 			}
-			# rod length:
-			# rod length ^ 2 = line distance ^ 2 + (reflector in line distance / 2) ^ 2
-			# line distance = 0.64
-			# reflector in line distance = 0.6350
-			# sqrt((0.6350 / 2) ^ 2 + 0.64 ^ 2)
-			# approx. 0.7144
-			scale 1 0.7144 1
-			# rod angle:
-			# tg(rod angle) = (reflector in line distance / 2) / line distance
-			# atg((0.6350 / 2) / 0.64)
-			# approx. 0.46
-			rotation 0 0 1 0.46
-		}
-
-		DEF	Side7 Group {
-			children [
-				Transform {
-					children [
-						USE	Line2Side7
-					]
-					translation	0 -0.64 0
-				}
-				USE	Line3
-				Transform {
-					children [
-						USE	Line2Side7
-					]
-					translation	0 0.64 0
-				}
-				Transform {
-					children USE InclinedRod
-					translation	0 -0.64 0
-				}
-				Transform {
-					children USE InclinedRod
-					scale -1 1 1
-					translation	0 -0.64 0
-				}
-				Transform {
-					children USE InclinedRod
-					scale 1 -1 1
-					translation	0 0.64 0
-				}
-				Transform {
-					children USE InclinedRod
-					scale -1 -1 1
-					translation	0 0.64 0
-				}
-				Transform {
-					children USE VerticalRodFull
-					translation	0.6350 0 0
-				}
-				Transform {
-					children USE VerticalRodFull
-					translation	-0.6350 0 0
-				}
-				Transform {
-					children USE VerticalRodHalf
-					translation	0.3175 -0.32 0
-				}
-				Transform {
-					children USE VerticalRodHalf
-					translation	-0.3175 -0.32 0
-				}
-				LightCone {
-					color 1 1 0
-				}
-			]
-		}
-
-		# http://www.bellrock.org.uk/lighthouse/lighthouse_lightroom.htm
-		# "panes of red-coloured glass were placed in front of each of the reflectors on the minor sides"
-		DEF	RedPane Shape	{
-			appearance Appearance {
-				material Material {
-					diffuseColor 1 0 0
-					transparency 0.5
-				}
+			Transform {
+				children DEF Refs2 Reflector2	{}
+				translation 0 -0.64 0
 			}
-			geometry Box {
-				size 1 1 0.00635
+			DEF LightCone LightCone {
+				color 1 0 0
 			}
-		}
-
-		DEF	Side5 Group {
-			children [
-				Transform {
-					children [
-						USE	Line2Side5
-					]
-					translation	0 -0.64 0
+		]
+	}
+	DEF Scr Script {
+		eventIn SFBool set_lit00
+		eventIn SFBool set_lit01
+		eventIn SFBool set_lit10
+		eventIn SFBool set_lit20
+		eventIn SFBool set_lit21
+		field SFBool lit00 FALSE
+		field SFBool lit01 FALSE
+		field SFBool lit10 FALSE
+		field SFBool lit20 FALSE
+		field SFBool lit21 FALSE
+		field SFInt32 litNum 5
+		field SFNode light USE LightCone
+		field SFFloat minTransparency 0.5
+		eventOut SFBool	lit IS lit
+		field SFInt32 thresholdSum 3
+		directOutput TRUE
+		url	"javascript:
+			function litUpdated() {
+				var sum = lit00 + lit01 + lit10 + lit20 + lit21;
+				if (sum >= thresholdSum) {
+					lit = true;
 				}
-				USE	Line1
-				Transform {
-					children [
-						USE	Line2Side5
-					]
-					translation	0 0.64 0
-				}
-				LightCone {
-					color 1 0 0
-					coneTransparency 0.8
-				}
-				Transform {
-					children [
-						USE	RedPane
-					]
-					scale 1 2 1
-					translation	0 0 0.4175
-				}
-			]
-		}
-
-		DEF	Chandelier Group {
-			children [
-				Transform {
-					children [
-						USE	Side7
-					]
-					translation	0 0 0.3175
-				}
-				Transform {
-					children [
-						USE	Side7
-					]
-					rotation 0 1 0 3.14
-					translation	0 0 -0.3175
-				}
-				Transform {
-					children [
-						USE	Side5
-					]
-					rotation 0 1 0 1.57
-					translation	0.6350 0 0
-				}
-				Transform {
-					children [
-						USE	Side5
-					]
-					rotation 0 1 0 4.71
-					translation	-0.6350 0 0
-				}
-			]
-		}
-
-	]
+				var relSum = sum / litNum;
+				light.pointLightOn = (sum != 0);
+				light.pointLightIntensity = relSum;
+				light.coneTransparency = minTransparency + (1 - relSum) * (1 - minTransparency);
+			}
+			function initialize() {
+				litUpdated();
+			}
+			function set_lit00(value) { lit00 = value; litUpdated(); }
+			function set_lit01(value) { lit01 = value; litUpdated(); }
+			function set_lit10(value) { lit10 = value; litUpdated(); }
+			function set_lit20(value) { lit20 = value; litUpdated(); }
+			function set_lit21(value) { lit21 = value; litUpdated(); }
+		"
+	}
+	ROUTE Refs0.lit0 TO Scr.set_lit00
+	ROUTE Refs0.lit1 TO	Scr.set_lit01
+	ROUTE Refs1.lit0 TO	Scr.set_lit10
+	ROUTE Refs2.lit0 TO	Scr.set_lit20
+	ROUTE Refs2.lit1 TO	Scr.set_lit21
 }
 
-USE	Chandelier
+PROTO Side7 [
+	eventOut SFBool	lit
+]{
+	Group {
+		children [
+			Transform {
+				children DEF Refs0 Reflector2	{}
+				translation 0 0.64 0
+			}
+			Transform {
+				children DEF Refs1 Reflector3	{}
+				translation 0 0 0
+			}
+			Transform {
+				children DEF Refs2 Reflector2	{}
+				translation 0 -0.64 0
+			}
+			DEF LightCone LightCone {
+				color 1 1 0
+			}
+		]
+	}
+	DEF Scr Script {
+		eventIn SFBool set_lit00
+		eventIn SFBool set_lit01
+		eventIn SFBool set_lit10
+		eventIn SFBool set_lit11
+		eventIn SFBool set_lit12
+		eventIn SFBool set_lit20
+		eventIn SFBool set_lit21
+		field SFBool lit00 FALSE
+		field SFBool lit01 FALSE
+		field SFBool lit10 FALSE
+		field SFBool lit11 FALSE
+		field SFBool lit12 FALSE
+		field SFBool lit20 FALSE
+		field SFBool lit21 FALSE
+		field SFInt32 litNum 7
+		field SFNode light USE LightCone
+		field SFFloat minTransparency 0.5
+		eventOut SFBool	lit IS lit
+		field SFInt32 thresholdSum 4
+		directOutput TRUE
+		url	"javascript:
+			function litUpdated() {
+				var sum = lit00 + lit01 + lit10 + lit11 + lit12 + lit20 + lit21;
+				if (sum >= thresholdSum) {
+					lit = true;
+				}
+				var relSum = sum / litNum;
+				light.pointLightOn = (sum != 0);
+				light.pointLightIntensity = relSum;
+				light.coneTransparency = minTransparency + (1 - relSum) * (1 - minTransparency);
+			}
+			function initialize() {
+				litUpdated();
+			}
+			function set_lit00(value) { lit00 = value; litUpdated(); }
+			function set_lit01(value) { lit01 = value; litUpdated(); }
+			function set_lit10(value) { lit10 = value; litUpdated(); }
+			function set_lit11(value) { lit11 = value; litUpdated(); }
+			function set_lit12(value) { lit12 = value; litUpdated(); }
+			function set_lit20(value) { lit20 = value; litUpdated(); }
+			function set_lit21(value) { lit21 = value; litUpdated(); }
+		"
+	}
+	ROUTE Refs0.lit0 TO Scr.set_lit00
+	ROUTE Refs0.lit1 TO	Scr.set_lit01
+	ROUTE Refs1.lit0 TO	Scr.set_lit10
+	ROUTE Refs1.lit1 TO	Scr.set_lit11
+	ROUTE Refs1.lit2 TO	Scr.set_lit12
+	ROUTE Refs2.lit0 TO	Scr.set_lit20
+	ROUTE Refs2.lit1 TO	Scr.set_lit21
+}
+
+PROTO ChandRefs [
+	eventOut SFBool	lit
+]{
+	Group {
+		children [
+			Transform {
+				children DEF SideN Side7 {}
+				translation	0 0 0.3175
+			}
+			Transform {
+				children DEF SideS Side7 {}
+				rotation 0 1 0 3.14
+				translation	0 0 -0.3175
+			}
+			Transform {
+				children DEF SideE Side5 {}
+				rotation 0 1 0 1.57
+				translation	0.6350 0 0
+			}
+			Transform {
+				children DEF SideW Side5 {}
+				rotation 0 1 0 4.71
+				translation	-0.6350 0 0
+			}
+		]
+	}
+	DEF Scr Script {
+		eventIn SFBool set_litN
+		eventIn SFBool set_litS
+		eventIn SFBool set_litE
+		eventIn SFBool set_litW
+		field SFBool litN FALSE
+		field SFBool litS FALSE
+		field SFBool litE FALSE
+		field SFBool litW FALSE
+		eventOut SFBool	lit IS lit
+		url	"javascript:
+			function litUpdated() {
+				var allLit = litN && litS && litE && litW;
+				lit = allLit;
+			}
+			function initialize() {
+				litUpdated();
+			}
+			function set_litN(value) { litN = value; litUpdated(); }
+			function set_litS(value) { litS = value; litUpdated(); }
+			function set_litE(value) { litE = value; litUpdated(); }
+			function set_litW(value) { litW = value; litUpdated(); }
+		"
+	}
+	ROUTE SideN.lit TO Scr.set_litN
+	ROUTE SideS.lit TO Scr.set_litS
+	ROUTE SideE.lit TO Scr.set_litE
+	ROUTE SideW.lit TO Scr.set_litW
+}
+
+# FIXME: Add missing rods.
+PROTO Frame [] {
+	Group {
+		children [
+			Switch {
+				choice [
+
+					DEF	Rod CylinderShape {
+						appearance Appearance {
+							material Material {
+								diffuseColor 0 0.1 0.2
+							}
+						}
+						height 1
+						radius 0.01
+					}
+
+					DEF	RodHorizontal Transform	{
+						children [
+							USE	Rod
+						]
+						rotation 0 0 1 1.57
+					}
+
+					DEF	RodHorizontalSide5 Transform {
+						children USE RodHorizontal
+						scale 0.6350 1 1
+					}
+
+					DEF	RodHorizontalSide7 Transform {
+						children USE RodHorizontal
+						scale 1.2700 1 1
+					}
+
+					DEF	VerticalRod Group {
+						children USE Rod
+					}
+
+					DEF	VerticalRodFull Transform {
+						children USE VerticalRod
+						scale 1 1.28 1
+					}
+
+					DEF	VerticalRodHalf Transform {
+						children USE VerticalRodFull
+						scale 1 0.5 1
+					}
+
+					DEF	ReflectorWithVerticalRod Group {
+						children [
+							Transform {
+								children USE VerticalRodHalf
+								translation	0 0.32 0
+							}
+						]
+					}
+
+					DEF	Line1 Group	{
+						children [
+							USE	ReflectorWithVerticalRod
+							USE	RodHorizontalSide5
+						]
+					}
+
+					DEF	Line2Side5 Group {
+						children [
+							USE	RodHorizontalSide5
+						]
+					}
+
+					DEF	Line2Side7 Group {
+						children [
+							USE	RodHorizontalSide7
+						]
+					}
+
+					DEF	InclinedRod Transform {
+						children Transform {
+							children USE Rod
+							translation	0 0.5 0
+						}
+						# rod length:
+						# rod length ^ 2 = line distance ^ 2 + (reflector in line distance / 2) ^ 2
+						# line distance = 0.64
+						# reflector in line distance = 0.6350
+						# sqrt((0.6350 / 2) ^ 2 + 0.64 ^ 2)
+						# approx. 0.7144
+						scale 1 0.7144 1
+						# rod angle:
+						# tg(rod angle) = (reflector in line distance / 2) / line distance
+						# atg((0.6350 / 2) / 0.64)
+						# approx. 0.46
+						rotation 0 0 1 0.46
+					}
+
+					DEF	Side7 Group {
+						children [
+							Transform {
+								children [
+									USE	Line2Side7
+								]
+								translation	0 -0.64 0
+							}
+							Transform {
+								children [
+									USE	Line2Side7
+								]
+								translation	0 0.64 0
+							}
+							Transform {
+								children USE InclinedRod
+								translation	0 -0.64 0
+							}
+							Transform {
+								children USE InclinedRod
+								scale -1 1 1
+								translation	0 -0.64 0
+							}
+							Transform {
+								children USE InclinedRod
+								scale 1 -1 1
+								translation	0 0.64 0
+							}
+							Transform {
+								children USE InclinedRod
+								scale -1 -1 1
+								translation	0 0.64 0
+							}
+							Transform {
+								children USE VerticalRodFull
+								translation	0.6350 0 0
+							}
+							Transform {
+								children USE VerticalRodFull
+								translation	-0.6350 0 0
+							}
+							Transform {
+								children USE VerticalRodHalf
+								translation	0.3175 -0.32 0
+							}
+							Transform {
+								children USE VerticalRodHalf
+								translation	-0.3175 -0.32 0
+							}
+						]
+					}
+
+					# http://www.bellrock.org.uk/lighthouse/lighthouse_lightroom.htm
+					# "panes of red-coloured glass were placed in front of each of the reflectors on the minor sides"
+					DEF	RedPane Shape	{
+						appearance Appearance {
+							material Material {
+								diffuseColor 1 0 0
+								transparency 0.5
+							}
+						}
+						geometry Box {
+							size 1 1 0.00635
+						}
+					}
+
+					DEF	Side5 Group {
+						children [
+							Transform {
+								children [
+									USE	RedPane
+								]
+								scale 1 2 1
+								translation	0 0 0.4175
+							}
+						]
+					}
+
+					DEF	Chandelier Group {
+						children [
+							Transform {
+								children [
+									USE	Side7
+								]
+								translation	0 0 0.3175
+							}
+							Transform {
+								children [
+									USE	Side7
+								]
+								rotation 0 1 0 3.14
+								translation	0 0 -0.3175
+							}
+							Transform {
+								children [
+									USE	Side5
+								]
+								rotation 0 1 0 1.57
+								translation	0.6350 0 0
+							}
+							Transform {
+								children [
+									USE	Side5
+								]
+								rotation 0 1 0 4.71
+								translation	-0.6350 0 0
+							}
+						]
+					}
+
+				]
+			}
+			USE	Chandelier
+		]
+	}
+}
+
+PROTO Chandelier [
+	eventOut SFBool	lit
+]{
+	Group {
+		children [
+			ChandRefs {
+				lit	IS lit
+			}
+			Frame {}
+		]
+	}
+}
+
+Chandelier {}
