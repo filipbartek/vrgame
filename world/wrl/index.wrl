@@ -63,22 +63,28 @@ PROTO Index [
 			Group {
 				children [
 					DEF Atmosphere Fog { 
-					color 1 1 1   
+					color 0.5 0.5 0.5   
 					fogType "LINEAR"   
 					visibilityRange 0
 
 					}
-					DEF	IncreaseFogColor ColorInterpolator	{
-						key	[0,1]
-						keyValue [ 0 0 0, 0.5 0.5 0.5]
-					}
+												
 					DEF	IncreaseFog ScalarInterpolator {
 						key	[0,0.5,1]
-						keyValue [60, 60, 20]
+						keyValue [60, 60, 5]
 					}
 					DEF IncreaseFogSensor TimeSensor {	
-						cycleInterval 30
+						cycleInterval 5
 					}	
+					
+					DEF	DecreaseFog ScalarInterpolator {
+						key	[0, 1]
+						keyValue [5, 600]
+					}
+					DEF DecreaseFogSensor TimeSensor {	
+						cycleInterval 5
+						enabled	TRUE
+					}
 				]
 			}
 			# Moonlight
@@ -289,17 +295,25 @@ PROTO Index [
 		eventOut SFBool	bind_vpfar
 		eventOut SFTime	outro_time
 		eventIn SFTime cur_time
+		eventIn	SFTime fogStarted
 		field SFNode outroTS USE OutroTS
 		eventOut SFBool enableSound
 		eventIn SFBool fog_solved  
-		eventOut SFFloat visibility
+		eventOut SFTime	fogLeaveTime
 		eventIn SFBool cheat_launch_outro
+		eventOut SFBool canGenerateFog
 		url	"javascript:
 			var nutCount = 0;
 			var nutsTotal = 4;
+			var fs = 0;
 			function launchOutro() {
 				bind_vpfar = true;
 				outro_time = cur_time;
+			}
+			function fogStarted(mtime)
+			{
+				canGenerateFog = true;
+				fs = 1;
 			}
 			function cheat_launch_outro(value) {
 				if (value) {
@@ -310,16 +324,20 @@ PROTO Index [
 				nutsOutput = new MFString(nutCount);
 			}
 			function fog_solved()
-			{					
-				visibility = 0;
-				nutDone();
+			{				
+			    if (fs == 1)
+				{
+					canGenerateFog = false;
+					fs =2;
+					fogLeaveTime = cur_time +1;
+					nutDone();
+				}
 			}
 			function nutDone() {
 				nutCount ++;
 				generateText();
 				if ( nutCount == nutsTotal )
-				{
-					nutCount =100;
+				{					 
 					generateText();
 					//start sound
 					enableSound=true;
@@ -405,15 +423,18 @@ PROTO Index [
 		"
 	}
 		
-	ROUTE IncreaseFogSensor.fraction_changed TO IncreaseFog.set_fraction
-	ROUTE IncreaseFogSensor.fraction_changed TO IncreaseFogColor.set_fraction
-	ROUTE IncreaseFog.value_changed TO Atmosphere.visibilityRange
-	ROUTE IncreaseFogColor.value_changed TO	Atmosphere.color
+	ROUTE IncreaseFogSensor.fraction_changed TO IncreaseFog.set_fraction	
+	ROUTE IncreaseFog.value_changed TO Atmosphere.visibilityRange	 
+	ROUTE DecreaseFogSensor.fraction_changed TO	DecreaseFog.set_fraction
+	ROUTE DecreaseFog.value_changed	 TO	Atmosphere.visibilityRange	 
 
+	ROUTE NutsNumber.canGenerateFog	TO IncreaseFogSensor.enabled
 	ROUTE S.startFog TO	IncreaseFogSensor.startTime
+	ROUTE S.startFog TO	NutsNumber.fogStarted
 
 	ROUTE Lighthouse.fog_solved	TO NutsNumber.fog_solved
-	ROUTE NutsNumber.visibility TO Atmosphere.visibilityRange 
+	ROUTE NutsNumber.fogLeaveTime TO DecreaseFogSensor.startTime
+	
 
 	ROUTE HudButtonSensor.touchTime TO HudButtonScript.switchShow
 	ROUTE HudButtonScript.arrowVisible TO Lighthouse.arrow_visible
