@@ -28,6 +28,11 @@ EXTERNPROTO	Reflector [
 ]
 "reflector.wrl#Reflector"
 
+EXTERNPROTO Arrow3DBlinker [	
+	eventIn SFBool arrowVisible
+]
+"arrow.wrl#Arrow3DBlinker"
+
 PROTO Reflector1 [
 	eventOut SFBool	lit0
 ]{
@@ -560,6 +565,7 @@ PROTO Frame [] {
 
 PROTO Chandelier [
 	eventOut SFBool	lit
+	eventIn SFBool arrow_visible
 ]{
 	Group {
 		children [
@@ -567,6 +573,12 @@ PROTO Chandelier [
 				lit	IS lit
 			}
 			Frame {}
+			Transform {
+				children Arrow3DBlinker {
+					arrowVisible IS	arrow_visible
+				}
+				translation	0 1 0
+			}
 		]
 	}
 }

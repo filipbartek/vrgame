@@ -21,6 +21,7 @@ EXTERNPROTO	Winding [
 
 EXTERNPROTO	Chandelier [
 	eventOut SFBool	lit
+	eventIn SFBool arrow_visible
 ]
 "chandelier.wrl#Chandelier"
 
@@ -41,6 +42,7 @@ PROTO Lightroom [
 				choice [
 					DEF	Chandelier Chandelier {
 						lit	IS chandelier_lit
+						arrow_visible IS arrow_visible
 					}
 					DEF	Cage CageProto {
 						lod	IS lod
