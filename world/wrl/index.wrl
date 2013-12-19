@@ -358,3 +358,5 @@ PROTO Index [
 	ROUTE OutroTS.fraction_changed TO OutroPI.set_fraction
 	ROUTE OutroPI.value_changed	TO VPFarTrans.translation
 }
+
+Index {}
