@@ -22,6 +22,19 @@ EXTERNPROTO	CylinderShape [
 ]
 "cylindershape.wrl#CylinderShape"
 
+EXTERNPROTO ConeShape [
+	field SFNode appearance
+	exposedField SFInt32 lod
+	field MFFloat range
+	field SFFloat radius
+	field SFFloat height
+	field SFBool bottom
+	field SFBool solid
+	field SFFloat creaseAngle
+	field SFInt32 complexity
+]
+"coneshape.wrl#ConeShape"
+
 EXTERNPROTO	Reflector [
 	eventOut SFBool	lit
 	exposedField SFVec3f proximitySize
@@ -112,20 +125,22 @@ PROTO LightCone [
 								children [
 									Transform {
 										children [
-											Shape {
-												appearance Appearance {
-													material Material {
-														transparency IS	coneTransparency
-														emissiveColor IS color
-														diffuseColor 0 0 0
-														shininess 0
-														specularColor 0 0 0
-														ambientIntensity 0
+											Collision {
+												children ConeShape {
+													appearance Appearance {
+														material Material {
+															transparency IS	coneTransparency
+															emissiveColor IS color
+															diffuseColor 0 0 0
+															shininess 0
+															specularColor 0 0 0
+															ambientIntensity 0
+														}
 													}
-												}
-												geometry Cone {
+													solid FALSE
 													bottom TRUE
 												}
+												collide	FALSE
 											}
 										]
 										translation	0 -1 0
