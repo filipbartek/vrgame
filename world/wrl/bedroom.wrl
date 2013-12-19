@@ -125,7 +125,9 @@ PROTO BedRoom [
 												children [
 													Transform {
 														children [
+															
 															USE LadyBugOnBed
+															
 															DEF LadyBugRemoval Script {
 															eventOut MFNode	child
 															eventOut SFBool	ladyBugRemoved IS ladyBugRemoved
@@ -139,30 +141,52 @@ PROTO BedRoom [
 																	}
 																"
 															}
+															# for setting correct time for moving ladybug
+															DEF	DefaultTimeSensor TimeSensor {
+																enabled	TRUE
+															}
 
 															DEF LadyBugTouch ProximitySensor { size 0.5 0.5 0.5 }
-															#DEF LadyBugMove ProximitySensor { size 3 3 3 }
+															DEF LadyBugMove ProximitySensor { size 0.6 0.6 0.6 }
+															DEF	LadyBugTimeSensor1 TimeSensor {
+																enabled	FALSE
+																cycleInterval 2
+															}
+															DEF	LadyBugTimeSensor2 TimeSensor {
+																enabled	FALSE
+																cycleInterval 2
+															}
 
 										    				DEF	TouchLadyBugOnBed TouchSensor {
 																enabled	FALSE
 															}
+															DEF	LadyBugMove1 PositionInterpolator {
+																key	[0,1]
+																keyValue [ 0 0 0.3, 0 1 1 ]
+															}
+
+															DEF	LadyBugMove2 PositionInterpolator {
+																key	[0,1]
+																keyValue [ 0 1 1, 0 0 0.3 ]
+															}
 														] 
-														scale 5 5 5		  
+														scale 3 3 3		  
 													}							  
 													Transform {
 														children Arrow3DBlinker	{
 															arrowVisible IS	arrow_visible
-														}			  
+														}	
+														translation 0 0.5 0		  
 													}
 												]
-												translation	0 0.2 0
+											translation 0 0.3 0						   
 											}
 											DEF	LadyBugOnBedProximity ProximitySensor	{
 												size 3 3 3
 											}
 											
 										]
-									translation	0 0 -0.3
+									
 								}
 											
 							]
@@ -232,8 +256,46 @@ PROTO BedRoom [
 			}
 		]
 	}
+	DEF LadyBugMoveScript Script {
+		eventIn	SFTime curTime
+		eventIn	SFBool moveLadyBug
+		eventIn	SFBool isActive1
+		eventIn	SFBool isActive2
+		
+		eventOut SFTime time1
+		eventOut SFTime time2
+		url "javascript:
+		        			  
+				var firstMove = true;
+				function moveLadyBug(time)
+				{		
+					if ( isActive1 || isActive2 )
+						return;
+					if ( firstMove )
+						time1 = curTime;
+					else
+						time2 = curTime; 
+					firstMove = !firstMove;
+				}
+			"  
+	}
+	
+	ROUTE DefaultTimeSensor.time TO	LadyBugMoveScript.curTime
+
+	#ROUTE LadyBugTimeSensor1.isActive TO LadyBugMoveScript.isActive1
+	#ROUTE LadyBugTimeSensor1.fraction_changed TO LadyBugMove1.set_fraction
+	#ROUTE LadyBugMove1.value_changed TO	ToRemoveWithLadyBug.translation
+	#ROUTE LadyBugMoveScript.time1 TO LadyBugTimeSensor1.startTime
+
+	#move back
+	#ROUTE LadyBugTimeSensor2.isActive TO LadyBugMoveScript.isActive2
+	#ROUTE LadyBugMoveScript.time2 TO LadyBugTimeSensor2.startTime 
+	#ROUTE LadyBugTimeSensor2.fraction_changed TO LadyBugMove2.set_fraction
+	#ROUTE LadyBugMove1.value_changed TO	ToRemoveWithLadyBug.translation
+
 	ROUTE LadyBugTouch.isActive TO TouchLadyBugOnBed.enabled
 	ROUTE TouchLadyBugOnBed.touchTime TO LadyBugRemoval.touched
+	ROUTE LadyBugMove.isActive TO	  LadyBugMoveScript.moveLadyBug
 	
 	ROUTE LadyBugRemoval.child TO TestContent.removeChildren
 }
