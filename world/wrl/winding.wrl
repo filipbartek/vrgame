@@ -199,3 +199,5 @@ ROUTE HingeCS.rotation_changed TO Winding.rotation
 ROUTE HingeCS.rotation_changed TO RopeScript.rot
 
 }
+
+Winding	{}
