@@ -165,13 +165,19 @@ DEF PS ProximitySensor	{
 	}
 
 DEF	RopeScript Script {
-	eventIn SFRotation rot
+	# This script controls `coil` scale so that its y component runs between
+	# `heightMin` and `heightMax` based on rotation `rot` of a CylinderSensor
+	# `cylinderSensor`. `cylinderSensor.minAngle` corresponds to `heightMin` and
+	# `cylinderSensor.maxAngle` corresponds to `heightMax`.
+	# When height surpasses `heightTarget`, `winding_solved` is set to true, indicating
+	# a successful solution of the winding puzzle.
+
+	eventIn SFRotation rot # rotation from CylinderSensor
 	field SFNode coil USE RopeCoil
 	field SFFloat heightMin 0.05
 	field SFFloat heightMax 0.3
-	field SFFloat heightTarget 0.28
-	field SFFloat angleMin 0
-	field SFFloat angleMax 25.13
+	field SFFloat heightTarget 0.28 # When height surpasses this value, winding_solved is set to true.
+	field SFNode cylinderSensor USE	HingeCS # CylinderSensor
 	eventOut SFBool	winding_solved IS winding_solved
 	url	"javascript:
 		function setCoilHeight(h) {
@@ -186,6 +192,8 @@ DEF	RopeScript Script {
 		}
 		function rot(value) {
 			var angle = value[3];
+			var angleMin = cylinderSensor.minAngle;
+			var angleMax = cylinderSensor.maxAngle;
 			var angle01 = (angle - angleMin) / (angleMax - angleMin);
 			var height = heightMin + (heightMax - heightMin) * angle01;
 			setCoilHeight(height);
