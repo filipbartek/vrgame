@@ -60,14 +60,28 @@ PROTO Index [
 				skyColor [0.0 0.0 0]
 				groundColor [0 0.0625 0.125]
 			}
+			Group {
+				children [
+					DEF Atmosphere Fog { 
+					color 1 1 1   
+					fogType "LINEAR"   
+					visibilityRange 0
 
-			DEF Atmosphere Fog { 
-			color 0.5 0.6 0.5   
-			fogType "LINEAR"   
-			visibilityRange 0
-
+					}
+					DEF	IncreaseFogColor ColorInterpolator	{
+						key	[0,1]
+						keyValue [ 0 0 0, 1 1 1]
+					}
+					DEF	IncreaseFog ScalarInterpolator {
+						key	[0,0.5,1]
+						keyValue [60,60, 20]
+					}
+					DEF IncreaseFogSensor TimeSensor {	
+						cycleInterval 30
+					}
+						
+				]
 			}
-
 			# Moonlight
 			DirectionalLight {
 				color 1 1 1
@@ -362,7 +376,7 @@ PROTO Index [
 
 	DEF	S Script {
 		eventIn	SFTime show				 
-		eventOut SFFloat visibility
+		eventOut SFTime	startFog
 		eventOut MFString hudTimeText
 		url	"javascript:
 			var time0 = Number.POSITIVE_INFINITY;
@@ -377,7 +391,7 @@ PROTO Index [
 					var timeSeconds = mTime - time0;
 					if ( (timeSeconds > 5) && addFog )
 					{
-						visibility = 10; 
+						startFog = mTime; 
 						addFog = false;
 					}
 
@@ -391,10 +405,17 @@ PROTO Index [
 			}
 		"
 	}
-		  
+		
+	ROUTE IncreaseFogSensor.fraction_changed TO IncreaseFog.set_fraction
+	ROUTE IncreaseFogSensor.fraction_changed TO IncreaseFogColor.set_fraction
+	ROUTE IncreaseFog.value_changed TO Atmosphere.visibilityRange
+	ROUTE IncreaseFogColor.value_changed TO	Atmosphere.color
+
+	ROUTE S.startFog TO	IncreaseFogSensor.startTime
+
 	ROUTE Lighthouse.fog_solved	TO NutsNumber.fog_solved
-	ROUTE NutsNumber.visibility TO Atmosphere.visibilityRange
-	ROUTE S.visibility TO	Atmosphere.visibilityRange
+	ROUTE NutsNumber.visibility TO Atmosphere.visibilityRange 
+
 	ROUTE HudButtonSensor.touchTime TO HudButtonScript.switchShow
 	ROUTE HudButtonScript.arrowVisible TO Lighthouse.arrow_visible
 	ROUTE Proxim.position_changed TO Proxim.center
