@@ -61,7 +61,7 @@ PROTO Index [
 			}
 
 			DEF Atmosphere Fog { 
-			color 1 1 1   
+			color 0.5 0.6 0.5   
 			fogType "LINEAR"   
 			visibilityRange 0
 
@@ -361,7 +361,7 @@ PROTO Index [
 					var timeSeconds = mTime - time0;
 					if ( (timeSeconds > 5) && addFog )
 					{
-						visibility = 30; 
+						visibility = 10; 
 						addFog = false;
 					}
 
