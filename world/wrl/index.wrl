@@ -27,9 +27,9 @@ PROTO Index [
 
 			Transform {
 				children [
-					Transform {
+					DEF VPFarTrans Transform {
 						children [
-							Viewpoint {
+							DEF VPFar Viewpoint {
 								description	"Far"
 								jump FALSE
 							}
@@ -231,27 +231,34 @@ PROTO Index [
 		cycleInterval 1000
 	}	  
 
-	DEF	OutroAnimation Transform {
-
+	DEF	OutroInitTS TimeSensor {
+		cycleInterval 1
+	}
+	DEF	OutroTS TimeSensor {
+		cycleInterval 10
+	}
+	DEF OutroPI PositionInterpolator {
+		key	[0 1]
+		keyValue [0 0 100, 0 0 1000]
 	}
 
-	DEF	OutroAnchor Anchor {
-		description	"Begin outro animation"
-		url	["index.wrl#Far"]
-		
-	}								 
-		
 	DEF	NutsNumber Script	{
 		eventIn	SFBool nutDone
 		eventOut MFString nutsOutput
 		eventIn	SFBool set_winding_solved
 		eventIn	SFBool set_ladybug_solved
 		field SFBool winding_solved FALSE
-		field SFNode anchor USE OutroAnchor
+		eventOut SFBool	bind_vpfar
+		eventOut SFTime	outro_time
+		eventIn SFTime cur_time
+		field SFNode outroTS USE OutroTS
 		url	"javascript:
 			var nutCount = 0;
 			var nutsTotal = 2;
-			
+			function launchOutro() {
+				bind_vpfar = true;
+				outro_time = cur_time;
+			}
 			function generateText() {
 				nutsOutput = new MFString(nutCount);
 			}
@@ -262,8 +269,7 @@ PROTO Index [
 				{
 					nutCount =100;
 					generateText();
-					// go to outro
-					anchor.activate = true;
+					launchOutro();
 				}
 			}
 			
@@ -278,6 +284,19 @@ PROTO Index [
 				generateText();
 			}
 			"
+	}
+
+	DEF	OutroScript Script {
+		eventIn	SFBool initIsActive
+		eventIn	SFTime curTime
+		eventOut SFTime	animStartTime
+		url	"javascript:
+			function initIsActive(value) {
+				if (!value) {
+					animStartTime = curTime;
+				}
+			}
+		"
 	}
 
 	DEF	HudButtonScript Script {
@@ -329,4 +348,13 @@ PROTO Index [
 	ROUTE S.hudTimeText	TO HudTimeText.string
 	ROUTE Lighthouse.winding_solved	TO NutsNumber.set_winding_solved
 	ROUTE Lighthouse.ladyBugRemoved	TO NutsNumber.set_ladybug_solved
+
+	ROUTE T.time TO NutsNumber.cur_time
+	ROUTE NutsNumber.bind_vpfar	TO VPFar.set_bind
+	ROUTE NutsNumber.outro_time	TO OutroInitTS.startTime
+	ROUTE OutroInitTS.isActive TO OutroScript.initIsActive
+	ROUTE T.time TO	OutroScript.curTime
+	ROUTE OutroScript.animStartTime	TO OutroTS.startTime
+	ROUTE OutroTS.fraction_changed TO OutroPI.set_fraction
+	ROUTE OutroPI.value_changed	TO VPFarTrans.translation
 }
