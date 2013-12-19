@@ -11,7 +11,10 @@ EXTERNPROTO	LightroomProto [
 ]
 "lightroom.wrl#Lightroom"
 
-EXTERNPROTO	BellProto [] "bell.wrl#Bell"
+EXTERNPROTO	BellProto [
+	eventOut SFBool	fog_solved
+] 
+"bell.wrl#Bell"
 
 EXTERNPROTO CylinderExtrusion [
 	field SFFloat radius
@@ -29,6 +32,7 @@ PROTO Balcony [
 	# 0: LOD disabled
 	exposedField SFInt32 lod 1
 	eventOut SFBool winding_solved
+	eventOut SFBool fog_solved
 
 ]{
 	Group {
@@ -99,7 +103,7 @@ PROTO Balcony [
 			# Southern bell
 			Transform {
 				children [
-					BellProto {}
+					BellProto { fog_solved  IS fog_solved }
 				]
 				translation	0 0 2.5273
 			}
@@ -119,7 +123,7 @@ PROTO Balcony [
 			# Northern bell
 			Transform {
 				children [
-					BellProto {}
+					BellProto { fog_solved IS fog_solved }
 				]
 				translation	0 0 -2.5273
 			}

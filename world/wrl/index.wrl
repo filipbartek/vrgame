@@ -9,6 +9,7 @@ EXTERNPROTO	LighthouseProto [
 	exposedField SFInt32 lod
 	eventOut SFBool	winding_solved
 	eventOut SFBool	ladyBugRemoved
+	eventOut SFBool	fog_solved
 	eventIn	SFBool arrow_visible
 ]
 "lighthouse.wrl#Lighthouse"
@@ -57,6 +58,13 @@ PROTO Index [
 			Background {
 				skyColor [0.0 0.0 0]
 				groundColor [0 0.0625 0.125]
+			}
+
+			DEF Atmosphere Fog { 
+			color 0 0 0   
+			fogType "LINEAR"   
+			visibilityRange 30
+
 			}
 
 			# Moonlight
@@ -268,6 +276,8 @@ PROTO Index [
 		eventIn SFTime cur_time
 		field SFNode outroTS USE OutroTS
 		eventOut SFBool enableSound
+		eventIn SFBool fog_solved
+		eventOut SFColor atmColor
 		url	"javascript:
 			var nutCount = 0;
 			var nutsTotal = 2;
@@ -277,6 +287,11 @@ PROTO Index [
 			}
 			function generateText() {
 				nutsOutput = new MFString(nutCount);
+			}
+			function fog_solved()
+			{					
+				atmColor = new SFColor(0,0,0);
+				nutDone();
 			}
 			function nutDone() {
 				nutCount ++;
@@ -331,17 +346,26 @@ PROTO Index [
 	}
 
 	DEF	S Script {
-		eventIn	SFTime show
+		eventIn	SFTime show				 
+		eventOut SFColor atmColor
 		eventOut MFString hudTimeText
 		url	"javascript:
 			var time0 = Number.POSITIVE_INFINITY;
 			var timeNext = Number.NEGATIVE_INFINITY;
+			var addFog = true;
 			function show(mTime){
 				if (mTime >= timeNext) {
 					if (mTime < time0) {
 						time0 = mTime;
 					}
+
 					var timeSeconds = mTime - time0;
+					if ( (timeSeconds > 5) && addFog )
+					{
+						atmColor = new SFColor(1,0.7,1); 
+						addFog = false;
+					}
+
 					var timeSecondsMod = Math.floor(timeSeconds) % 60;
 					var timeMinutes = timeSeconds / 60;
 					var timeMinutesFloor = Math.floor(timeMinutes);
@@ -353,7 +377,9 @@ PROTO Index [
 		"
 	}
 		  
-	ROUTE NutsNumber.enableSound TO	FinishAudioClip.loop
+	ROUTE Lighthouse.fog_solved	TO NutsNumber.fog_solved
+	ROUTE NutsNumber.atmColor TO Atmosphere.color
+	ROUTE S.atmColor TO	Atmosphere.color
 	ROUTE HudButtonSensor.touchTime TO HudButtonScript.switchShow
 	ROUTE HudButtonScript.arrowVisible TO Lighthouse.arrow_visible
 	ROUTE Proxim.position_changed TO Proxim.center
