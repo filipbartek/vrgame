@@ -1,0 +1,80 @@
+#VRML V2.0 utf8
+
+WorldInfo {
+	title "Bar with circular cross section"
+	info ["Filip Bártek"]
+}
+
+EXTERNPROTO	CylinderShape [
+	field SFNode appearance
+	exposedField SFInt32 lod
+	field MFFloat range
+	field SFFloat radius
+	field SFFloat height
+	field SFBool top
+	field SFBool bottom
+	field SFBool solid
+	field SFFloat creaseAngle
+	field SFInt32 complexity
+]
+"cylindershape.wrl#CylinderShape"
+
+PROTO BarRound [
+
+	# 1: LOD enabled
+	# 0: LOD disabled
+	exposedField SFInt32 lod 1
+
+	# LOD ranges
+	field MFFloat range [50 200]
+
+	# Size of the bar
+	# Should be longer along Y axis
+	# The dimensions in axes X and Z should match
+	field SFVec3f scale 0.5 1 0.5
+
+	# Color of the bar
+	exposedField SFColor diffuseColor 1 1 1
+
+	# Texture of the bar
+	exposedField SFNode texture NULL
+
+	# Render bottom cap?
+	field SFBool bottom TRUE
+
+	# Render top cap?
+	field SFBool top TRUE
+
+	field SFBool solid TRUE
+	field SFInt32 complexity 24
+
+]{
+	DEF Cyl CylinderShape {
+		lod	IS lod
+		range IS range
+		appearance Appearance {
+			material Material {
+				diffuseColor IS	diffuseColor
+			}
+			texture IS texture
+		}
+		bottom IS bottom
+		top	IS top
+		solid IS solid
+		complexity IS complexity
+		#radius from scale - set in script
+		#height from scale - set in script
+	}
+	Script {
+		directOutput TRUE
+		field SFNode cyl USE Cyl
+		field SFVec3f scale IS scale
+		url	"javascript:
+			function initialize() {
+				//console.assert(scale[0] == scale[2]);
+				cyl.radius = scale[0] / 2;
+				cyl.height = scale[1];
+			}
+		"
+	}
+}

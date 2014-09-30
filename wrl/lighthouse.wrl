@@ -1,0 +1,120 @@
+#VRML V2.0 utf8
+
+# Based on Bell Rock Lighthouse
+# http://www.bellrock.org.uk/
+
+WorldInfo {
+	title "Lighthouse"
+	info ["Filip Bártek", "Eva Pešková"]
+}
+
+EXTERNPROTO	Body [
+	exposedField SFInt32 lod
+	exposedField SFColor diffuseColor
+]
+"lighthouse-body.wrl#LighthouseBody"
+
+EXTERNPROTO	BalconyProto [
+	exposedField SFInt32 lod
+	eventOut SFBool	fog_solved
+	eventOut SFBool	winding_solved
+	eventOut SFBool	chandelier_lit
+	eventIn	SFBool arrow_visible
+]
+"balcony.wrl#Balcony"
+
+EXTERNPROTO	BedRoomProto [
+	exposedField SFInt32 lod
+	eventIn	SFBool arrow_visible
+	eventOut SFBool ladyBugRemoved
+]
+"bedroom.wrl#BedRoom"
+
+EXTERNPROTO	StoreRoomProto [
+	exposedField SFInt32 lod
+]
+"storeroom.wrl#StoreRoom"
+
+PROTO Lighthouse [
+
+	# 1: LOD enabled
+	# 0: LOD disabled
+	exposedField SFInt32 lod 1
+	eventOut SFBool winding_solved
+	eventOut SFBool	ladyBugRemoved
+	eventIn	SFBool arrow_visible
+	eventOut SFBool fog_solved
+	eventOut SFBool	chandelier_lit
+]{
+	Group {
+		children [
+
+			Body {
+				lod IS lod
+			}
+
+			Transform {
+				children [
+					BalconyProto {
+						lod	IS lod
+						fog_solved IS fog_solved
+						winding_solved IS winding_solved
+						chandelier_lit IS chandelier_lit
+						arrow_visible IS arrow_visible
+					}
+					Transform {
+						children [   
+							Transform {
+								children [																    
+									Inline {
+										url	["../blend/balconyplatform.wrl"]
+									}
+									BedRoomProto {
+										lod	IS  lod
+										arrow_visible IS arrow_visible
+										ladyBugRemoved IS ladyBugRemoved
+									}
+									
+								]
+								rotation 0 1 0 1
+								translation	0 2.9 0
+							}
+							StoreRoomProto {
+										lod	IS lod
+									}
+							# floor
+							Transform {
+									children [
+										Shape {
+											geometry Cylinder {
+												height 0.1
+												radius 5.4
+												bottom TRUE
+												top	TRUE
+											}
+											appearance Appearance
+											{
+												material Material {
+													diffuseColor 0.0 0.2 .2
+												}
+											}
+										}
+									]
+									translation	0 -2.9 0
+							}
+							
+						]
+						translation	 0 -2.9 0
+						scale 0.33 1 0.33
+					}
+					
+				]
+				# Lighthouse height
+				translation	0 29.7942 0
+			}
+
+		]
+	}
+}
+
+Lighthouse {}

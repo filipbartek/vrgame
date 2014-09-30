@@ -1,0 +1,162 @@
+#VRML V2.0 utf8
+
+WorldInfo {
+	title "3D arrow"
+	info ["Eva Pešková"]
+}
+
+PROTO Arrow3D [				   
+	exposedField SFInt32 visible 1	 
+	exposedField SFInt32 hidden 0
+]{
+	Group {
+		children [
+			Switch {
+				choice [
+					DEF	ArrowApp Appearance {
+						 material Material {
+								 diffuseColor  0.2 0.4 0.8 
+							 }
+					}
+					DEF	ArrowShapeHead Transform 
+					{
+						children[ 
+							Shape {
+							 appearance	USE	ArrowApp
+							 geometry Cone {
+								 height	1
+								 bottomRadius 0.5
+								 bottom	FALSE
+								 side TRUE
+							 }
+							}
+						]
+						rotation 0 0 1 3.1
+					}
+					DEF	ArrowShapeBody Shape {
+						appearance USE ArrowApp	  
+						geometry Cylinder {
+							height 2
+							radius 0.2
+							bottom FALSE
+							side TRUE
+						}
+					}		
+				    DEF	ArrowShape Transform {
+						children [
+							USE	ArrowShapeHead
+							Transform {
+								children [
+									USE	ArrowShapeBody
+								]
+								translation	0 1.2 0
+							}
+						]	
+						translation	0 0.8 0			 		
+					}
+				]
+			}
+			Switch {
+				whichChoice	IS hidden
+				choice [   
+					Group {
+						children [
+							Switch
+							{
+								whichChoice	IS visible
+								choice [
+									Group {
+
+									}								 
+									USE	ArrowShape
+								]
+								
+							}
+						]
+					}
+
+					Group {}			   					
+				]
+			}
+			
+		]		
+	}
+}		  
+
+PROTO Arrow3DBlinker [	
+	eventIn SFBool arrowVisible
+]{
+	Group {
+		children [
+			Switch {
+				choice [
+					DEF	MoveSensor TimeSensor {
+						cycleInterval 1
+						loop TRUE
+						enabled	TRUE
+					}
+					DEF BlinkSensor TimeSensor {
+						
+						#how much the interval should take
+						cycleInterval 3	
+
+						#for repeat forever
+						loop TRUE
+			
+					}
+					DEF PositionMover PositionInterpolator	{
+						key	[0, 0.5, 1]
+						keyValue [ 0 0 0, 0 -0.2 0, 0 0 0]
+					}		 
+
+					DEF	BlinkerScript Script {
+						eventIn	SFBool arrowVisible IS arrowVisible
+						eventIn	SFFloat blinker
+						eventOut SFInt32 visible
+						eventOut SFBool	enabled	
+						eventOut SFInt32 hide	 
+						url	"javascript:
+							var time0 = true;
+							var mEnabled = true;
+							function blinker( fraction ){
+								if ( fraction > 0.5 ) {	 
+									visible = 1;
+								}
+								else
+								{
+									visible = 0;
+								}
+							}
+							function arrowVisible()
+							{
+								mEnabled = !mEnabled;
+								enabled = mEnabled;
+								if ( enabled )
+									hide = 0;
+								else
+									hide = 1;				
+							}
+						"
+					}
+					DEF	BlinkingArrowPos Transform
+					   {
+						   children	DEF BlinkingArrow Arrow3D {
+								visible	1	
+						        hidden 0	  
+							}				  
+					   } 
+				]
+			} 
+			USE	BlinkingArrowPos
+		]
+
+		ROUTE BlinkerScript.enabled	TO MoveSensor.enabled
+		ROUTE BlinkerScript.enabled	TO BlinkSensor.enabled 
+		ROUTE BlinkerScript.hide  TO BlinkingArrow.hidden
+
+		ROUTE MoveSensor.fraction_changed TO PositionMover.set_fraction
+		ROUTE PositionMover.value_changed TO BlinkingArrowPos.translation
+		ROUTE BlinkSensor.fraction_changed TO BlinkerScript.blinker
+		ROUTE BlinkerScript.visible	TO	BlinkingArrow.visible
+	}
+} 

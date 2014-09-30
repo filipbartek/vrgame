@@ -1,0 +1,84 @@
+#VRML V2.0 utf8
+
+WorldInfo {
+	title "Cylinder with solid, creaseAngle and complexity"
+	info ["Author: Filip Bártek"]
+}
+
+# Cylinder-shaped extrusion
+# Doesn't support Cylinder attribute side.
+# Supports Extrusion attributes solid and creaseAngle.
+# Supports new attribute complexity that describes the number of faces used to represent the cylinder.
+
+EXTERNPROTO	RoundExtrusion [
+	field MFVec3f spine
+	field MFVec2f scale
+	field MFRotation orientation
+	field SFBool beginCap
+	field SFBool endCap
+	field SFBool solid
+	field SFFloat creaseAngle
+	field SFFloat radius
+	field SFInt32 complexity
+]
+"roundextrusion.wrl#RoundExtrusion"
+
+PROTO CylinderExtrusion [
+
+	# Cylinder:
+	field SFFloat radius 1 # as in Cylinder
+	field SFFloat height 2 # as in Cylinder
+	field SFBool top TRUE # as in Cylinder
+	field SFBool bottom TRUE # as in Cylinder
+
+	# Extrusion:
+	field SFBool solid TRUE # as in Extrusion and Cylinder
+
+	# Crease angle
+	# Useful values:
+	# 0: no smoothing
+	# 1.57 (90 degrees - epsilon): smooth sides as long as complexity >= 5
+	field SFFloat creaseAngle 1.57 # 90 degrees - epsilon
+
+	# Complexity
+	# Must be at least 1.
+	# Possible values:
+	# 0 or below: undefined behavior
+	# 1: invisible
+	# 2: weird plane
+	# 3 to 4: no crease (not smooth)
+	# 5 and above: smooth surface
+	field SFInt32 complexity 24 # as in Cylinder
+
+]{
+	DEF Ext RoundExtrusion {
+		beginCap IS	bottom
+		endCap IS top
+		solid IS solid
+		creaseAngle	IS creaseAngle
+		radius IS radius
+		complexity IS complexity
+
+		spine [0 -1 0, 0 1 0] # Generated in script
+		scale [1 1, 1 1]
+		orientation	0 0 1 0
+	}
+	Script {
+		field SFNode ext USE Ext
+		field SFFloat height IS height
+		directOutput TRUE
+		url "javascript:
+			function generateSpine(h) {
+				var halfH = h / 2;
+				var spineBegin = new SFVec3f(0, -halfH, 0);
+				var spineEnd = new SFVec3f(0, halfH, 0);
+				var spine = new MFVec3f(spineBegin, spineEnd);
+				return spine;
+			}
+			// Generate spine
+			function initialize() {
+				ext.spine = generateSpine(height);
+			}
+		"
+	}
+}

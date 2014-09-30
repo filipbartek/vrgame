@@ -1,0 +1,51 @@
+#VRML V2.0 utf8
+
+WorldInfo {
+	title "LadyBug parameters"
+	info ["Eva Pešková"]
+}
+
+PROTO LadyBug [
+    # 1: LOD enabled
+	# 0: LOD disabled
+	exposedField SFInt32 lod 1		
+]{
+	Group {
+		children [
+			Switch {
+				choice [
+					DEF	LadyBug1 Transform {
+							children [
+								Inline {
+									url	["../blend/ladybug.wrl"]
+								}
+							]
+							scale 0.01 0.01 0.01 
+						}  
+					DEF	LadyBug2 Transform {
+							children [
+								Inline {
+									url	["../blend/ladybug_lod2.wrl"]
+								}
+							]
+							scale 0.01 0.01 0.01 
+						}
+				]
+			}
+			Switch {   
+				whichChoice	IS lod
+				choice [
+					USE	LadyBug1
+					LOD	{
+						range [1 2]
+						level [
+							USE	LadyBug1
+							USE	LadyBug2
+							Group {}
+						]
+					}
+				]
+			}	   
+		]
+	}
+}

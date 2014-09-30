@@ -1,0 +1,17 @@
+#VRML V2.0 utf8
+
+WorldInfo {
+	title "Display FPS in console"
+	info ["Author: Jiri Zara", "Date: 24.10.2013"]
+}
+DEF	T TimeSensor {loop TRUE cycleInterval 0.25}
+DEF	S Script {
+eventIn	SFTime ukaz
+url	"javascript:
+function ukaz(){
+	c = Browser.getCurrentFrameRate();
+	print ('fps = ' + c);
+}
+"
+}
+ROUTE T.time TO	S.ukaz

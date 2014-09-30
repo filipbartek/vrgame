@@ -1,0 +1,141 @@
+#VRML V2.0 utf8
+
+WorldInfo {
+	title "Lighthouse Body"
+	info ["Filip Bártek"]
+}
+
+EXTERNPROTO TruncatedConeShape [
+	field SFNode appearance
+	exposedField SFInt32 lod
+	field MFFloat range
+	field SFFloat height
+	field SFFloat bottomRadius
+	field SFFloat topRadius
+	field SFBool bottom
+	field SFBool top
+	field SFBool solid
+	field SFFloat creaseAngle
+	field SFInt32 complexity
+]
+"truncatedconeshape.wrl#TruncatedConeShape"
+
+PROTO LighthouseBody [
+
+	# 1: LOD enabled
+	# 0: LOD disabled
+	exposedField SFInt32 lod 1
+
+	# Lighthouse color
+	exposedField SFColor diffuseColor 1 1 1
+
+]{
+	Group {
+		children [
+
+			Switch {
+				choice [
+
+					DEF BodyExtrusion Shape {
+						appearance Appearance {
+							material Material {
+								diffuseColor IS	diffuseColor
+							}
+						}
+						geometry Extrusion {
+							# http://www.wiley.com/legacy/compbooks/vrml2sbk/ch15/15fig07.htm
+							# circle - 16 vertices
+							crossSection [
+								 1.00  0.00,   0.92 -0.38,
+								 0.71 -0.71,   0.38 -0.92,
+								 0.00 -1.00,  -0.38 -0.92,
+								-0.71 -0.71,  -0.92 -0.38,
+								-1.00 -0.00,  -0.92  0.38,
+								-0.71  0.71,  -0.38  0.92,
+								 0.00  1.00,   0.38  0.92,
+								 0.71  0.71,   0.92  0.38,
+								 1.00  0.00
+							]
+
+							# http://www.bellrock.org.uk/lighthouse/lighthouse_courses.htm
+							# https://docs.google.com/spreadsheet/ccc?key=0AkRO6nRMpzvydGh4dWlmZDJfYlc4UUZROHZ4VnR1NGc&usp=sharing
+							spine [
+								0  0.0000 0, #  0
+								0  9.9568 0, # 27
+								0 13.9954 0, # 39
+								0 17.0180 0, # 48
+								0 20.0152 0, # 57
+								0 23.0632 0, # 66
+								0 26.1874 0, # 75
+								0 27.8269 0, # 80 (guess)
+								0 29.7942 0  # 86 outer
+							]
+							scale [
+								6.4008 6.4008, #  0
+								2.9972 2.9972, # 27
+								2.7432 2.7432, # 39
+								2.5654 2.5654, # 48
+								2.4384 2.4384, # 57
+								2.3622 2.3622, # 66
+								2.2860 2.2860, # 75
+								2.2860 2.2860, # 80 (guess)
+								2.9972 2.9972  # 86 outer
+							]
+
+							beginCap FALSE
+							endCap FALSE
+							creaseAngle	0.79
+						}
+					}
+
+					DEF	BodyCylinder Transform {
+						children [
+							Transform {
+								children [
+									TruncatedConeShape {
+										appearance Appearance {
+											material Material {
+												diffuseColor IS	diffuseColor
+											}
+										}
+										lod	IS lod
+										bottom FALSE
+										top	FALSE
+										#bottomRadius 6.4008
+										bottomRadius 4
+										topRadius 2.9972
+										height 1
+										creaseAngle	0.79
+										complexity 16
+										range [1000 2000]
+									}
+								]
+								translation	0 0.5 0
+							}
+						]
+						scale 1 29.7942 1
+					}
+
+				]
+			}
+
+			Switch {
+				whichChoice	IS lod
+				choice [
+					USE	BodyExtrusion
+					LOD	{
+						range [500 2000]
+						level [
+							USE	BodyExtrusion
+							USE	BodyCylinder
+							Group {}
+						]
+					}
+				]
+			}
+
+		]
+	}
+}
+
+LighthouseBody {}

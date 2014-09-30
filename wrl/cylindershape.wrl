@@ -1,0 +1,60 @@
+#VRML V2.0 utf8
+
+WorldInfo {
+	title "Cylinder shape with LOD"
+	info ["Filip Bártek"]
+}
+
+EXTERNPROTO TruncatedConeShape [
+	field SFNode appearance
+	exposedField SFInt32 lod
+	field MFFloat range
+	field SFFloat height
+	field SFFloat bottomRadius
+	field SFFloat topRadius
+	field SFBool bottom
+	field SFBool top
+	field SFBool solid
+	field SFFloat creaseAngle
+	field SFInt32 complexity
+]
+"truncatedconeshape.wrl#TruncatedConeShape"
+
+PROTO CylinderShape [
+
+	field SFNode appearance NULL # Mandatory!
+
+	# 1: LOD enabled
+	# 0: LOD disabled
+	exposedField SFInt32 lod 1
+
+	# LOD ranges
+	field MFFloat range [50 200]
+
+	# Cylinder:
+	field SFFloat radius 1
+	field SFFloat height 2
+	field SFBool top TRUE
+	field SFBool bottom TRUE
+
+	# Extrusion:
+	field SFBool solid TRUE
+	field SFFloat creaseAngle 1.57
+
+	field SFInt32 complexity 24
+
+]{
+	TruncatedConeShape {
+		appearance IS appearance
+		lod	IS lod
+		range IS range
+		height IS height
+		bottomRadius IS	radius
+		topRadius	IS radius
+		bottom IS bottom
+		top	IS top
+		solid IS solid
+		creaseAngle	IS creaseAngle
+		complexity IS complexity
+	}
+}

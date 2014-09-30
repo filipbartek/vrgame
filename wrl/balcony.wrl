@@ -1,0 +1,139 @@
+#VRML V2.0 utf8
+
+WorldInfo {
+	title "Balcony"
+	info ["Filip Bártek", "Eva Pešková"]
+}
+
+EXTERNPROTO	LightroomProto [
+	exposedField SFInt32 lod
+	eventOut SFBool	winding_solved
+	eventOut SFBool	chandelier_lit
+	eventIn	SFBool arrow_visible
+]
+"lightroom.wrl#Lightroom"
+
+EXTERNPROTO	BellProto [
+	eventOut SFBool	fog_solved
+] 
+"bell.wrl#Bell"
+
+EXTERNPROTO CylinderExtrusion [
+	field SFFloat radius
+	field SFFloat height
+	field SFBool bottom
+	field SFBool top
+	field SFBool solid
+	field SFInt32 complexity
+]
+"cylinderextrusion.wrl#CylinderExtrusion"
+
+PROTO Balcony [
+
+	# 1: LOD enabled
+	# 0: LOD disabled
+	exposedField SFInt32 lod 1
+	eventOut SFBool winding_solved
+	eventOut SFBool fog_solved
+	eventOut SFBool	chandelier_lit
+	eventIn	SFBool arrow_visible
+
+]{
+	Group {
+		children [
+
+			Transform {
+				children [
+					Transform {
+						children [
+							Transform {
+								children [
+									Viewpoint {
+										description	"Balcony"
+										position 0 0 15
+										jump FALSE
+									}
+								]
+								# pi / 32 ~ 0.10
+								rotation 1 0 0 -0.10
+							}
+						]
+						rotation 0 1 0 -1.05
+					}
+				]
+				translation	0 4.1022 0
+			}
+
+			LightroomProto {
+				lod	IS lod
+				winding_solved IS winding_solved
+				chandelier_lit IS chandelier_lit
+				arrow_visible IS arrow_visible
+			}
+
+			Collision {
+				children Transform {
+					children [
+						Inline {
+							url	["barrier.wrl"]
+						}
+					]
+					scale 1.5 1.2 1.5
+				}
+				collide TRUE
+				proxy Transform {
+					children Transform {
+						children Shape {
+							geometry CylinderExtrusion {
+								bottom FALSE
+								top FALSE
+								height 1
+								radius 2.9972
+								solid FALSE
+								complexity 16 # to match lighthouse body
+							}
+						}
+						translation 0 0.5 0
+					}
+					# Height is rather arbitrary; the value doesn't match the height of the lightroom
+					scale 1 5.5118 1
+				}
+			}
+
+			# Bells positioned according to a picture on:
+			# http://www.bellrock.org.uk/lighthouse/lighthouse_courses.htm
+			# balcony diameter = 2.9972
+			# lightroom masonry outer diameter = 2.0574
+			# bell distance from center = (balcony diameter + masonry diameter) / 2 = 2.5273
+
+			# Southern bell
+			Transform {
+				children [
+					BellProto { fog_solved  IS fog_solved }
+				]
+				translation	0 0 2.5273
+			}
+
+			Transform {
+				children Viewpoint {
+					description	"Bell"
+					jump FALSE
+					fieldOfView	1.05 # 60 degrees
+					position 0 0 0
+					orientation	1 0 0 -0.39 # 45 degrees
+				}
+				rotation 0 1 0 -1.57 # 90 degrees
+				translation	-1 1.6 2.5273
+			}
+
+			# Northern bell
+			Transform {
+				children [
+					BellProto { fog_solved IS fog_solved }
+				]
+				translation	0 0 -2.5273
+			}
+
+		]
+	}
+}

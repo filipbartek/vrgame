@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>Lighthouse - Prototypy</title>
+  </head>
+  <body>
+    <p><a href="index.html">Zpět na hlavní stránku</a></p>
+    <h1>Prototypy</h1>
+    <p><a href="wrl-dependencies.svg">Graf závislostí WRL souborů</a></p>
+    <p>Následující tabulka obsahuje výběr VRML prototypů použitých v&nbsp;projektu.</p>
+    <table border="1">
+      <thead>
+        <tr>
+          <td>Soubor</td>
+          <td>Hlavička</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>lighthouse.wrl</td>
+          <td>
+<pre>PROTO Lighthouse [
+
+	# 1: LOD enabled
+	# 0: LOD disabled
+	exposedField SFInt32 lod 1
+
+]</pre>
+          </td>
+        </tr>
+        <tr>
+          <td>balcony.wrl</td>
+          <td>
+<pre>PROTO Balcony [
+
+	# 1: LOD enabled
+	# 0: LOD disabled
+	exposedField SFInt32 lod 1
+
+]</pre>
+          </td>
+        </tr>
+        <tr>
+          <td>lightroom.wrl</td>
+          <td>
+<pre>PROTO Lightroom [
+
+	# 1: LOD enabled
+	# 0: LOD disabled
+	exposedField SFInt32 lod 1
+
+]</pre>
+          </td>
+        </tr>
+        <tr>
+          <td>lightroom-cage.wrl</td>
+          <td>
+<pre>PROTO Cage [
+
+	# 1: LOD enabled
+	# 0: LOD disabled
+	exposedField SFInt32 lod 1
+
+]</pre>
+          </td>
+        </tr>
+        <tr>
+          <td>lightroom-window.wrl</td>
+          <td>
+<pre>PROTO Window [
+
+	# 1: LOD enabled
+	# 0: LOD disabled
+	exposedField SFInt32 lod 1
+
+]</pre>
+          </td>
+        </tr>
+        <tr>
+          <td>lightroom-glass-panel.wrl</td>
+          <td>
+<pre>PROTO Panel [
+
+	# 1: LOD enabled
+	# 0: LOD disabled
+	exposedField SFInt32 lod 1
+
+	# Size of the panel
+	# Should be stretched along XY plane and thin along Z axis
+	field SFVec3f size 0.3429 0.67945 0.00635
+	# Default values respect Bell Rock:
+	# http://www.bellrock.org.uk/lighthouse/lighthouse_stats.htm
+	# > Each glass plate measured 13½ inches (34.2cm) by 26¾ inches (67.9cm) and was ¼ of an inch (6.35mm) thick.
+
+	# Color of the glass
+	exposedField SFColor diffuseColor 0.0 0.0 0.8
+
+	# Transparency of the glass
+	exposedField SFFloat transparency 0.5
+
+]</pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

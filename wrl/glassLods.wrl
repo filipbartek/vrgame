@@ -1,0 +1,61 @@
+#VRML V2.0 utf8
+
+WorldInfo {
+	title "Glass parameters"
+	info ["Eva Pešková"]
+}
+
+EXTERNPROTO	OneCup [
+	exposedField SFColor color
+]
+"..\blend\glass.wrl#Glass1"
+
+EXTERNPROTO	SecondCup [
+	exposedField SFColor color
+]
+"..\blend\glass_lod2.wrl#Glass2"
+
+PROTO Cups [
+    # 1: LOD enabled
+	# 0: LOD disabled
+	exposedField SFInt32 lod 1	  
+	exposedField SFColor color 0.2 0.5 0.8
+]{
+	Group {
+		children [
+			Switch {
+				choice [
+					DEF	Glass1 Transform {
+							children [
+								OneCup {
+									color IS color
+								}
+							]					 
+						}  
+					DEF	Glass2 Transform {
+							children [		
+								SecondCup {
+									color IS color
+								}
+							]					 
+						} 
+				]
+			}
+			Switch {
+				whichChoice	IS lod
+				choice [
+					USE	Glass1
+					LOD	{
+						range [20 50]
+						level [
+							USE	Glass1
+							USE	Glass2
+							Group {}
+						]
+					}
+				]
+			}
+
+		]
+	}
+}

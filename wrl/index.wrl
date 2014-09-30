@@ -1,0 +1,425 @@
+#VRML V2.0 utf8
+
+WorldInfo {
+	title "Lighthouse"
+	info ["Filip Bártek", "Eva Pešková"]
+}
+
+EXTERNPROTO	LighthouseProto [
+	exposedField SFInt32 lod
+	eventOut SFBool	winding_solved
+	eventOut SFBool	ladyBugRemoved
+	eventOut SFBool	fog_solved
+	eventIn	SFBool arrow_visible
+	eventOut SFBool	chandelier_lit
+]
+"lighthouse.wrl#Lighthouse"
+
+PROTO Index [
+	exposedField SFInt32 lod 1
+]{
+	Group {
+		children [
+
+			NavigationInfo {
+				headlight TRUE
+				# radius, height, foot length (climb height)
+				avatarSize [0.1, 1.6, 0.4]
+			}
+
+			Transform {
+				children [
+					DEF VPFarTrans Transform {
+						children [
+							DEF VPFar Viewpoint {
+								description	"Far"
+								jump FALSE
+							}
+						]
+						# pi / 32 ~ 0.10
+						rotation 1 0 0 0.20
+						translation	0 0 100
+					}
+					Transform {
+						children [
+							Viewpoint {
+								description	"Near"
+								jump FALSE
+							}
+						]
+						# pi / 3 ~ 1.05
+						rotation 1 0 0 1.05
+						translation	0 0 10
+					}
+				]
+				rotation 0 1 0 -1.05
+			}
+
+			# Night
+			Background {
+				skyColor [0.0 0.0 0]
+				groundColor [0 0.0625 0.125]
+			}
+
+			DEF Atmosphere Fog { 
+			color 1 1 1   
+			fogType "LINEAR"   
+			visibilityRange 0
+
+			}
+
+			# Moonlight
+			DirectionalLight {
+				color 1 1 1
+				direction 0 -1 0
+				intensity 0.25
+				ambientIntensity 0.125
+			}
+
+			Transform {
+				children [
+					DEF Lighthouse LighthouseProto	{
+						# Central entry point where scene parameters are set
+						lod	IS lod
+					}
+
+					Transform {
+						children [
+							Transform {
+								children [
+									Transform {
+										children Viewpoint {
+											description	"Test: FPS near left"
+											position 0 0 0
+											jump FALSE
+										}
+										translation	-0.5 0 0
+									}
+									Transform {
+										children Viewpoint {
+											description	"Test: FPS near right"
+											position 0 0 0
+											jump FALSE
+										}
+										translation	0.5 0 0
+									}
+								]
+								translation	0 0 10
+							}
+							Transform {
+								children [
+									Transform {
+										children Viewpoint {
+											description	"Test: FPS far left"
+											position 0 0 0
+											jump FALSE
+										}
+										translation	-0.5 0 0
+									}
+									Transform {
+										children Viewpoint {
+											description	"Test: FPS far right"
+											position 0 0 0
+											jump FALSE
+										}
+										translation	0.5 0 0
+									}
+								]
+								translation	0 0 100
+							}
+							Transform {
+								children [
+									Transform {
+										children Viewpoint {
+											description	"Test: FPS farthest left"
+											position 0 0 0
+											jump FALSE
+										}
+										translation	-0.5 0 0
+									}
+									Transform {
+										children Viewpoint {
+											description	"Test: FPS farthest right"
+											position 0 0 0
+											jump FALSE
+										}
+										translation	0.5 0 0
+									}
+								]
+								translation	0 0 1000
+							}
+						]
+						rotation 0 1 0 -1.05
+						# translation = lighthouse height + masonry height + window height * window scale / 2
+						# 33.8963803275 = 29.7942 + 1.80975 + 2.03835 * 2.2493 / 2
+						translation	0 33.8963803275 0
+					}
+
+				]
+				# Sea level
+				translation	0 -4.7752 0
+			}
+
+			DEF	Proxim ProximitySensor {
+				size 100 100 100
+			}				
+
+			# Inspired by: http://dcgi.felk.cvut.cz/cgg/LaskavyPruvodce/kap5/p-5-14.wrl
+			DEF	Hud Transform {
+				children [
+					Transform {
+						children [
+							Transform {
+								children [
+										Shape {
+											appearance Appearance {
+												material Material {
+													ambientIntensity 0
+													diffuseColor 0 0 0
+													emissiveColor 0 1 1
+													shininess 0
+													specularColor 0 0 0
+												}
+											}
+											geometry DEF HudTimeText Text {
+												maxExtent 20
+											}
+										}
+										Transform {
+											children [
+												Shape	{
+													appearance Appearance{
+														material Material {
+															ambientIntensity 0
+															diffuseColor 1 0 0
+															emissiveColor 1 1 1
+															shininess 0
+															specularColor 0 0 0
+														}
+													}
+													geometry DEF NutsCountText Text {
+														maxExtent 20
+													}
+												}
+												Transform {
+													children DEF Button Shape {
+														 geometry Box {
+															 size 1 1 0
+														 }
+														 appearance	Appearance {
+															 material Material {
+																 diffuseColor  0.2 0.2 0.7
+																 emissiveColor 0.1  0.7 1
+															 }
+														 }
+													}
+													translation 2 -3 0			   
+												}
+												DEF	HudButtonSensor TouchSensor	{
+													enabled	TRUE
+												}
+											]											
+											translation	0 1 0 				   
+										} 
+									]
+								scale 0.05 0.05 1
+								translation	0.25 -0.25 0
+							}
+						]
+						translation	0 0 -1
+					}
+				]
+			}
+
+		]
+	}
+
+	# Inspired by: fps.wrl
+
+	DEF	T TimeSensor {
+		cycleInterval 1000
+	}									 
+
+	DEF	OutroInitTS TimeSensor {
+		cycleInterval 1
+	}
+	DEF	OutroTS TimeSensor {
+		cycleInterval 10
+	}
+	DEF OutroPI PositionInterpolator {
+		key	[0 1]
+		keyValue [0 0 100, 0 0 1000]
+	}
+
+	DEF	OutroAnimation Transform {
+			children [
+				Sound {
+					source DEF FinishAudioClip AudioClip {
+						url	["../wav/applause.wav"]
+						description	"Final sound"
+
+					}
+					maxBack	1000
+					maxFront 1000
+				}
+			]		 
+	}															 
+		
+	DEF	NutsNumber Script	{
+		eventIn	SFBool nutDone
+		eventOut MFString nutsOutput
+		eventIn	SFBool set_winding_solved
+		eventIn	SFBool set_ladybug_solved
+		eventIn	SFBool set_chandelier_solved
+		field SFBool winding_solved FALSE
+		field SFBool chandelier_solved FALSE
+		eventOut SFBool	bind_vpfar
+		eventOut SFTime	outro_time
+		eventIn SFTime cur_time
+		field SFNode outroTS USE OutroTS
+		eventOut SFBool enableSound
+		eventIn SFBool fog_solved  
+		eventOut SFFloat visibility
+		eventIn SFBool cheat_launch_outro
+		url	"javascript:
+			var nutCount = 0;
+			var nutsTotal = 4;
+			function launchOutro() {
+				bind_vpfar = true;
+				outro_time = cur_time;
+			}
+			function cheat_launch_outro(value) {
+				if (value) {
+					launchOutro();
+				}
+			}
+			function generateText() {
+				nutsOutput = new MFString(nutCount);
+			}
+			function fog_solved()
+			{					
+				visibility = 0;
+				nutDone();
+			}
+			function nutDone() {
+				nutCount ++;
+				generateText();
+				if ( nutCount == nutsTotal )
+				{
+					nutCount =100;
+					generateText();
+					//start sound
+					enableSound=true;
+					launchOutro();
+				}
+			}
+			
+			function set_ladybug_solved(value)
+			{				   
+				nutDone();
+			}
+
+			function set_winding_solved(value) {
+				if (value && !winding_solved) {
+					winding_solved = true;
+					nutDone();
+				}
+			}
+			function set_chandelier_solved(value) {
+				if (value && !chandelier_solved) {
+					chandelier_solved = true;
+					nutDone();
+				}
+			}
+			"
+	}
+
+	DEF	OutroScript Script {
+		eventIn	SFBool initIsActive
+		eventIn	SFTime curTime
+		eventOut SFTime	animStartTime
+		url	"javascript:
+			function initIsActive(value) {
+				if (!value) {
+					animStartTime = curTime;
+				}
+			}
+		"
+	}
+
+	DEF	HudButtonScript Script {
+		eventIn	SFTime switchShow
+		eventOut SFBool	arrowVisible
+		url	"javascript:
+			var visible = false;			
+			function switchShow(time) {
+				visible = !visible;
+				arrowVisible = visible;
+			}	  
+
+			"
+	}
+
+	DEF	S Script {
+		eventIn	SFTime show				 
+		eventOut SFFloat visibility
+		eventOut MFString hudTimeText
+		url	"javascript:
+			var time0 = Number.POSITIVE_INFINITY;
+			var timeNext = Number.NEGATIVE_INFINITY;
+			var addFog = true;
+			function show(mTime){
+				if (mTime >= timeNext) {
+					if (mTime < time0) {
+						time0 = mTime;
+					}
+
+					var timeSeconds = mTime - time0;
+					if ( (timeSeconds > 5) && addFog )
+					{
+						visibility = 30; 
+						addFog = false;
+					}
+
+					var timeSecondsMod = Math.floor(timeSeconds) % 60;
+					var timeMinutes = timeSeconds / 60;
+					var timeMinutesFloor = Math.floor(timeMinutes);
+					var text = timeMinutesFloor + ':' + timeSecondsMod;
+					hudTimeText = new MFString(text);
+					timeNext = mTime + 1;
+				}
+			}
+		"
+	}
+		  
+	ROUTE Lighthouse.fog_solved	TO NutsNumber.fog_solved
+	ROUTE NutsNumber.visibility TO Atmosphere.visibilityRange
+	ROUTE S.visibility TO	Atmosphere.visibilityRange
+	ROUTE HudButtonSensor.touchTime TO HudButtonScript.switchShow
+	ROUTE HudButtonScript.arrowVisible TO Lighthouse.arrow_visible
+	ROUTE Proxim.position_changed TO Proxim.center
+	ROUTE Proxim.position_changed TO Hud.translation
+	ROUTE Proxim.orientation_changed TO	Hud.rotation
+	ROUTE Proxim.isActive TO T.loop
+	ROUTE T.cycleTime TO S.show
+	ROUTE T.time TO	S.show
+	ROUTE T.isActive TO NutsNumber.nutDone
+	ROUTE NutsNumber.nutsOutput	TO NutsCountText.string
+	ROUTE S.hudTimeText	TO HudTimeText.string
+	ROUTE Lighthouse.winding_solved	TO NutsNumber.set_winding_solved
+	ROUTE Lighthouse.ladyBugRemoved	TO NutsNumber.set_ladybug_solved
+	ROUTE Lighthouse.chandelier_lit	TO NutsNumber.set_chandelier_solved
+
+	ROUTE T.time TO NutsNumber.cur_time
+	ROUTE NutsNumber.bind_vpfar	TO VPFar.set_bind
+	ROUTE NutsNumber.outro_time	TO OutroInitTS.startTime
+	ROUTE OutroInitTS.isActive TO OutroScript.initIsActive
+	ROUTE T.time TO	OutroScript.curTime
+	ROUTE OutroScript.animStartTime	TO OutroTS.startTime
+	ROUTE OutroTS.fraction_changed TO OutroPI.set_fraction
+	ROUTE OutroPI.value_changed	TO VPFarTrans.translation
+
+	#ROUTE T.isActive TO NutsNumber.cheat_launch_outro # debug
+}
+
+Index {}

@@ -1,0 +1,99 @@
+#VRML V2.0 utf8
+
+EXTERNPROTO	TruncatedConeExtrusion [
+	field SFFloat height
+	field SFFloat bottomRadius
+	field SFFloat topRadius
+	field SFBool bottom
+	field SFBool top
+	field SFBool solid
+	field SFFloat creaseAngle
+	field SFInt32 complexity
+]
+"truncatedconeextrusion.wrl#TruncatedConeExtrusion"
+
+PROTO TruncatedConeShape [
+
+	field SFNode appearance NULL # Mandatory!
+
+	# 1: LOD enabled
+	# 0: LOD disabled
+	exposedField SFInt32 lod 1
+
+	# LOD ranges
+	field MFFloat range [50 200]
+
+	# TruncatedConeExtrusion:
+	field SFFloat height 2
+	field SFFloat bottomRadius 1
+	field SFFloat topRadius 1
+	field SFBool bottom TRUE
+	field SFBool top TRUE
+	field SFBool solid TRUE
+	field SFFloat creaseAngle 0.79
+	field SFInt32 complexity 24
+
+]{
+	Switch {
+		whichChoice	IS lod
+		choice [
+			DEF	NoLod Shape {
+				appearance IS appearance
+				geometry TruncatedConeExtrusion {
+					height IS height
+					bottomRadius IS	bottomRadius
+					topRadius IS topRadius
+					bottom IS bottom
+					top	IS top
+					solid IS solid
+					creaseAngle	IS creaseAngle
+					complexity IS complexity
+				}
+			}
+			LOD	{
+				range IS range
+				level [
+					USE	NoLod
+					DEF	Billboard Transform {
+						children Billboard	{
+							axisOfRotation 0 1 0
+							children Shape	{
+								appearance IS appearance
+								geometry IndexedFaceSet	{
+									coord DEF BillCoord Coordinate {
+										point [-1 -1 0, 1 -1 0, 1 1 0, -1 1 0] # Set in script
+									}
+									coordIndex [0, 1, 2, 3]
+									texCoord NULL
+									color NULL
+									normal NULL
+									ccw	TRUE
+									solid TRUE
+									convex TRUE
+								}
+							}
+						}
+					}
+					Group {}
+				]
+			}
+		]
+	}
+	Script {
+		field SFNode billCoord USE BillCoord
+		field SFFloat height IS height
+		field SFFloat bottomRadius IS bottomRadius
+		field SFFloat topRadius IS topRadius
+		directOutput TRUE
+		url	"javascript:
+			function initialize() {
+				var halfHeight = height / 2;
+				var p0 = new SFVec3f(-bottomRadius, -halfHeight, 0);
+				var p1 = new SFVec3f(bottomRadius, -halfHeight, 0);
+				var p2 = new SFVec3f(topRadius, halfHeight, 0);
+				var p3 = new SFVec3f(-topRadius, halfHeight, 0);
+				billCoord.point = new MFVec3f(p0, p1, p2, p3);
+			}
+		"
+	}
+}

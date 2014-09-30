@@ -1,0 +1,109 @@
+#VRML V2.0 utf8
+
+WorldInfo {
+	title "Lightroom masonry"
+	info ["Filip Bártek"]
+}
+
+# Height: 1.80975
+# Diameter (smaller): 4.1148
+
+# Opening width: 0.4
+# Source: picture on:
+# http://www.bellrock.org.uk/lighthouse/lighthouse_courses.htm
+
+# Wall thickness: 0.381
+# Source: http://www.bellrock.org.uk/lighthouse/lighthouse_courses.htm
+# Thickness - 1 ft 3 in
+
+Transform {
+	children [
+		Shape {
+			appearance Appearance {
+				material Material {
+					diffuseColor 1 1 1
+				}
+			}
+			geometry Extrusion {
+
+				# Outer circle: regular octagon
+				# Diameter: 4.1148
+				# Source: http://www.bellrock.org.uk/lighthouse/lighthouse_courses.htm
+				# "Diameter - 13 ft 6 in"
+				# radius = diameter / 2 = 2.0574
+				# side = diameter / (1 + 2 * sqrt(1/2)) = 1.7044
+				# side / 2 = 0.8522
+				# opening half-width: 0.2 (guess from picture)
+				# wall thickness: 0.381
+				# inner width = radius - wall thickness = 1.6764
+				crossSection [
+					# outer circle
+					 2.0574 -0.8522,
+					 0.8522 -2.0574,
+					-0.8522 -2.0574,
+					-2.0574 -0.8522,
+					-2.0574  0.8522,
+					-0.8522  2.0574,
+					 0.8522  2.0574,
+					 2.0574  0.8522,
+					# go in
+					 2.0574  0.2000,
+					 1.6764  0.2000,
+					# inner circle
+					 1.6764  0.8522,
+					 0.8522  1.6764,
+					-0.8522  1.6764,
+					-1.6764  0.8522,
+					-1.6764 -0.8522,
+					-0.8522 -1.6764,
+					 0.8522 -1.6764,
+					 1.6764 -0.8522
+					# go out
+					 1.6764 -0.2000
+					 2.0574 -0.2000
+					# finish
+					 2.0574 -0.8522
+				]
+
+				# http://www.bellrock.org.uk/lighthouse/lighthouse_courses.htm
+				# course 86 to course 91: 1.80975 (extension from course 90 information)
+				spine [
+					0 0 0,
+					0 1.80975 0
+				]
+
+				beginCap FALSE
+
+				creaseAngle	0.7
+			}
+		}
+		Transform {
+			children [
+				Viewpoint {
+					description	"Lightroom"
+					position 0 0 0
+					jump FALSE
+					fieldOfView	1.05 # 60 degrees
+				}
+			]
+			rotation 0 1 0 1.57
+			translation	2.0574 1.6 0
+		}
+		Transform {
+			children [
+				Viewpoint {
+					description	"Lightroom floor"
+					position 0 0 0
+					orientation	1 0 0 -0.52
+					jump FALSE
+					fieldOfView	1.05
+				}
+			]
+			rotation 0 1 0 1.57
+			translation	1.8 1.6 0
+		}
+	]
+	# Exit faces south-west
+	# Source: picture at http://www.bellrock.org.uk/lighthouse/lighthouse_courses.htm
+	rotation 0 1 0 -2.36
+}

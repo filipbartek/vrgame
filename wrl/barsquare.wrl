@@ -1,0 +1,84 @@
+#VRML V2.0 utf8
+
+WorldInfo {
+	title "Bar with square cross section"
+	info ["Filip Bártek"]
+}
+
+PROTO BarSquare [
+
+	# 1: LOD enabled
+	# 0: LOD disabled
+	exposedField SFInt32 lod 1
+
+	# Size of the bar
+	# Should be longer along one of the axes
+	# The longer axis must be the Y axis
+	field SFVec3f size 0.5 1 0.5
+
+	# Color of the bar
+	exposedField SFColor diffuseColor 0.5 0.1 0
+
+	# Texture of the bar
+	exposedField SFNode texture NULL
+
+]{
+	Group {
+		children [
+			Switch {
+				choice [
+					DEF	Box Shape {
+						appearance Appearance {
+							texture	IS texture
+							material Material {
+								diffuseColor IS	diffuseColor
+							}
+						}
+						geometry Box {
+							size IS	size
+						}
+					}
+					DEF	Billboard Billboard	{
+						axisOfRotation 0 1 0
+						children Transform	{
+							children Transform {
+								children Transform {
+									children Shape	{
+										appearance Appearance {
+											material Material {
+												diffuseColor IS	diffuseColor
+											}
+										}
+										geometry ElevationGrid {
+											xDimension 2
+											zDimension 2
+											height [0 0, 0 0]
+											solid TRUE
+										}
+									}
+									translation	-0.5 0 -0.5
+								}
+								rotation 1 0 0 1.57
+							}
+							scale IS size
+						}
+					}
+				]
+			}
+			Switch {
+				whichChoice	IS lod
+				choice [
+					USE	Box
+					LOD	{
+						range [50 150]
+						level [
+							USE	Box
+							USE	Billboard
+							Group {}
+						]
+					}
+				]
+			}
+		]
+	}
+}

@@ -1,0 +1,196 @@
+#VRML V2.0 utf8
+
+# A reflector that is pointing in the positive direction of Z axis.
+
+WorldInfo {
+	title "Reflector with chimney and oil reservoir"
+	info ["Filip Bártek"]
+}
+
+EXTERNPROTO	CylinderShape [
+	field SFNode appearance
+	exposedField SFInt32 lod
+	field MFFloat range
+	field SFFloat radius
+	field SFFloat height
+	field SFBool top
+	field SFBool bottom
+	field SFBool solid
+	field SFFloat creaseAngle
+	field SFInt32 complexity
+]
+"cylindershape.wrl#CylinderShape"
+
+EXTERNPROTO ConeShape [
+	field SFNode appearance
+	exposedField SFInt32 lod
+	field MFFloat range
+	field SFFloat radius
+	field SFFloat height
+	field SFBool bottom
+	field SFBool solid
+	field SFFloat creaseAngle
+	field SFInt32 complexity
+]
+"coneshape.wrl#ConeShape"
+
+EXTERNPROTO RoundExtrusion [
+	field MFVec3f spine
+	field MFVec2f scale
+	field MFRotation orientation
+	field SFBool beginCap
+	field SFBool endCap
+	field SFBool solid
+	field SFFloat creaseAngle
+	field SFFloat radius
+	field SFInt32 complexity
+]
+"roundextrusion.wrl#RoundExtrusion"
+
+PROTO Reflector [
+	eventOut SFBool	lit
+	exposedField SFVec3f proximitySize 10 10 10
+]{
+	Group {
+		children [
+
+			# Reflector
+			Transform {
+				children [
+					ConeShape {
+						appearance DEF	Metal Appearance {
+							material Material {
+								diffuseColor 0.8 0.8 0.8
+							}
+						}
+						# http://www.bellrock.org.uk/lighthouse/lighthouse_lightroom.htm
+						# parabolic shape of 25 inches in diameter
+						# http://www.bellrock.org.uk/lighthouse/lighthouse_stats.htm
+						# 25-inch (63.5cm)
+						radius 0.3175
+						height 0.3175
+						bottom FALSE
+						solid FALSE
+					}
+					DEF TS TouchSensor	{
+						enabled	FALSE
+					}
+				]
+				rotation 1 0 0 4.71
+				translation	0 0 0.15875
+			}
+
+			DEF	PS ProximitySensor {
+				size IS	proximitySize
+			}
+
+			# Flame
+			Transform {
+				children DEF FlameSwitch Switch	{
+					whichChoice	-1
+					choice [
+						Group {}
+						Shape {
+							appearance Appearance {
+								material Material {
+									transparency 0.5
+									emissiveColor 0.7 0.5 0
+									ambientIntensity 0
+									diffuseColor 0 0 0
+									shininess 0
+									specularColor 0 0 0
+								}
+							}
+							geometry RoundExtrusion {
+								spine [
+									0 0.0 0,
+									0 0.1 0,
+									0 0.2 0,
+									0 0.3 0,
+									0 0.6 0,
+									0 1.0 0]
+								scale [
+									0.00 0.00,
+									0.20 0.20,
+									0.25 0.25,
+									0.25 0.25,
+									0.10 0.10,
+									0.00 0.00]
+								creaseAngle	0.79
+								complexity 8
+							}
+						}
+					]
+				}
+				scale 0.25 0.25 0.25
+				translation	0 -0.1 0.15
+			}
+
+
+			# Chimney
+			Transform {
+				children Transform {
+					children CylinderShape {
+						appearance USE Metal
+						top	FALSE
+						bottom FALSE
+						solid FALSE
+						height 1
+						radius 0.0375
+					}
+					translation	0 0.5 0
+				}
+				scale 1 0.25 1
+				translation	0 0.1 0.15
+			}
+
+			# Oil reservoir
+			Transform {
+				children Transform {
+					children CylinderShape	{
+						appearance Appearance {
+							material Material {
+								diffuseColor 0 0 0.1
+							}
+						}
+						height 1
+						radius 0.0375
+					}
+					translation	0 0.5 0
+				}
+				scale 1 0.3175 1
+				translation	0 0 -0.0375
+			}
+
+		]
+	}
+
+	DEF S Script {
+		eventIn	SFBool isActive
+		eventOut SFBool lit IS	lit
+		field SFNode flameSwitch USE FlameSwitch
+		field SFNode ts USE	TS
+		eventIn	SFBool proximityIsActive
+		directOutput TRUE
+		url	"javascript:
+			function isActive(value) {
+				if (value) {
+					lit = 1;
+					flameSwitch.whichChoice = 1;
+					ts.enabled = false;
+				}
+			}
+			function proximityIsActive(value) {
+				if (!lit) {
+					ts.enabled = value;
+				}
+			}
+		"
+	}
+
+	ROUTE TS.isActive TO S.isActive
+	ROUTE PS.isActive TO S.proximityIsActive
+}
+
+Reflector {
+}

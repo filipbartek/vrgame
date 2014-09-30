@@ -1,0 +1,70 @@
+#VRML V2.0 utf8
+
+EXTERNPROTO	RoundExtrusion [
+	field MFVec3f spine
+	field MFVec2f scale
+	field MFRotation orientation
+	field SFBool beginCap
+	field SFBool endCap
+	field SFBool solid
+	field SFFloat creaseAngle
+	field SFFloat radius
+	field SFInt32 complexity
+]
+"roundextrusion.wrl#RoundExtrusion"
+
+PROTO TruncatedConeExtrusion [
+
+	# Cone:
+	field SFFloat bottomRadius 1
+	field SFFloat height 2
+	field SFBool bottom TRUE
+
+	field SFFloat topRadius 1
+	field SFBool top TRUE
+
+	# Extrusion:
+	field SFBool solid TRUE
+	field SFFloat creaseAngle 0.79
+
+	field SFInt32 complexity 24
+
+]{
+	DEF Ext RoundExtrusion {
+		spine [0 -1 0, 0 1 0] # Alter by height
+		scale [1 1, 1 1] # Alter by bottomRadius and topRadius
+		orientation	0 0 1 0
+		beginCap IS	bottom
+		endCap IS top
+		solid IS solid
+		creaseAngle	IS creaseAngle
+		radius 1
+		complexity IS complexity
+	}
+	Script {
+		directOutput TRUE
+		field SFNode ext USE Ext
+		field SFFloat height IS	height
+		field SFFloat bottomRadius IS bottomRadius
+		field SFFloat topRadius IS topRadius
+		url	"javascript:
+			function generateSpine(h) {
+				var halfH = h / 2;
+				var spineBegin = new SFVec3f(0, -halfH, 0);
+				var spineEnd = new SFVec3f(0, halfH, 0);
+				var spine = new MFVec3f(spineBegin, spineEnd);
+				return spine;
+			}
+			function generateScale(b, t) {
+				var bottom = new SFVec2f(b, b);
+				var top = new SFVec2f(t, t);
+				var scale = new MFVec2f(bottom, top);
+				return scale;
+			}
+			function initialize() {
+				ext.spine = generateSpine(height);
+				ext.scale = generateScale(bottomRadius, topRadius);
+			}
+		"
+	}
+}
